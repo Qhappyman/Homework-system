@@ -1,12 +1,13 @@
 <template>
   <div>
-      setting-me
+      error
   </div>
+
 </template>
 
 <script>
 export default {
-name:'SettingMe'
+
 }
 </script>
 
