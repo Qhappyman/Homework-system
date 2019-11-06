@@ -1,8 +1,9 @@
 <template>
 <div>
-    home
+
     <HomeNav></HomeNav>
     <ClassList></ClassList>
+    <CreateClass></CreateClass>
 </div>
 </template>
 <script>
