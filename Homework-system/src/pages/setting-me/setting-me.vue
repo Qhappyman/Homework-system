@@ -1,8 +1,6 @@
 <template>
   <div>
-<<<<<<< HEAD
-      setting-me
-=======
+
     <HomeNav></HomeNav>
     <header>
       <div class="mycount">
@@ -67,20 +65,14 @@
         </div>
       </div>
     </main>
->>>>>>> front-gjq-dev
+
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-name:'SettingMe'
-}
-</script>
 
-<style>
-=======
-import HomeNav from "../home/components/home-nav";
+
+import HomeNav from '../home/components/home-nav'
 export default {
   name: "SettingMe",
   data() {
@@ -144,6 +136,5 @@ header {
   float: left;
 }
 </style>>
->>>>>>> front-gjq-dev
 
-</style>
+
