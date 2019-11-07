@@ -1,67 +1,71 @@
 <template>
   <div>
-      <el-menu mode="horizontal">
-        <el-menu-item>
-          课程列表
-        </el-menu-item>
+    <el-menu mode="horizontal">
+      <el-menu-item>课程列表</el-menu-item>
 
-          <el-menu-item class="create-class-nav">
-    <el-popover placement="right" width="500" trigger="click">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="课程名称:">
-          <el-select v-model="form.course" placeholder="请选择课程名称" filterable="true">
-            <el-option label="前端" value="qianduan"></el-option>
-            <el-option label="后台" value="houtai"></el-option>
-            <el-option label="安卓" value="anzhuo"></el-option>
-            <el-option label="Python" value="python"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="学年:">
-          <el-select v-model="form.schoolyear" placeholder="请选择学年" filterable="true">
-            <el-option label="2017-2018" value="2017"></el-option>
-            <el-option label="2018-2019" value="2018"></el-option>
-            <el-option label="2019-2020" value="2019"></el-option>
-            <el-option label="2020-2021" value="2020"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="学期:">
-          <el-select v-model="form.schoolteam" placeholder="请选择学期" filterable="true">
-            <el-option label="第一学期" value="first"></el-option>
-            <el-option label="第二学期" value="second"></el-option>
-          </el-select>
-        </el-form-item>
+      <el-menu-item class="create-class-nav">
+        <el-button type="text" @click="dialogFormVisible = true" class="create-release">
+          <i class="el-icon-plus"></i>创建课程
+        </el-button>
+        <el-dialog title="选择信息" :visible.sync="dialogFormVisible" class="dialog-title">
+          <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="课程名称:">
+              <el-select v-model="createclass.course" placeholder="请选择课程名称" filterable="true">
+                <el-option label="前端" value="qianduan"></el-option>
+                <el-option label="后台" value="houtai"></el-option>
+                <el-option label="安卓" value="anzhuo"></el-option>
+                <el-option label="Python" value="python"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="学年:">
+              <el-select v-model="createclass.schoolyear" placeholder="请选择学年" filterable="true">
+                <el-option label="2017-2018" value="2017"></el-option>
+                <el-option label="2018-2019" value="2018"></el-option>
+                <el-option label="2019-2020" value="2019"></el-option>
+                <el-option label="2020-2021" value="2020"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="学期:">
+              <el-select v-model="createclass.schoolteam" placeholder="请选择学期" filterable="true">
+                <el-option label="第一学期" value="first"></el-option>
+                <el-option label="第二学期" value="second"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <span @click="createClass">
+              <el-button type="primary" @click="dialogFormVisible = false">确定</el-button>
+            </span>
+          </div>
+        </el-dialog>
 
-        <el-form-item>
-          <el-button type="primary" plain @click="createClass">立即创建</el-button>
-          <el-button @click="cancle">取消</el-button>
-        </el-form-item>
-      </el-form>
-      <el-button slot="reference" ref="create"><i class="el-icon-plus"></i>创建课程</el-button>
-    </el-popover>
-          
-          
-    <el-popover placement="right" width="500" trigger="click" class="el-popover2">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="课程">
-          <el-select v-model="form.noticecourse" placeholder="请选择课程">
-            <el-option label="前端" value="qianduan"></el-option>
-            <el-option label="后台" value="houtai"></el-option>
-            <el-option label="安卓" value="anzhuo"></el-option>
-            <el-option label="Python" value="python"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="公告内容">
-          <el-input type="textarea" v-model="form.notice"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="releaseNotice">立即发布</el-button>
-          <el-button>取消</el-button>
-        </el-form-item>
-      </el-form>
-      <el-button slot="reference" ref="create"><i class="el-icon-plus"></i>发布公告</el-button>
-    </el-popover>
-          </el-menu-item>
-      </el-menu>
+        <el-button type="text" @click="dialogForVisible = true" class="create-release">
+          <i class="el-icon-plus"></i>发布公告
+        </el-button>
+        <el-dialog title="编辑公告" :visible.sync="dialogForVisible" class="dialog-title">
+          <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="课程">
+              <el-select v-model="releasenotice.noticecourse" placeholder="请选择课程">
+                <el-option label="前端" value="qianduan"></el-option>
+                <el-option label="后台" value="houtai"></el-option>
+                <el-option label="安卓" value="anzhuo"></el-option>
+                <el-option label="Python" value="python"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="公告内容">
+              <el-input type="textarea" v-model="releasenotice.notice"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogForVisible = false">取 消</el-button>
+            <span @click="releaseNotice">
+              <el-button type="primary" @click="dialogForVisible = false">发布</el-button>
+            </span>
+          </div>
+        </el-dialog>
+      </el-menu-item>
+    </el-menu>
   </div>
 </template>
 
@@ -69,27 +73,51 @@
 export default {
   data() {
     return {
-      form: {
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      dialogForVisible: false,
+      dialogForVisible: false,
+      createclass: {
         course: "",
-        delivery: false,
-        schoolteam: "",
         schoolyear: "",
+        schoolteam: ""
+      },
+      releasenotice: {
         notice: "",
         noticecourse: ""
-      }
+      },
+      formLabelWidth: "120px"
     };
   },
   methods: {
     onSubmit: function() {},
     cancle: function() {},
     createClass() {
+      if((this.createclass.course=="")||(this.createclass.schoolyear=="")||(this.createclass.schoolteam=="")){
+        this.$notify.error({
+          title: '未完善',
+          message: '请完善你的内容'
+        });
+        this.dialogFormVisible = true;
+      }
+      else{
       this.$notify({
         title: "成功",
         message: "创建成功",
         type: "success"
       });
+      this.$emit('add');
+      }
     },
-    releaseNotice(){
+    releaseNotice() {
+      if((this.releasenotice.notice=="")||(this.releasenotice.noticecourse=="")){
+        this.$notify.error({
+          title: '未完善',
+          message: '请完善你的内容'
+        });
+        this.dialogForVisible = true;
+      }
+      else{
       this.$notify({
         title: "成功",
         message: "发布成功",
@@ -97,17 +125,31 @@ export default {
       });
     }
   }
+  }
 };
 </script>
 
 <style scoped>
-.el-popover2{
-    margin-left: 5px;
+.el-popover2 {
+  margin-left: 5px;
 }
-.create-class-nav{
-  float:right;
+.create-class-nav {
+  float: right;
 }
-el-menu-item{
+el-menu-item {
   margin: 0 10px;
+}
+.create-release {
+  background-color: #409eff;
+  color: white;
+  border-radius: 8px;
+  width: 120px;
+  margin-left: 20px;
+}
+i {
+  color: whitesmoke;
+}
+.dialog-title {
+  font-family: Microsoft YaHei;
 }
 </style>>

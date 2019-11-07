@@ -2,8 +2,9 @@
 <div>
 
     <HomeNav></HomeNav>
-    <ClassList></ClassList>
-    <CreateClass></CreateClass>
+    
+    <CreateClass @add="addCourse"></CreateClass>
+    <ClassList :courseList="courseList"></ClassList>
 </div>
 </template>
 <script>
@@ -16,6 +17,16 @@ components:{
      ClassList,
      CreateClass,
      HomeNav
+},
+data(){
+    return{
+        courseList:[]
+    }
+},
+methods:{
+    addCourse(){
+        this.courseList.unshift(1);
+    }
 }
 }
 </script>
