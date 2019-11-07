@@ -13,6 +13,6 @@ export default {
 
 <style>
 #app {
-  
+  color: black;
 }
 </style>
