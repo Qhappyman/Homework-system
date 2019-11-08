@@ -1,7 +1,5 @@
 # homework-system
 
-> y
-
 ## Build Setup
 
 ``` bash
@@ -25,3 +23,4 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+19-11-8晚:通过vuex双向绑定了用户数据和** 所选课程 ** ,同时动态绑定了创建课程时同步到vuex，代码有点繁琐，需要简化(create-class.vue).动态给class.vue绑定数据有待实现
