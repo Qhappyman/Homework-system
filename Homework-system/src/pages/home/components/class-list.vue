@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <Class v-for="item in classlist" :key="item.index" style="display:inline-block; margin-right:15px;">item</Class>
+  <div class="class-list">
+      <Class v-for="item in classlist" :key="item.index" @delete="handleDelete" :classtype="classlist" style="display:inline-block; margin-right:15px;">item</Class>
       
 
   </div>
@@ -19,17 +19,19 @@ data(){
     }
 },
 methods:{
-     
+     handleDelete(){
+       this.classlist.pop();
+       console.log(this.classlist);
+     }
   },
   
-
-
 
 }
 
 
 </script>
 
-<style>
+<style scoped>
 
-</style>
+</style>>
+
