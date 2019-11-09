@@ -1,23 +1,21 @@
 <template>
-<div>
-    index
-  <Nav></Nav>
-  <Body></Body>
-</div>
+  <div>
+    <IndexNav></IndexNav>
+    <IndexBody></IndexBody>
+  </div>
 </template>
 
 <script>
-import Nav from './nav'
-import Body from './body'
+import IndexNav from './nav'
+import IndexBody from './body'
 export default {
-name:'Index',
-components:{
-    Nav,
-    Body
-}
+  name:'Index',
+  components:{
+    IndexNav,
+    IndexBody
+  }
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>
