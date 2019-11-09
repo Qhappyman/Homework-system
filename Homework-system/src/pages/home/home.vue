@@ -20,12 +20,12 @@ components:{
 },
 data(){
     return{
-        courseList:[]
+        courseList:[1]
     }
 },
 methods:{
-    addCourse(){
-        this.courseList.unshift(1);
+    addCourse(course){
+        this.courseList.unshift(course);
     }
 }
 }

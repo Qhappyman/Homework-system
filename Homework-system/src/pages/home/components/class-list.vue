@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <Class v-for="item in classlist" :key="item.index" style="display:inline-block; margin-right:15px;">item</Class>
+  <div class="class-list">
+      <Class v-for="item in classlist" :key="item.index" @delete="handleDelete"   style="display:inline-block; margin-right:15px;"><template v-slot:classname>{{item}}</template></Class>   <!--通过插槽动态加入数据-->
       
 
   </div>
@@ -15,21 +15,26 @@ components:{
 },
 data(){
     return{
-      classlist:this.courseList
+      classlist:[]
     }
 },
 methods:{
-     
+     handleDelete(){
+       this.classlist.pop();
+       console.log(this.classlist);
+     }
   },
+  created(){
+    this.classlist = this.$store.getters.getChecklist;
+  }
   
-
-
 
 }
 
 
 </script>
 
-<style>
+<style scoped>
 
-</style>
+</style>>
+

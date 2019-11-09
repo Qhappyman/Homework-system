@@ -20,21 +20,25 @@
             </el-form-item>
             <el-form-item label="学号">
               <el-input v-model="user.ID"></el-input>
+              <el-alert title="学号格式错误" type="error" class="alert" v-if="true">
+              </el-alert>
             </el-form-item>
             <el-form-item label="专业">
               <el-input v-model="user.profession"></el-input>
+              <el-alert title="请填写专业" type="error" class="alert" v-if="true"></el-alert>
             </el-form-item>
             <el-form-item label="方向">
               <el-checkbox-group v-model="checkList">
-                <el-checkbox label="前端"></el-checkbox>
-                <el-checkbox label="后台"></el-checkbox>
-                <el-checkbox label="安卓"></el-checkbox>
-                <el-checkbox label="Python"></el-checkbox>
+                <el-checkbox label="前端" value="1"></el-checkbox>
+                <el-checkbox label="后台" value="2"></el-checkbox>
+                <el-checkbox label="安卓" value="3"></el-checkbox>
+                <el-checkbox label="Python" value="4"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
             <el-form-item label="角色">
-              <el-radio v-model="user.changerole" label="1">讲师</el-radio>
-              <el-radio v-model="user.changerole" label="2">学妹学弟</el-radio>
+              <el-radio v-model="role" label="1">讲师</el-radio>
+              <el-radio v-model="role" label="2">学妹学弟</el-radio>
+              <el-alert title="请选择身份" type="error" class="alert" v-if="true"></el-alert>
             </el-form-item>
 
             <el-form-item size="small">
@@ -54,9 +58,11 @@
           >
             <el-form-item label="密码" prop="pass">
               <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
+              <el-alert title="密码只能由字母,数字构成，不可包含特殊字符" type="error" class="alert" v-if="true"></el-alert>
             </el-form-item>
             <el-form-item label="确认密码">
               <el-input type="password" autocomplete="off"></el-input>
+              <el-alert title="密码不一致" type="error" class="alert" v-if="true"></el-alert>
             </el-form-item>
             <el-form-item size="small">
               <el-button type="primary" @click="savePassword">确认修改</el-button>
@@ -72,29 +78,66 @@
 <script>
 
 
-import HomeNav from '../home/components/home-nav'
+
+
+
+import HomeNav from "../home/components/home-nav";
+import {mapState} from 'vuex';
+import {mapGetters} from 'vuex'
+
 export default {
   name: "SettingMe",
   data() {
     return {
       user: {
-        name: "郭俊清",
+        name: "",
         ID: "2018210842",
         profession: "信管",
-        changerole: "", //保存着1/2,1老师，2学生
         password: ""
       },
-      checkList: [] //选中的科目
+      checkList: [ ], //选中的科目,保存着"前端","后台"
+      role: "", //保存着1/2,1老师，2学生
     };
   },
   methods: {
     savebaseInf() {
+      let _this = this;
+      _this.$store.commit('update',{
+        name:'teach',
+        data:this.user, //更新store.teach数据
+        list:'checkList',
+        listdata:this.checkList,
+        role:'role',
+        roledata:this.role,
+        checklist:'checkList',
+        listdata:this.checkList
+      });
       console.log(this.checkList);
     },
     savePassword() {
-      console.log(parseInt(this.user.password));
     }
   },
+  // watch: {
+  //       getUserDetails (newData){
+  //           this.user = newData;
+  //       }
+  //   },
+  created(){
+     this.user = this.$store.getters.getUserDetails; //获取用户数据
+     this.checkList = this.$store.getters.getChecklist;
+  },
+   computed: {
+     ...mapGetters([
+        'getUserDetails',
+        'getChecklist'
+    ]),
+    ...mapState({
+      name:state => state.checkList //获取store的某些数据用于验证更新到state
+   })
+   },
+   watch:{
+     
+   },
   components: {
     HomeNav
   }
@@ -121,7 +164,9 @@ header {
   font-size: 30px;
   font-weight: 600;
 }
-
+.alert{
+  height: 30px;
+}
 .information {
   display: flex;
   flex-direction: column;
