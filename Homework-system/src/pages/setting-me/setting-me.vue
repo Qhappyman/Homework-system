@@ -14,31 +14,31 @@
     <main>
       <div class="information">
         <div class="base-inf">
-          <el-form ref="form" :model="user" label-width="80px" size="mini">
-            <el-form-item label="姓名">
+          <el-form ref="user" :model="user" label-width="80px" size="mini" :rules="userrules">
+            <el-form-item label="姓名" prop="name">
               <el-input v-model="user.name"></el-input>
             </el-form-item>
-            <el-form-item label="学号">
+            <el-form-item label="学号" prop="ID">
               <el-input v-model="user.ID"></el-input>
-              <el-alert title="学号格式错误" type="error" class="alert" v-if="true">
+              <!-- <el-alert title="学号格式错误" type="error" class="alert" v-if="true"> -->
               </el-alert>
             </el-form-item>
-            <el-form-item label="专业">
+            <el-form-item label="专业" prop="profession">
               <el-input v-model="user.profession"></el-input>
-              <el-alert title="请填写专业" type="error" class="alert" v-if="true"></el-alert>
+              <!-- <el-alert title="请填写专业" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
-            <el-form-item label="方向">
+            <el-form-item label="方向" >
               <el-checkbox-group v-model="checkList">
-                <el-checkbox label="前端" value="1"></el-checkbox>
-                <el-checkbox label="后台" value="2"></el-checkbox>
-                <el-checkbox label="安卓" value="3"></el-checkbox>
-                <el-checkbox label="Python" value="4"></el-checkbox>
+                <el-checkbox label="前端" value="前端"></el-checkbox>
+                <el-checkbox label="后台" value="后台"></el-checkbox>
+                <el-checkbox label="安卓" value="安卓"></el-checkbox>
+                <el-checkbox label="Python" value="Python"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
             <el-form-item label="角色">
               <el-radio v-model="role" label="1">讲师</el-radio>
               <el-radio v-model="role" label="2">学妹学弟</el-radio>
-              <el-alert title="请选择身份" type="error" class="alert" v-if="true"></el-alert>
+              <!-- <el-alert title="请选择身份" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
 
             <el-form-item size="small">
@@ -48,21 +48,21 @@
         </div>
         <div class="password">
           <el-form
-            :model="ruleForm"
+            :model="password"
             status-icon
-            :rules="rules"
+            :rules="passrules"
             ref="ruleForm"
             label-width="100px"
             class="demo-ruleForm"
             size="small"
           >
             <el-form-item label="密码" prop="pass">
-              <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
-              <el-alert title="密码只能由字母,数字构成，不可包含特殊字符" type="error" class="alert" v-if="true"></el-alert>
+              <el-input type="password" v-model="password.pass" autocomplete="off"></el-input>
+              <!-- <el-alert title="密码只能由字母,数字构成，不可包含特殊字符" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
-            <el-form-item label="确认密码">
-              <el-input type="password" autocomplete="off"></el-input>
-              <el-alert title="密码不一致" type="error" class="alert" v-if="true"></el-alert>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input type="password" autocomplete="off" v-model="password.checkPass"></el-input>
+              <!-- <el-alert title="密码不一致" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
             <el-form-item size="small">
               <el-button type="primary" @click="savePassword">确认修改</el-button>
@@ -88,32 +88,90 @@ import {mapGetters} from 'vuex'
 export default {
   name: "SettingMe",
   data() {
+    let testID =(rule,value,callback)=>{
+      let test = /^201\d{7}/;
+      if(!test.test(value)){
+        return callback(new Error('学号格式不正确'));
+      }
+    };
+    let validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.ruleForm.checkPass !== '') {
+            this.$refs.ruleForm.validateField('checkPass');
+          }
+          callback();
+        }
+      };
+      let validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.ruleForm.pass) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
     return {
       user: {
         name: "",
         ID: "2018210842",
         profession: "信管",
-        password: ""
+      },
+      password:{
+        pass:"",
+        checkPass:""
       },
       checkList: [ ], //选中的科目,保存着"前端","后台"
       role: "", //保存着1/2,1老师，2学生
+      userrules:{
+        name:[
+          {required:true,message:'请填写姓名',tigger:'blur'}
+          ],
+        ID:[
+          {required:true,message:'请输入正确的学号',validator:testID,tigger:'blur'}
+          ],
+        profession:[
+          {required:true,message:'请填写专业',tigger:'blur'}
+          ]
+      },
+      passrules:{
+        pass: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+          checkPass: [
+            { validator: validatePass2, trigger: 'blur' }
+          ]
+      }
     };
   },
+  
   methods: {
     savebaseInf() {
+      let newarr = new Array();     
+      for(let i in this.checkList){
+        newarr[i] = this.checkList[i];
+        console.log(newarr[i]);
+        console.log(newarr.length); 
+      };
+       let courselist= newarr.filter((item)=>{
+      return !(item>=1&&item<=127)  
+    })                        //因为最开始的checkList列表包括了observe的属性值，为了创建一个
+      //纯粹的数组，定义一个新的数组来存放数据，去除了多余不需要的数据
       let _this = this;
       _this.$store.commit('update',{
         name:'teach',
         data:this.user, //更新store.teach数据
-        list:'checkList',
-        listdata:this.checkList,
+        // list:'checkList',
+        // listdata:this.checkList,
         role:'role',
         roledata:this.role,
         checklist:'checkList',
-        listdata:this.checkList
+        listdata: courselist
       });
-      console.log(this.checkList);
     },
+   
     savePassword() {
     }
   },

@@ -11,10 +11,10 @@
           <el-form ref="form" :model="createclass" label-width="80px">
             <el-form-item label="课程名称:">
               <el-select v-model="createclass.course" placeholder="请选择课程名称">
-                <el-option label="前端" value="1"></el-option>
-                <el-option label="后台" value="2"></el-option>
-                <el-option label="安卓" value="3"></el-option>
-                <el-option label="Python" value="4"></el-option>
+                <el-option label="前端" value="前端"></el-option>
+                <el-option label="后台" value="后台"></el-option>
+                <el-option label="安卓" value="安卓"></el-option>
+                <el-option label="Python" value="Python"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="学年:">
@@ -47,10 +47,10 @@
           <el-form ref="form" :model="releasenotice" label-width="80px">
             <el-form-item label="课程">
               <el-select v-model="releasenotice.noticecourse" placeholder="请选择课程">
-                <el-option label="前端" value="1"></el-option>
-                <el-option label="后台" value="2"></el-option>
-                <el-option label="安卓" value="3"></el-option>
-                <el-option label="Python" value="4"></el-option>
+                <el-option label="前端" value="前端"></el-option>
+                <el-option label="后台" value="后台"></el-option>
+                <el-option label="安卓" value="安卓"></el-option>
+                <el-option label="Python" value="Python"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="公告内容">
@@ -108,6 +108,9 @@ export default {
       //   }
       
       else{
+        console.log(this.classlist);
+        if(this.classlist.indexOf(this.createclass.course)==-1){
+          console.log(this.createclass.course)
       this.$notify({
         title: "成功",
         message: "创建成功",
@@ -115,19 +118,26 @@ export default {
       });
       console.log(this.createclass.course)
       this.$emit('add',this.createclass.course);
-      if(this.createclass.course == 1){
-        this.createclass.course = "前端";
-      }
-      else if(this.createclass.course == 2){
-        this.createclass.course = "后台";
-      }
-      else if(this.createclass.course == 3){
-        this.createclass.course = "安卓";
-      }
-      else
-        this.createclass.course = "Python"; //根据选择的课程进行更新state,代码需要简化
+      // if(this.createclass.course == 1){
+      //   this.createclass.course = "前端";
+      // }
+      // else if(this.createclass.course == 2){
+      //   this.createclass.course = "后台";
+      // }
+      // else if(this.createclass.course == 3){
+      //   this.createclass.course = "安卓";
+      // }
+      // else
+      //   this.createclass.course = "Python"; //根据选择的课程进行更新state,代码需要简化
       this.$store.commit('updateChecklist',this.createclass.course);
-      console.log(this.createclass.course)
+        }
+        else{
+          console.log('error');
+          this.$notify.error({
+          title: '不可添加',
+          message: '一学期你只能创建一个此类课程'
+        });
+        }
       }
       
     },
@@ -150,7 +160,7 @@ export default {
   },
   computed:{
     classlist(){
-      return this.$store.checkList;
+      return this.$store.state.checkList;
     }
       
     

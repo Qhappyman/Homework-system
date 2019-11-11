@@ -18,9 +18,9 @@ return new Vuex.Store({
     mutations:{
         update(state,paload){
             state[paload.name] = paload.data; //更新teach
-            state[paload.list] = paload.listdata //更新checklist
+            // state[paload.list] = paload.listdata //更新checklist
             state[paload.role] = paload.roledata
-            state[paload.checklist] = paload.checkList;
+            state[paload.checklist] = paload.listdata;
         },
         updateChecklist(state,course){
             state.checkList.push(course);
