@@ -7,6 +7,7 @@ import Login from '../pages/login/login'
 import Register from '../pages/register/register'
 import SettingMe from '../pages/setting-me/setting-me'
 import ClassDetail from '../pages/class-detail/class-detail'
+import StuClass from '../pages/stu-class-detail/stu-class.vue'
 import TecClassDetail from '../pages/tec-class-detail/tec-class-detail'
 import Error from '../pages/error'
 Vue.use(Router)
@@ -36,7 +37,11 @@ export default new Router({
     },
     {
       path:'/class-detail',
-      component:ClassDetail 
+      component:ClassDetail
+    },
+    {
+      path:'/stu-class-detail',
+      component:StuClass
     },
     {
       path:'/tec-class-detail',

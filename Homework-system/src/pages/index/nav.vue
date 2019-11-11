@@ -1,8 +1,10 @@
 <template>
-  <el-header>作业提交
-     <el-button type="primary" round>登录</el-button>
-     <el-button type="primary" round>注册</el-button>
-  </el-header>
+  <div>
+    <el-header>作业提交
+      <el-button type="primary" round>登录</el-button>
+      <el-button type="primary" round>注册</el-button>
+    </el-header>
+  </div>
 </template>
 
 <script>
