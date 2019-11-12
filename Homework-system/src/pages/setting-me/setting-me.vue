@@ -27,7 +27,7 @@
               <el-input v-model="user.profession"></el-input>
               <!-- <el-alert title="请填写专业" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
-            <el-form-item label="方向" >
+            <el-form-item label="方向">
               <el-checkbox-group v-model="checkList">
                 <el-checkbox label="前端" value="前端"></el-checkbox>
                 <el-checkbox label="后台" value="后台"></el-checkbox>
@@ -35,14 +35,17 @@
                 <el-checkbox label="Python" value="Python"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
+         
             <el-form-item label="角色">
+              <el-radio-group v-model="role">
               <el-radio v-model="role" label="1">讲师</el-radio>
               <el-radio v-model="role" label="2">学妹学弟</el-radio>
+              </el-radio-group>
               <!-- <el-alert title="请选择身份" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
-
+    
             <el-form-item size="small">
-              <el-button type="primary" @click="savebaseInf">保存</el-button>
+              <el-button type="primary" @click="savebaseInf('user')">保存</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -51,12 +54,12 @@
             :model="password"
             status-icon
             :rules="passrules"
-            ref="ruleForm"
+            ref="password"
             label-width="100px"
             class="demo-ruleForm"
             size="small"
           >
-            <el-form-item label="密码" prop="pass">
+            <el-form-item label="修改密码" prop="pass">
               <el-input type="password" v-model="password.pass" autocomplete="off"></el-input>
               <!-- <el-alert title="密码只能由字母,数字构成，不可包含特殊字符" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
@@ -65,7 +68,7 @@
               <!-- <el-alert title="密码不一致" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
             <el-form-item size="small">
-              <el-button type="primary" @click="savePassword">确认修改</el-button>
+              <el-button type="primary" @click="savePassword('password')">确认修改</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -89,7 +92,7 @@ export default {
   name: "SettingMe",
   data() {
     let testID =(rule,value,callback)=>{
-      let test = /^201\d{7}/;
+      let test = /^20{1,2}\d{7}/;
       if(!test.test(value)){
         return callback(new Error('学号格式不正确'));
       }
@@ -98,8 +101,11 @@ export default {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
+          if (this.password.pass !== '') {
+            let reg = /^[\w]{6,12}$/;
+            if(!value.match(reg)){
+              callback(new Error('密码6-12位，只能包括字母、数字和下划线'));
+            } 
           }
           callback();
         }
@@ -107,7 +113,7 @@ export default {
       let validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
+        } else if (value !== this.password.pass) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -119,12 +125,13 @@ export default {
         ID: "2018210842",
         profession: "信管",
       },
+      role: "", //保存着1/2,1老师，2学生
       password:{
         pass:"",
         checkPass:""
       },
       checkList: [ ], //选中的科目,保存着"前端","后台"
-      role: "", //保存着1/2,1老师，2学生
+      
       userrules:{
         name:[
           {required:true,message:'请填写姓名',tigger:'blur'}
@@ -143,17 +150,28 @@ export default {
           checkPass: [
             { validator: validatePass2, trigger: 'blur' }
           ]
-      }
+      },
+     
+      
+    
     };
   },
   
   methods: {
     savebaseInf() {
+      let result = Object.keys(this.user);
+    if(result.some((item)=>{
+      return this.user[item] == "";   //通过user.item无法访问属性，反思一下区别？
+    })){
+      this.$notify.error({
+          title: '未完善',
+          message: '请完善你的内容'
+        });
+    }
+    else{
       let newarr = new Array();     
       for(let i in this.checkList){
         newarr[i] = this.checkList[i];
-        console.log(newarr[i]);
-        console.log(newarr.length); 
       };
        let courselist= newarr.filter((item)=>{
       return !(item>=1&&item<=127)  
@@ -163,16 +181,37 @@ export default {
       _this.$store.commit('update',{
         name:'teach',
         data:this.user, //更新store.teach数据
-        // list:'checkList',
-        // listdata:this.checkList,
-        role:'role',
         roledata:this.role,
         checklist:'checkList',
         listdata: courselist
       });
+
+      this.$notify({
+          title: '保存',
+          message: '保存成功',
+          type:'success'
+        });
+    }
     },
    
-    savePassword() {
+    savePassword(password) {
+      this.$refs[password].validate((valid) => {
+          if (valid) {
+            this.$notify({
+              title:'成功',
+              message:'修改成功',
+              type:'success'
+            })
+          } else {
+            this.$notify.error({
+              title:'失败',
+              message:'请检查密码'
+            })
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      
     }
   },
   // watch: {
@@ -183,14 +222,16 @@ export default {
   created(){
      this.user = this.$store.getters.getUserDetails; //获取用户数据
      this.checkList = this.$store.getters.getChecklist;
+     this.role = this.$store.getters.getRole;
   },
    computed: {
      ...mapGetters([
         'getUserDetails',
-        'getChecklist'
+        'getChecklist',
+        'getRole'
     ]),
     ...mapState({
-      name:state => state.checkList //获取store的某些数据用于验证更新到state
+      name:state => state.checkList, //获取store的某些数据用于验证更新到state
    })
    },
    watch:{
