@@ -39,7 +39,7 @@ export default new Router({
       component:ClassDetail 
     },
     {
-      path:'/tec-class-detail',
+      path:'/tec-class-detail/:class',
       component:TecClassDetail
     },
     {

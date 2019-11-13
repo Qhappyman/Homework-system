@@ -94,7 +94,7 @@ export default {
     let testID =(rule,value,callback)=>{
       let test = /^20{1,2}\d{7}/;
       if(!test.test(value)){
-        return callback(new Error('学号格式不正确'));
+        return callback(new Error('学号格式不正确'));  //为了代码方便，可以获取到当年时间，2019级不允许选择教师
       }
     };
     let validatePass = (rule, value, callback) => {

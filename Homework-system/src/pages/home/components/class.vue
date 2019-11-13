@@ -1,21 +1,22 @@
 <template>
 
   <div id="continer">
-      {{checklist}}
-      <header ref="class"><slot name="classname"></slot><p class="header-p">课程号:20720</p></header>
+      <!-- {{checklist}} -->
+      <header ref="class"> <slot name="classname"></slot><p class="header-p">课程号:20720</p></header>
      
       <main>学生数:23<br>学年:2019</main>
       
-      <footer><el-button type="primary" size="small" @click="deleteCourse">删除课程<el-button type="primary" icon="el-icon-delete" size="mini"></el-button></el-button></footer>
+      <footer><el-button type="primary" size="big" @click="toteclass" style="float:left">进入课程</el-button><el-button type="primary" size="big" @click="deleteCourse" style="float:right">删除课程   <i class="el-icon-delete"></i></el-button></footer>
   </div>
 </template>
 
 <script>
+import Vuex from 'vuex'
 export default {
     props:['classtype','item'],
 data(){
     return{
-        itemclass:this.item
+
     }
 },
 methods:{
@@ -24,6 +25,9 @@ methods:{
         // this.$emit('delete')
         console.log(this.$slots.classname[0].text);
         console.log(this.checklist);
+    },
+    toteclass(){
+        this.$router.push({ path: `/tec-class-detail/${this.$slots.classname[0].text}` })
     }
 },
 computed:{
@@ -37,7 +41,7 @@ computed:{
 <style scoped>
 #continer{
     width:250px;
-    height: 250px;
+    height: 238px;
     border-radius: 10px;
     background-color:cornsilk;
     display: flex;
@@ -47,7 +51,7 @@ computed:{
 }
 .header-p{
     font-size: 20px;
-    line-height: 5px;
+    line-height: 4px;
 }
 
 header{
@@ -73,7 +77,7 @@ main{
 }
 footer{
     
-    height: 20%;
+    height: 18%;
     text-align: right;
     font-size: 20px;
     color: cornflowerblue;
