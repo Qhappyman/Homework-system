@@ -12,7 +12,9 @@ return new Vuex.Store({
             ID:"2018210842",
             
         },
-        checkList:["前端"]
+        checkList:["前端"],
+        workList:[{title:'作业一',content:'做一个登录网站'},{title:'作业二',content:'做一个注册网站'}],
+        noticeList:[{title:'公告一',content:'做一个公鸡网站'},{title:'公告二',content:'做一个公告网站'}]
         
     },
     mutations:{
@@ -21,6 +23,12 @@ return new Vuex.Store({
             // state[paload.list] = paload.listdata //更新checklist
             state[paload.role] = paload.roledata
             state[paload.checklist] = paload.listdata;
+        },
+        updateWorklist(state,message){
+            state.workList.push(message.name);
+        },
+        updateNoticelist(state,message){
+            state.noticeList.push(message.name);
         },
         updateChecklist(state,course){
             state.checkList.push(course);
@@ -53,7 +61,13 @@ return new Vuex.Store({
         },
         getRole:state=>{
             return state.role;
-        }
+        },
+        getWorklist: state => {
+            return state.workList;
+        },
+        getNoticelist: state => {
+            return state.noticeList;
+        },
     }
 })
 }

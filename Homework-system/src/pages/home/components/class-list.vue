@@ -41,5 +41,5 @@ methods:{
 
 <style scoped>
 
-</style>>
+</style>
 

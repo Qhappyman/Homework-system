@@ -1,12 +1,12 @@
 <template>
   <div>
-    <class-detail-nav>
+    <div>
       <el-menu
         class="el-menu-demo"
         mode="horizontal"
         background-color="#545c64"
         text-color="#fff"
-        router="true"
+        :router="true"
         active-text-color="#ffd04b"
       >
         <el-menu-item>
@@ -31,16 +31,16 @@
           <i class="el-icon-s-home"></i>
         </el-menu-item>
       </el-menu>
-    </class-detail-nav>
+    </div>
     <main>
       <div class="base-class">
         <div class="class-name">{{this.$route.params.class}}</div>
         <div class="class-code"><p>加课码 : 123456</p><p>学生数 : 50</p></div>
       </div>
       <div class="class-nav">
-        <el-tabs v-model="activeName"  @tab-click="handleClick" stretch = true class="nav-tap">
-    <el-tab-pane label="作业" name="first">作业</el-tab-pane>
-    <el-tab-pane label="公告" name="second">公告</el-tab-pane>
+        <el-tabs v-model="activeName"  @tab-click="handleClick" :stretch = true class="nav-tap">
+    <el-tab-pane label="作业" name="first"><ReleaseWork></ReleaseWork></el-tab-pane>
+    <el-tab-pane label="公告" name="second"><ReleaseNotice></ReleaseNotice></el-tab-pane>
     
   </el-tabs>
       </div>
@@ -49,15 +49,17 @@
 </template>
 
 <script>
+import ReleaseWork from './tec-homework/release-work'
 import TecNotice from "./tec-notice/tec-notice";
 import TecHomework from "./tec-homework/tec-homework.vue";
+import ReleaseNotice from './tec-notice/release-notice'
 export default {
   name: "TecClass",
   data() {
     return {
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-        activeName: 'second'
+        activeName: 'first'
     };
   },
   methods:{
@@ -67,7 +69,9 @@ export default {
   },
   components: {
     TecNotice,
-    TecHomework
+    TecHomework,
+    ReleaseWork,
+    ReleaseNotice
   }
 };
 </script>
@@ -118,7 +122,7 @@ main{
 }
 .class-nav{
   flex-grow: 1;
-  height: 6%;
+  height: 8%;
   background-color:#F1F3F4;
   border-radius: 0 0 15px 15px;
 }
