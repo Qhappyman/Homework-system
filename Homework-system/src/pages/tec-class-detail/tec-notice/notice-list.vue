@@ -28,7 +28,7 @@ mounted(){
     //         if(worklist[index][content] == this.$slots.title[0].text ){
     //             return worklist[index].title;
     //         }
-    //     });
+    //     })
     // Object.defineProperty(worklist,)
     // this.$set(this,"titl", a);
 }
