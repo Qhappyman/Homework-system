@@ -37,10 +37,6 @@ export default new Router({
       component:SettingMe
     },
     {
-      path:'/class-detail',
-      component:ClassDetail 
-    },
-    {
       path:'/tec-class-detail/:class',
       component:TecClassDetail
     },
