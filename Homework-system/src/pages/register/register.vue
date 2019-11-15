@@ -23,13 +23,7 @@ export default {
 }
 </script>
 
-<style scoped>
-  body {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-
+<style>
   .background {
     width: 100%;
     height: 100%;
@@ -38,7 +32,8 @@ export default {
 
   .container {
     width: 40%;
-    height: 80px;
+    height: 80%;
+    background-color: white;
   }
 
   .el-input {
