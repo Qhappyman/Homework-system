@@ -16,7 +16,6 @@ Vue.use(router)
 Vue.use(Vuex)
 Vue.use(ElementUI);
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
