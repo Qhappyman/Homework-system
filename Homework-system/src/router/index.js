@@ -38,14 +38,14 @@ export default new Router({
     },
     {
       path:'/tec-class-detail/:class',
-      component:TecClassDetail
+      component:TecClassDetail,
     },
     {
-      path:'/stu-homework-list/:id',
+      path:'/stu-homework/:workid',
       component:Stuworklist
     },
     {
-      path:'/fix-homework',
+      path:'/fix-homework/:id',
       component:Fixwork
     },
     {

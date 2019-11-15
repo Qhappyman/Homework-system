@@ -51,8 +51,7 @@ export default {
     },
     addNotice() {
       if (!(this.notice.name == "" || this.notice.content == "")) {
-        this.$notify({
-          title: "成功",
+        this.$message({
           message: "发布成功",
           type: "success"
         }),
@@ -61,9 +60,9 @@ export default {
           });
         this.handleRelease();
       } else {
-        this.$notify.error({
-          title: "失败",
-          message: "请完善公告"
+        this.$message.error({
+          message: "请完善公告",
+          type:'warning'
         });
       }
     }

@@ -107,17 +107,18 @@ export default {
     releaseWork() {
       if (!(this.homework.name == "" || this.homework.content == "")) {
 
-        this.$notify({
-          title: "成功",
+        this.$message({
+          // title: "成功",
           message: "发布成功",
           type: "success"
         }),
         this.$store.commit('updateWorklist',{name:{title:this.homework.name,content:this.homework.content}});
           this.handelRelease();
       } else {
-        this.$notify.error({
-          title: "失败",
-          message: "作业名称或内容不可为空"
+        this.$message.error({
+          // title: "失败",
+          message: "作业名称或内容不可为空",
+          type:'warning'
         });
       }
     }
