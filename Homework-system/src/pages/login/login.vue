@@ -3,7 +3,7 @@
     <div class="login">账号登录
       <el-input v-model="username" placeholder="请输入学号" id="username"></el-input>
       <el-input placeholder="请输入密码" v-model="password" show-password id="password"></el-input>
-      <el-button type="primary">登录</el-button>
+      <el-button type="primary" @click="login">登录</el-button>
       <div class="to-register" @click="goRegister">注册账号</div>
     </div>
   </div>
@@ -19,6 +19,28 @@ export default {
     }
   },
   methods: {
+    login: function() {
+      axios.post('', {
+        uesrName: username,
+        password: password
+      })
+      .then(function (response) {
+        console.log(response);
+        const h = this.$createElement;
+        this.$notify({
+          title: '提示',
+          message: h('i','登录成功')
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        const h = this.$createElement;
+        this.$notify({
+          title: '提示',
+          message: h('i','登录失败')
+        });
+      });
+    },
     goRegister: function() {
       this.$router.push({path: '/register'})
     }
@@ -37,6 +59,7 @@ export default {
   .background {
     width: 100%;
     height: 100%;
+    background-image: url('../../images/img1.jpg');
   }
 
   .login {
