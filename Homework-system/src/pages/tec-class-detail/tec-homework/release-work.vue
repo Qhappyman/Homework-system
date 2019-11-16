@@ -25,13 +25,13 @@
         <el-upload
           class="upload-demo"
           ref="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action=""
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :file-list="fileList"
           :auto-upload="false"
         >
-          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+          <el-button slot="trigger" size="small" type="primary" id="files">选取文件</el-button>
           <el-button
             style="margin-left: 10px;"
             size="small"
@@ -45,6 +45,7 @@
         <el-button type="primary" @click="releaseWork">立即发布</el-button>
         <el-button @click="handelRelease">取消</el-button>
       </el-form-item>
+<!-- <input type="file" id="filea"><input type="submit" @click="addfile"> -->
     </el-form>
     <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
       <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist">
@@ -57,6 +58,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Worklist from "./tec-homework-list";
 export default {
   name: "ReleaseWork",
@@ -74,16 +76,7 @@ export default {
       },
       release: false,
       fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        }
+       
       ],
       workName: ""
     };
@@ -113,6 +106,28 @@ export default {
           type: "success"
         }),
         this.$store.commit('updateWorklist',{name:{title:this.homework.name,content:this.homework.content}});
+        let data = {"direction":1,"time":1,context:"写一个jsp"};
+
+ 
+axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=1&time=3&context=${this.name+this.content}`
+)
+.then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  let a = document.getElementById('files');
+  console.log(a.files[0]);
+  let file = this.fileList[0];
+  console.log(this.fileList[0]);
+  let param = new FormData();
+  param.append('file',file);
+  console.log(param.get('file'));
+  // axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=1`,param,{ headers: {'Content-Type': 'multipart/form-data'}});
+  // axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=1`).then(res=>console.log(res))
+        // axios.post('http://2z431s2133.wicp.vip:20570/Mission/addMission',data).then(res=>console.log(res));
+          // axios.get('http://2z431s2133.wicp.vip:20570/Mission/searchMission',{direction:1}).then((res)=>console.log(res));
           this.handelRelease();
       } else {
         this.$message.error({
@@ -121,7 +136,16 @@ export default {
           type:'warning'
         });
       }
-    }
+    },
+    // addfile(){
+    //   let file= document.getElementById('filea').files[0];
+    //   let box = new FormData();
+    //   box.append("file",file);
+    //   // console.log(box);
+    //   // console.log(box.get('file'));
+    //   axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=2`,box,{ headers: {'Content-Type': 'multipart/form-data'}});
+    //   axios.get('http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=2').then((res)=>console.log(res))
+    // }
   },
   computed: {
     worklist() {

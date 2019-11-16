@@ -102,7 +102,7 @@ main{
   display: flex;
   flex-direction: column;
   /* background-color: bisque; */
-  background-image: url(../../../src/assets/class.png);
+  background-image: url(../../../src/assets/class.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
 

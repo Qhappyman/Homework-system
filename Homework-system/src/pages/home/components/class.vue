@@ -43,7 +43,7 @@ computed:{
     width:250px;
     height: 238px;
     border-radius: 10px;
-    background-color:cornsilk;
+    background-color: aliceblue;
     display: flex;
     flex-direction: column;
     margin: 10px 10px 10px  30px;
@@ -83,5 +83,8 @@ footer{
     color: cornflowerblue;
     background-color: #409EFF;
     border-radius: 0 0 5px 5px;
+}
+.header-p{
+    color: black;
 }
 </style>

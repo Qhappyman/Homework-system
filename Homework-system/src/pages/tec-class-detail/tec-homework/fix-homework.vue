@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu background-color="#545c64" text-color="#fff" class="el-menu-demo" mode="horizontal">
+    <el-menu background-color="#545c64" text-color="#fff" class="el-menu-demo" mode="horizontal" :router="true">
       <el-menu-item>
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/stu-homework/1' }" class="back">返回</el-breadcrumb-item>
@@ -9,6 +9,10 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </el-menu-item>
+       <el-menu-item class="studio" index="/">
+          系统主页
+          <i class="el-icon-s-home"></i>
+        </el-menu-item>
     </el-menu>
     <div class="homework">
       <div class="work-score">
@@ -92,5 +96,8 @@ export default {
 }
 .submit{
     margin-top: 15px;
+}
+.studio {
+  float: right;
 }
 </style>
