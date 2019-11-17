@@ -13,6 +13,17 @@ export default {
 
 <style>
 #app {
+  width: 100%;
+  height: 100%;
   color: black;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  position: absolute;
 }
 </style>

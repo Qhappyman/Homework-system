@@ -8,8 +8,11 @@ import Register from '../pages/register/register'
 import SettingMe from '../pages/setting-me/setting-me'
 import ClassDetail from '../pages/class-detail/class-detail'
 import StuClass from '../pages/stu-class-detail/stu-class.vue'
+import StuClassDetail from '../pages/stu-class-detail/stu-class'
 import TecClassDetail from '../pages/tec-class-detail/tec-class-detail'
 import Error from '../pages/error'
+import Stuworklist from '../pages/tec-class-detail/tec-homework/stu-homework'
+import Fixwork from '../pages/tec-class-detail/tec-homework/fix-homework'
 Vue.use(Router)
 Vue.use(Vuex)
 export default new Router({
@@ -44,8 +47,20 @@ export default new Router({
       component:StuClass
     },
     {
-      path:'/tec-class-detail',
+      path:'/stu-class-detail',
+      component:StuClassDetail
+    },
+    {
+      path:'/tec-class-detail/:class',
       component:TecClassDetail
+    },
+    {
+      path:'/stu-homework/:workid',
+      component:Stuworklist
+    },
+    {
+      path:'/fix-homework/:id',
+      component:Fixwork
     },
     {
       path:'*',
