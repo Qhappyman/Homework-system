@@ -21,10 +21,26 @@ data(){
 },
 methods:{
     deleteCourse(){
-        this.$store.commit('deleteClass',this.$slots.classname[0].text); //获取到对应课程的名字，通过插槽属性获取
-        // this.$emit('delete')
-        console.log(this.$slots.classname[0].text);
-        console.log(this.checklist);
+        this.$confirm('删除该课程, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+            
+          })
+           this.$store.commit('deleteClass',this.$slots.classname[0].text)//获取到对应课程的名字，通过插槽属性获取
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+        // console.log(this.$slots.classname[0].text);
+        // console.log(this.checklist);
     },
     toteclass(){
         this.$router.push({ path: `/tec-class-detail/${this.$slots.classname[0].text}` })

@@ -35,9 +35,8 @@
           <el-button
             style="margin-left: 10px;"
             size="small"
-            type="success"
-            @click="submitUpload"
-          >上传文件</el-button>
+            type="danger"
+          >删除附件</el-button>
           <div slot="tip" class="el-upload__tip">文件大小不超过5M</div>
         </el-upload>
       </el-form-item>
