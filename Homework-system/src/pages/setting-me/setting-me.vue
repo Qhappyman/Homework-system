@@ -125,7 +125,8 @@ export default {
         ID: "2018210842",
         profession: "信管",
       },
-      role: "", //保存着1/2,1老师，2学生
+      checkList: [ ], //选中的科目,保存着"前端","后台"
+      role: "", //保存1/2,1老师，2学生
       password:{
         pass:"",
         checkPass:""
