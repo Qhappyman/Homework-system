@@ -1,6 +1,6 @@
 <template>
   <div class="class-list">
-      <Class v-for="item in classlist" :key="item.index" @delete="handleDelete" :classtype="classlist" style="display:inline-block; margin-right:15px;">item</Class>
+      <Class v-for="item in checklist" :key="item.index" @delete="handleDelete"   style="display:inline-block; margin-right:15px;"><template v-slot:classname>{{item}}</template></Class>   <!--通过插槽动态加入数据-->
       
 
   </div>
@@ -9,13 +9,13 @@
 <script>
 import Class from '../components/class'
 export default {
-    props:['courseList'],
+    // props:['courseList'],
 components:{
     Class
 },
 data(){
     return{
-      classlist:this.courseList
+      
     }
 },
 methods:{
@@ -24,6 +24,14 @@ methods:{
        console.log(this.classlist);
      }
   },
+  created(){
+    // this.classlist = this.$store.getters.getChecklist;
+  },
+  computed:{
+    checklist(){
+        return this.$store.state.checkList;
+    }
+  }
   
 
 }
@@ -33,5 +41,5 @@ methods:{
 
 <style scoped>
 
-</style>>
+</style>
 

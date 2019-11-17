@@ -1,4 +1,4 @@
-<template>
+<template> <!--暂时不需要这个组件-->
 <div>
   <router-view></router-view>
 </div>
