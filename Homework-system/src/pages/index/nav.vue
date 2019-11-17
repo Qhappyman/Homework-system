@@ -1,15 +1,23 @@
 <template>
   <div>
     <el-header>作业提交
-      <el-button type="primary" round>登录</el-button>
-      <el-button type="primary" round>注册</el-button>
+      <el-button type="primary" round @click="goLogin">登录</el-button>
+      <el-button type="primary" round @click="goRegister">注册</el-button>
     </el-header>
   </div>
 </template>
 
 <script>
 export default {
-  name:'IndexNav'
+  name:'IndexNav',
+  methods: {
+    goLogin: function() {
+      this.$router.push({path: '/login'});
+    },
+    goRegister: function() {
+      this.$router.push({path: '/register'});
+    }
+  }
 }
 </script>
 

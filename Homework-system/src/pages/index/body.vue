@@ -1,6 +1,6 @@
 <template>
   <el-main>
-    <div class="part">
+    <div class="part" id="part1">
       <div class="show">
         <div class="list"><img src=""></div>
         <div class="list"><img src=""></div>
@@ -29,6 +29,11 @@ export default {
     height: 50%;
   }
 
+  #part1 {
+    background-image: url('../../images/img2.jpg');
+    background-size: 100% 100%;
+  }
+
   .show {
     position: relative;
     top: 80%;
@@ -42,7 +47,6 @@ export default {
   .list {
     width: 20%;
     height: 100%;
-    background-color: green;
     box-shadow: 5px 5px 3px 0 grey;
   }
 
