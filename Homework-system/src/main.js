@@ -9,14 +9,15 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
+import qs from 'qs'
+Vue.prototype.axios = axios
+Vue.prototype.qs =qs
 Vue.config.productionTip = false
 Vue.use(router)
 Vue.use(Vuex)
 Vue.use(ElementUI);
 Vue.use(VueAxios,axios);
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
