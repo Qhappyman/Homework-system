@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="title" @click="lookUp">作业题目</div>
-    <div class="content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
+    <div class="title" @click="lookUp">题目</div>
+    <div class="content"></div>
     <div class="whole-text" @click="lookUp">查看全文></div>
     <div class="deadline">截止日期</div>
-    <div class="score" @click="lookUp">{{score}}</div>
+    <div class="score" @click="lookUp">成绩</div>
   </div>
 </template>
 
@@ -12,15 +12,13 @@
 export default {
   name: 'StuHomeworkList',
   data() {
-    return {
-      score: '成绩未公布',
-    }
   },
   methods: {
     lookUp: function() {
       this.$router.push({path: '/stu-class-detail'})
     }
   },
+  props: ['items']
 }
 </script>
 

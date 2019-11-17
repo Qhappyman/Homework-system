@@ -10,7 +10,18 @@ export default {
   name: 'Body',
   data() {
     return {
-      items:['1','2']
+      items:[
+        {
+          title:'题目1',
+          content: '内容1',
+          score: '成绩1'
+        },
+        {
+          title:'题目2',
+          content: '内容2',
+          score: '成绩2'
+        }
+      ]
     }
   },
   components: {
