@@ -1,5 +1,7 @@
 <template>
-  <StuNotice></StuNotice>
+  <div>
+    <StuNotice></StuNotice>
+  </div>
 </template>
 
 <script>

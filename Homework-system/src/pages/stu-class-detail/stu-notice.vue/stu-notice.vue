@@ -1,14 +1,32 @@
 <template>
-  <div class="container">
-    <div class="title">公告题目</div>
-    <div class="publish-time">发布时间</div>
-    <div class="content">公告内容</div>
+  <div>
+    <div class="container" v-for="(item,index) in items" :key="index">
+      <div class="title">{{item.title}}</div>
+      <div class="publish-time">发布时间 {{item.time}}</div>
+      <div class="content">{{item.content}}</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'StuNotice'
+  name: 'StuNotice',
+  data() {
+    return {
+      items: [
+        {
+          title: '公告题目1',
+          time: '发布时间1',
+          content: '公告内容1'
+        },
+        {
+          title: '公告题目1',
+          time: '发布时间1',
+          content: '公告内容1'
+        },
+      ]
+    }
+  }
 }
 </script>
 
