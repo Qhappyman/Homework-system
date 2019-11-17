@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="title">作业题目</div>
-    <div class="deadline">截止日期</div>
-    <div class="content">作业内容</div>
+    <div class="title">{{title}}</div>
+    <div class="deadline">{{deadline}}</div>
+    <div class="content">{{content}}</div>
     <div class="upload">
       <el-upload
       class="upload-demo"
@@ -23,6 +23,13 @@
 <script>
 export default {
   name: 'SubmitWork',
+  data() {
+    return {
+      title: '作业题目',
+      deadline: '截止日期',
+      content: '作业内容'
+    }
+  },
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);

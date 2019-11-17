@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <div class="title">作业题目</div>
-    <div class="deadline">截止日期</div>
+    <div class="title">{{title}}</div>
+    <div class="deadline">{{deadline}}</div>
     <div class="score">成绩
-      <div class="scores">分数未公布</div>
+      <div class="scores">{{score}}</div>
     </div>
     <div class="content"></div>
   </div>
@@ -12,6 +12,13 @@
 <script>
 export default {
   name: 'HasSubmit',
+  data() {
+    return {
+      title: '作业题目',
+      deadline: '截止日期',
+      score: '分数未公布'
+    }
+  },
   props: ['appear2']
 }
 </script>
