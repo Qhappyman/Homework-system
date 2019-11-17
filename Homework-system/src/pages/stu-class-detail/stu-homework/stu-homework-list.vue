@@ -1,10 +1,12 @@
 <template>
-  <div class="container">
-    <div class="title" @click="lookUp">题目</div>
-    <div class="content"></div>
-    <div class="whole-text" @click="lookUp">查看全文></div>
-    <div class="deadline">截止日期</div>
-    <div class="score" @click="lookUp">成绩</div>
+  <div>
+    <div class="container" v-for="(item,index) in items" :key="index">
+      <div class="title" @click="lookUp">{{item.title}}</div>
+      <div class="content">{{item.content}}</div>
+      <div class="whole-text" @click="lookUp">查看全文></div>
+      <div class="deadline">截止日期 {{item.deadline}}</div>
+      <div class="score" @click="lookUp">{{item.score}}</div>
+    </div>
   </div>
 </template>
 
@@ -12,13 +14,28 @@
 export default {
   name: 'StuHomeworkList',
   data() {
+    return {
+      items:[
+        {
+          title:'题目1',
+          content: '内容1',
+          deadline: '截止日期1',
+          score: '成绩1'
+        },
+        {
+          title:'题目2',
+          content: '内容2',
+          deadline: '截止日期2',
+          score: '成绩2'
+        }
+      ]
+    }
   },
   methods: {
     lookUp: function() {
       this.$router.push({path: '/stu-class-detail'})
     }
-  },
-  props: ['items']
+  }
 }
 </script>
 
