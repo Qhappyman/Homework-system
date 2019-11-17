@@ -37,6 +37,7 @@ export default {
       this.appear1 = false
     }
   }
+
 }
 </script>
 

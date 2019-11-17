@@ -9,7 +9,7 @@ import Body from './components/body'
 export default {
   name:'ClassDetail',
   components:{
-      Body
+    Body
   }
 }
 </script>

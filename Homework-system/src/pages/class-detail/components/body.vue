@@ -1,6 +1,7 @@
 <template>
   <div>
     <StuHomeworkList></StuHomeworkList>
+    <StuNotice></StuNotice>
   </div>
 </template>
 
@@ -10,6 +11,11 @@ export default {
   name: 'Body',
   components: {
     StuHomeworkList
+import StuNotice from '../../stu-class-detail/stu-notice.vue/stu-notice'
+export default {
+  name: 'Body',
+  components: {
+    StuNotice
   }
 }
 </script>

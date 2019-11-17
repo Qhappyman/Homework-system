@@ -10,7 +10,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api':
+      {
+        target :'http://2z431s2133.wicp.vip:20570/work/Mission',
+        changeOrigin:true,
+        pathRewriteL:{
+          '^api':''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
