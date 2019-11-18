@@ -12,8 +12,9 @@ return new Vuex.Store({
             ID:"2018210842",
             
         },
+        stuworkList:[],
         checkList:["前端"],
-        workList:[{title:'作业一',content:'做一个登录网站'},{title:'作业二',content:'做一个注册网站'}],
+        workList:[{title:'作业一',content:'做一个登录网站'},{title:'作业二',content:'做一个注册网站不是noise2号212拨不2比比不择手段交付给基本基本环节拨不就吧就会被就拨不基本基本基本基本就weg'}],
         noticeList:[{title:'公告一',content:'做一个公鸡网站'},{title:'公告二',content:'做一个公告网站'}]
         
     },
@@ -27,11 +28,17 @@ return new Vuex.Store({
         updateWorklist(state,message){
             state.workList.push(message.name);
         },
+        deleteWorklist(state,id){
+            state.workList.pop();
+        },
         updateNoticelist(state,message){
             state.noticeList.push(message.name);
         },
         updateChecklist(state,course){
             state.checkList.push(course);
+        },
+        updateStuworklist(state,payload){
+            
         },
         deleteClass(state,name){
             let index;

@@ -79,12 +79,13 @@ export default {
       console.log(index, row.name, row.date);
       this.$router.push({ path: `/fix-homework/${row.name}` });
     }
+  },
+  mounted(){
+    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?mission=${1}`).then((res)=>{
+      console.log(res);
+    })
+    this.$store.commit('updateStuworklist');
   }
-  // mounted(){
-  //   axios.get('https://www.easy-mock.com/mock/5c35a447a7a7577b357b4596/example/name').then(res=>{console.log(res.data.data.class);
-    
-  //   })
-  // }
 };
 </script>
 

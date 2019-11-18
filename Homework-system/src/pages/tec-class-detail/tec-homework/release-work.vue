@@ -28,13 +28,13 @@
           action=""
           :on-preview="handlePreview"
           :on-remove="handleRemove"
-          :file-list="fileList"
           :auto-upload="false"
+          :file-list="fileList"
         >
           <!-- <el-button slot="trigger" size="small" type="primary" id="files">选取文件</el-button> -->
-          <input type="file" value="上传文件" style="display:none" ref="fileSubmit" id="file">
-          <label for="file" class="fileSubmit">选择文件</label>
-         
+          <div @click.stop><input type="file" value="上传文件" style="display:none" ref="fileSubmit" id="file">
+          <label for="file" class="fileSubmit">选择文件</label>   
+          </div>
           <div slot="tip" class="el-upload__tip">文件大小不超过5M</div>
         </el-upload>
          <el-button
@@ -50,8 +50,8 @@
       </el-form-item>
 <!-- <input type="file" id="filea"><input type="submit" @click="addfile"> -->
     </el-form>
-    <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
-      <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist">
+    <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="false">
+      <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist" @delete="deleteWork">
         <template slot="title">{{worklist[index].title}}:</template>
         <template slot="content">{{worklist[index].content}}</template>
         <!--千万不要修改插槽，不然会有很多问题-->
@@ -79,9 +79,7 @@ export default {
         content: ""
       },
       release: false,
-      fileList: [
-       
-      ],
+       fileList:[],
       directnumber:'',
       workName: "",
       // direction:this.direction
@@ -105,9 +103,19 @@ export default {
     },
     deleteFile(){
       console.log('delete');
-    },
+      // axios.delete(`http://2z431s2133.wicp.vip:20570/work/Mission/deleteMissionFile?missionId=${this.directnumber}`);
+      let file = document.getElementById('file');
+      console.log(file.files[0]);
+      file.value='';
+      this.fileList =[];
+      console.log(file.files[0]);
+         },
     getWorklist(){
-      axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?${this.directnumber}`);
+      // axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?${this.directnumber}`);
+    },
+    deleteWork(){
+      axios.delete(`http://2z431s2133.wicp.vip:20570/work/Mission/deleteMission?mission=1`);
+      this.$store.commit('deleteWorklist');
     },
     releaseWork() {
       if (!(this.homework.name == "" || this.homework.content == "")) {
@@ -152,10 +160,12 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?mission
   computed: {
     worklist() {
       return this.$store.state.workList;
-    }
+    },
+    
+    
   },
   watch:{
-
+   
   },
 created(){
   if(this.direction == '前端'){
