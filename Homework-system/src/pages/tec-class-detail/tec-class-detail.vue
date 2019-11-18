@@ -40,7 +40,7 @@
       </div>
       <div class="class-nav">
         <el-tabs v-model="activeName"  @tab-click="handleClick" :stretch = true class="nav-tap">
-    <el-tab-pane label="作业" name="first"><ReleaseWork :clas="this.$route.params.class"></ReleaseWork></el-tab-pane>
+    <el-tab-pane label="作业" name="first"><ReleaseWork :direction="this.$route.params.class"></ReleaseWork></el-tab-pane>
     <el-tab-pane label="公告" name="second"><ReleaseNotice></ReleaseNotice></el-tab-pane>
     
   </el-tabs>

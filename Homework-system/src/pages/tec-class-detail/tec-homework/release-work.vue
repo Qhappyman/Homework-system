@@ -31,14 +31,18 @@
           :file-list="fileList"
           :auto-upload="false"
         >
-          <el-button slot="trigger" size="small" type="primary" id="files">选取文件</el-button>
-          <el-button
+          <!-- <el-button slot="trigger" size="small" type="primary" id="files">选取文件</el-button> -->
+          <input type="file" value="上传文件" style="display:none" ref="fileSubmit" id="file">
+          <label for="file" class="fileSubmit">选择文件</label>
+         
+          <div slot="tip" class="el-upload__tip">文件大小不超过5M</div>
+        </el-upload>
+         <el-button
             style="margin-left: 10px;"
             size="small"
             type="danger"
+            @click="deleteFile"
           >删除附件</el-button>
-          <div slot="tip" class="el-upload__tip">文件大小不超过5M</div>
-        </el-upload>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="releaseWork">立即发布</el-button>
@@ -61,6 +65,7 @@ import axios from "axios";
 import Worklist from "./tec-homework-list";
 export default {
   name: "ReleaseWork",
+  props:['direction'],
   components: {
     Worklist
   },
@@ -77,7 +82,9 @@ export default {
       fileList: [
        
       ],
-      workName: ""
+      directnumber:'',
+      workName: "",
+      // direction:this.direction
     };
   },
   methods: {
@@ -88,13 +95,19 @@ export default {
       this.$refs.upload.submit();
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePreview(file) {
-      console.log(file);
+      // console.log(file);
     },
     handleChange(val) {
-      console.log(val);
+      // console.log(val);
+    },
+    deleteFile(){
+      console.log('delete');
+    },
+    getWorklist(){
+      axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?${this.directnumber}`);
     },
     releaseWork() {
       if (!(this.homework.name == "" || this.homework.content == "")) {
@@ -105,10 +118,9 @@ export default {
           type: "success"
         }),
         this.$store.commit('updateWorklist',{name:{title:this.homework.name,content:this.homework.content}});
-        let data = {"direction":1,"time":1,context:"写一个jsp"};
 
  
-axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=1&time=3&context=${this.name+this.content}`
+axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=${this.directnumber}&time=3&context=${this.homework.name+'and'+this.homework.content}`
 )
 .then(function (response) {
     console.log(response);
@@ -116,17 +128,17 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=1
   .catch(function (error) {
     console.log(error);
   });
-  let a = document.getElementById('files');
-  console.log(a.files[0]);
-  let file = this.fileList[0];
-  console.log(this.fileList[0]);
-  let param = new FormData();
-  param.append('file',file);
-  console.log(param.get('file'));
-  // axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=1`,param,{ headers: {'Content-Type': 'multipart/form-data'}});
-  // axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=1`).then(res=>console.log(res))
-        // axios.post('http://2z431s2133.wicp.vip:20570/Mission/addMission',data).then(res=>console.log(res));
-          // axios.get('http://2z431s2133.wicp.vip:20570/Mission/searchMission',{direction:1}).then((res)=>console.log(res));
+  // let file = this.$refs.fileSubmit;
+
+  let file = document.getElementById('file');
+  
+  if(file.files[0]!=undefined){
+    console.log(file.files[0]);
+let formdata = new FormData();
+formdata.append('file',file.files[0]);
+axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=1`,formdata,{ headers: {'Content-Type': 'multipart/form-data;charset=UTF-8'}});
+  // let a = document.getElementById('files');
+  }
           this.handelRelease();
       } else {
         this.$message.error({
@@ -136,21 +148,38 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=1
         });
       }
     },
-    // addfile(){
-    //   let file= document.getElementById('filea').files[0];
-    //   let box = new FormData();
-    //   box.append("file",file);
-    //   // console.log(box);
-    //   // console.log(box.get('file'));
-    //   axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=2`,box,{ headers: {'Content-Type': 'multipart/form-data'}});
-    //   axios.get('http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=2').then((res)=>console.log(res))
-    // }
   },
   computed: {
     worklist() {
       return this.$store.state.workList;
     }
-  }
+  },
+  watch:{
+
+  },
+created(){
+  if(this.direction == '前端'){
+            this.directnumber=1;
+        }
+        else if(this.direction == '后台'){
+          this.directnumber=2;
+        }
+         else if(this.direction == 'Python'){
+          this.directnumber=3;
+        }
+        else{
+          this.directnumber=4;
+        }
+        
+},
+mounted(){
+  axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=${this.directnumber}`).then((res)=>{
+    this.$store.commit('updateWorklist')   //分析返回数据传给store
+  })
+}, 
+updated(){
+ 
+}
 };
 </script>
 
@@ -166,5 +195,14 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=1
   border: 1px solid #e2e6ed;
   border-radius: 8px;
   padding: 10px 10px 0 20px; /*此处css样式可复用与notice,可添加在全局样式里面*/
+}
+.fileSubmit{
+  color: aliceblue;
+  margin-top: 5px;
+  display: inline-block;
+  background-color:#409EFF;
+  border-radius: 4px;
+  width: 70px;
+  height: 35px;
 }
 </style>
