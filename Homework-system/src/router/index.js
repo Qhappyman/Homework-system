@@ -7,7 +7,7 @@ import Login from '../pages/login/login'
 import Register from '../pages/register/register'
 import SettingMe from '../pages/setting-me/setting-me'
 import ClassDetail from '../pages/class-detail/class-detail'
-import StuClass from '../pages/stu-class-detail/stu-class.vue'
+import StuClassDetail from '../pages/stu-class-detail/stu-class'
 import TecClassDetail from '../pages/tec-class-detail/tec-class-detail'
 import Error from '../pages/error'
 import Stuworklist from '../pages/tec-class-detail/tec-homework/stu-homework'
@@ -42,9 +42,12 @@ export default new Router({
       component:TecClassDetail
     },
     {
+      path:'/class-detail',
+      component:ClassDetail
+    },
+    {
       path:'/stu-class-detail',
-      component:StuClass
-
+      component:StuClassDetail
     },
     {
       path:'/stu-homework/:workid',

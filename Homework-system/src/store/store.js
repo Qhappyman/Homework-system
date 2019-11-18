@@ -4,7 +4,7 @@ Vue.use(Vuex)
 export default()=>{
 return new Vuex.Store({
     state:{
-        role:"2",
+        role:"1",
         teach:{
             
             name:"郭俊清",

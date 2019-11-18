@@ -21,7 +21,7 @@
             <el-form-item label="学号" prop="ID">
               <el-input v-model="user.ID"></el-input>
               <!-- <el-alert title="学号格式错误" type="error" class="alert" v-if="true"> -->
-              </el-alert>
+              
             </el-form-item>
             <el-form-item label="专业" prop="profession">
               <el-input v-model="user.profession"></el-input>
@@ -125,7 +125,8 @@ export default {
         ID: "2018210842",
         profession: "信管",
       },
-      role: "", //保存着1/2,1老师，2学生
+      checkList: [ ], //选中的科目,保存着"前端","后台"
+      role: "", //保存1/2,1老师，2学生
       password:{
         pass:"",
         checkPass:""

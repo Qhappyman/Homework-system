@@ -47,7 +47,7 @@
 <!-- <input type="file" id="filea"><input type="submit" @click="addfile"> -->
     </el-form>
     <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
-      <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist">
+      <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist" >
         <template slot="title">{{worklist[index].title}}:</template>
         <template slot="content">{{worklist[index].content}}</template>
         <!--千万不要修改插槽，不然会有很多问题-->
@@ -60,6 +60,7 @@
 import axios from "axios";
 import Worklist from "./tec-homework-list";
 export default {
+  props:["clas"],
   name: "ReleaseWork",
   components: {
     Worklist
@@ -74,9 +75,9 @@ export default {
         content: ""
       },
       release: false,
-      fileList: [
-       
+      fileList: [  
       ],
+    my:this.clas,
       workName: ""
     };
   },
@@ -105,36 +106,51 @@ export default {
           type: "success"
         }),
         this.$store.commit('updateWorklist',{name:{title:this.homework.name,content:this.homework.content}});
-        let data = {"direction":1,"time":1,context:"写一个jsp"};
-
- 
-axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=1&time=3&context=${this.name+this.content}`
-)
+        let classtype;
+        function course(clas){
+          if(clas='前端'){
+            classtype = 1;
+          }
+          else if(clas='后台'){
+            classtype=2;
+          }
+          else if(clas='安卓'){
+            classtype=4;
+          }
+          else{
+            classtype=3;
+          }
+        }
+        course(this.my);
+console.log(classtype);
+axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=${classtype}&time=3&context=${this.homework.name+this.homework.content}`)
 .then(function (response) {
     console.log(response);
   })
   .catch(function (error) {
     console.log(error);
   });
-  let a = document.getElementById('files');
-  console.log(a.files[0]);
-  let file = this.fileList[0];
-  console.log(this.fileList[0]);
-  let param = new FormData();
-  param.append('file',file);
-  console.log(param.get('file'));
+  // let a = document.getElementById('files');
+  // console.log(a.files[0]);
+  // let file = this.fileList[0];
+  // console.log(this.fileList[0]);
+  // let param = new FormData();
+  // param.append('file',file);
+  // console.log(param.get('file'));
   // axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=1`,param,{ headers: {'Content-Type': 'multipart/form-data'}});
   // axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=1`).then(res=>console.log(res))
         // axios.post('http://2z431s2133.wicp.vip:20570/Mission/addMission',data).then(res=>console.log(res));
           // axios.get('http://2z431s2133.wicp.vip:20570/Mission/searchMission',{direction:1}).then((res)=>console.log(res));
           this.handelRelease();
-      } else {
+      } else 
+      {
         this.$message.error({
           // title: "失败",
           message: "作业名称或内容不可为空",
           type:'warning'
         });
       }
+    
     },
     // addfile(){
     //   let file= document.getElementById('filea').files[0];
@@ -146,6 +162,9 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=1
     //   axios.get('http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=2').then((res)=>console.log(res))
     // }
   },
+  // created(){
+  //   axios.get("http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=1").then((res)=>console.log(res));
+  // },
   computed: {
     worklist() {
       return this.$store.state.workList;
