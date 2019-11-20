@@ -25,35 +25,31 @@
         <el-upload
           class="upload-demo"
           ref="upload"
-          action=""
+          action
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :auto-upload="false"
           :file-list="fileList"
         >
           <!-- <el-button slot="trigger" size="small" type="primary" id="files">选取文件</el-button> -->
-          <div @click.stop><input type="file" value="上传文件" style="display:none" ref="fileSubmit" id="file">
-          <label for="file" class="fileSubmit">选择文件</label>   
+          <div @click.stop>
+            <input type="file" value="上传文件" style="display:none" ref="fileSubmit" id="file" />
+            <label for="file" class="fileSubmit">选择文件</label>
           </div>
           <div slot="tip" class="el-upload__tip">文件大小不超过5M</div>
         </el-upload>
-         <el-button
-            style="margin-left: 10px;"
-            size="small"
-            type="danger"
-            @click="deleteFile"
-          >删除附件</el-button>
+        <el-button style="margin-left: 10px;" size="small" type="danger" @click="deleteFile">删除附件</el-button>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="releaseWork">立即发布</el-button>
         <el-button @click="handelRelease">取消</el-button>
       </el-form-item>
-<!-- <input type="file" id="filea"><input type="submit" @click="addfile"> -->
+      <!-- <input type="file" id="filea"><input type="submit" @click="addfile"> -->
     </el-form>
     <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="false">
       <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist" @delete="deleteWork">
-        <template slot="title">{{worklist[index].title}}:</template>
-        <template slot="content">{{worklist[index].content}}</template>
+        <!-- <template slot="title">{{worklist[index].context.split('and')[0]}}:</template> -->
+        <template slot="content">{{worklist[index].context.split('and')[1]}}</template>
         <!--千万不要修改插槽，不然会有很多问题-->
       </Worklist>
     </el-collapse>
@@ -65,7 +61,7 @@ import axios from "axios";
 import Worklist from "./tec-homework-list";
 export default {
   name: "ReleaseWork",
-  props:['direction'],
+  props: ["direction"],
   components: {
     Worklist
   },
@@ -79,9 +75,9 @@ export default {
         content: ""
       },
       release: false,
-       fileList:[],
-      directnumber:'',
-      workName: "",
+      fileList: [],
+      directnumber: "",
+      workName: ""
       // direction:this.direction
     };
   },
@@ -101,95 +97,116 @@ export default {
     handleChange(val) {
       // console.log(val);
     },
-    deleteFile(){
-      console.log('delete');
+    deleteFile() {
+      console.log("delete");
       // axios.delete(`http://2z431s2133.wicp.vip:20570/work/Mission/deleteMissionFile?missionId=${this.directnumber}`);
-      let file = document.getElementById('file');
+      let file = document.getElementById("file");
       console.log(file.files[0]);
-      file.value='';
-      this.fileList =[];
+      file.value = "";
+      this.fileList = [];
       console.log(file.files[0]);
-         },
-    getWorklist(){
+    },
+    getWorklist() {
       // axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?${this.directnumber}`);
     },
-    deleteWork(){
-      axios.delete(`http://2z431s2133.wicp.vip:20570/work/Mission/deleteMission?mission=1`);
-      this.$store.commit('deleteWorklist');
+    deleteWork() {
+      axios.delete(
+        `http://2z431s2133.wicp.vip:20570/work/Mission/deleteMission?mission=1`
+      );
+      this.$store.commit("deleteWorklist");
     },
     releaseWork() {
       if (!(this.homework.name == "" || this.homework.content == "")) {
+        axios
+          .post(
+            `http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=${
+              this.directnumber
+            }&time=3&context=${this.homework.name +
+              "and" +
+              this.homework.content}`
+          )
+          .then(function(response) {
+            console.log(response);
+            this.$store.commit("addWorklist", {
+              context: this.homework.name + "and" + this.homework.content
+            });
+            this.$message({
+              // title: "成功",
+              message: "发布成功",
+              type: "success"
+            });
+             this.handelRelease();
+          })
+          .catch(err => {
+            this.$message({
+              type: "info",
+              message: "网络错误"
+            })
+          });
+        // let file = this.$refs.fileSubmit;
 
-        this.$message({
-          // title: "成功",
-          message: "发布成功",
-          type: "success"
-        }),
-        this.$store.commit('updateWorklist',{name:{title:this.homework.name,content:this.homework.content}});
+        let file = document.getElementById("file");
 
- 
-axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=${this.directnumber}&time=3&context=${this.homework.name+'and'+this.homework.content}`
-)
-.then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-  // let file = this.$refs.fileSubmit;
-
-  let file = document.getElementById('file');
-  
-  if(file.files[0]!=undefined){
-    console.log(file.files[0]);
-let formdata = new FormData();
-formdata.append('file',file.files[0]);
-axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=1`,formdata,{ headers: {'Content-Type': 'multipart/form-data;charset=UTF-8'}});
-  // let a = document.getElementById('files');
-  }
-          this.handelRelease();
+        if (file.files[0] != undefined) {
+          console.log(file.files[0]);
+          let formdata = new FormData();
+          formdata.append("file", file.files[0]);
+          axios.post(
+            `http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=2`,
+            formdata,
+            { headers: { "Content-Type": "multipart/form-data;charset=UTF-8" } }
+          ).then(res=>{
+            console.log('file success')
+          }).catch(error=>{
+            this.$message({
+              type: "info",
+              message: "网络错误"
+            })
+          })
+        }
       } else {
         this.$message.error({
-          // title: "失败",
           message: "作业名称或内容不可为空",
-          type:'warning'
+          type: "warning"
         });
       }
-    },
+    }
   },
   computed: {
     worklist() {
       return this.$store.state.workList;
-    },
-    
-    
+    }
   },
-  watch:{
-   
+  watch: {},
+  created() {
+    if (this.direction == "前端") {
+      this.directnumber = 1;
+    } else if (this.direction == "后台") {
+      this.directnumber = 2;
+    } else if (this.direction == "Python") {
+      this.directnumber = 3;
+    } else {
+      this.directnumber = 4;
+    }
   },
-created(){
-  if(this.direction == '前端'){
-            this.directnumber=1;
+  mounted() {
+    axios
+      .get(
+        `http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=${this.directnumber}`
+      )
+      .then(res => {
+        let workArray = res.data.data;
+        console.log(workArray);
+        if (workArray == "") {
+          this.release = true;
         }
-        else if(this.direction == '后台'){
-          this.directnumber=2;
-        }
-         else if(this.direction == 'Python'){
-          this.directnumber=3;
-        }
-        else{
-          this.directnumber=4;
-        }
-        
-},
-mounted(){
-  axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=${this.directnumber}`).then((res)=>{
-    this.$store.commit('updateWorklist')   //分析返回数据传给store
-  })
-}, 
-updated(){
- 
-}
+        this.$store.commit("updateWorklist", workArray); //分析返回数据传给store
+      })
+      .catch(res => {
+        alert(res);
+      });
+  },
+  updated() {}
 };
 </script>
 
@@ -206,11 +223,11 @@ updated(){
   border-radius: 8px;
   padding: 10px 10px 0 20px; /*此处css样式可复用与notice,可添加在全局样式里面*/
 }
-.fileSubmit{
+.fileSubmit {
   color: aliceblue;
   margin-top: 5px;
   display: inline-block;
-  background-color:#409EFF;
+  background-color: #409eff;
   border-radius: 4px;
   width: 70px;
   height: 35px;

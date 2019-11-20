@@ -14,7 +14,8 @@ return new Vuex.Store({
         },
         stuworkList:[],
         checkList:["前端"],
-        workList:[{title:'作业一',content:'做一个登录网站'},{title:'作业二',content:'做一个注册网站不是noise2号212拨不2比比不择手段交付给基本基本环节拨不就吧就会被就拨不基本基本基本基本就weg'}],
+        // workList:[{title:'作业一',content:'做一个登录网站'},{title:'作业二',content:'做一个注册网站不是noise2号212拨不2比比不择手段交付给基本基本环节拨不就吧就会被就拨不基本基本基本基本就weg'}],
+        workList:[{context:"作业一and写一个网站",id:1},{context:"作业一and一个网站",id:2}],
         noticeList:[{title:'公告一',content:'做一个公鸡网站'},{title:'公告二',content:'做一个公告网站'}]
         
     },
@@ -26,10 +27,19 @@ return new Vuex.Store({
             state[paload.checklist] = paload.listdata;
         },
         updateWorklist(state,message){
-            state.workList.push(message.name);
+            state.workList=message;
+        },
+        addWorklist(state,message){
+            state.workList.push(message);
         },
         deleteWorklist(state,id){
-            state.workList.pop();
+            let deleteIndex;
+            state.workList.forEach((item,index)=>{
+                if(item.id == id){
+                    deleteIndex = index;
+                }
+            })
+            state.workList.splice(deleteIndex,1);
         },
         updateNoticelist(state,message){
             state.noticeList.push(message.name);
