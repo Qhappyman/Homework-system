@@ -32,6 +32,13 @@ return new Vuex.Store({
         addWorklist(state,message){
             state.workList.push(message);
         },
+        updateWork(state,message){
+            state.workList.forEach((item)=>{
+                if(item.id==message.id){
+                    item.context=message.context;
+                }
+            })
+        },
         deleteWorklist(state,id){
             let deleteIndex;
             state.workList.forEach((item,index)=>{

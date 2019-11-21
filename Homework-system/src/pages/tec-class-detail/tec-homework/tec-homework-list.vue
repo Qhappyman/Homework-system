@@ -8,6 +8,7 @@
         <i class="el-icon-view el-icon--right"></i>
       </el-link>
       <el-button type="danger" size="mini" class="delete" @click="deleteWork">删除任务</el-button>
+       <el-button type="danger" size="mini" class="delete" @click="updateWork">修改任务</el-button>
     </el-collapse-item>
   </div>
 </template>
@@ -20,7 +21,7 @@ export default {
   name: "Worklist",
   data() {
     return {
-      // titl:"1"
+    
     };
   },
   computed: {
@@ -40,8 +41,19 @@ export default {
   methods: {
     workDetail() {
       this.$router.push({
-        path: `/stu-homework/${this.$slots.content[0].text}`
+        path: `/stu-homework/${this.worklist.filter((item, index) => {
+          return item.context
+            .split("and")
+            .includes(this.$slots.content[0].text);
+        })[0].id}`
       });
+    },
+    updateWork(){
+      this.$emit('updateWork',this.worklist.filter((item, index) => {
+          return item.context
+            .split("and")
+            .includes(this.$slots.content[0].text);
+        })[0].id)
     },
     deleteWork() {
       this.$confirm("确认删除?", "提示", {

@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <el-menu
       class="el-menu-demo"
       mode="horizontal"
@@ -81,7 +82,7 @@ export default {
     }
   },
   mounted(){
-    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?mission=${1}`).then((res)=>{
+    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?mission=${this.$route.params.workid}`).then((res)=>{
       console.log(res);
     })
     this.$store.commit('updateStuworklist');
