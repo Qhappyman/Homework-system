@@ -9,6 +9,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import qs from 'qs'
+import './assets/reset.css'   //引入reset.css和一像素边框
+import './assets/border.css'
 Vue.prototype.axios = axios
 Vue.prototype.qs =qs
 Vue.config.productionTip = false
