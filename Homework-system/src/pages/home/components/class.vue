@@ -4,7 +4,7 @@
       <!-- {{checklist}} -->
       <header ref="class"> <slot name="classname"></slot><p class="header-p">课程号:20720</p></header>
      
-      <main>学生数:23<br>学年:2019</main>
+      <main>学生数 :<br>教师 :</main>
       
       <footer><el-button type="primary" size="big" @click="toteclass" style="float:left">进入课程</el-button><el-button type="primary" size="big" @click="deleteCourse" style="float:right">删除课程   <i class="el-icon-delete"></i></el-button></footer>
   </div>

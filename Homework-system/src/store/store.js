@@ -9,8 +9,7 @@ return new Vuex.Store({
             
             name:"郭俊清",
             profession:"信管",
-            ID:"2018210842",
-            
+            ID:"2018210842",            
         },
         stuworkList:[],
         checkList:["前端"],
@@ -65,6 +64,9 @@ return new Vuex.Store({
                 }
             });
             state.checkList.splice(index,1);
+        },
+        getCourse:(state,message)=>{
+            state.checkList = message;
         }
         // updateName(state,namw){
         //     state.teach.name=name;
@@ -92,6 +94,9 @@ return new Vuex.Store({
         getNoticelist: state => {
             return state.noticeList;
         },
+    },
+    actions:{
+        
     }
 })
 }

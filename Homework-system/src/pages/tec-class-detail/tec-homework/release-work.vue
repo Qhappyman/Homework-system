@@ -244,7 +244,7 @@ export default {
       if (!(this.homework.name == "" || this.homework.content == "")) {
         axios
           .post(
-            `http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=${
+            `http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${
               this.directnumber
             }&time=3&context=${this.homework.name +
               "and" +
@@ -322,7 +322,7 @@ export default {
   mounted() {
     axios
       .get(
-        `http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=${this.directnumber}`
+        `http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?courseId=${this.directnumber}`
       )
       .then(res => {
         let workArray = res.data.data;

@@ -25,11 +25,8 @@
                 <el-option label="2020-2021" value="2020"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="学期:">
-              <el-select v-model="createclass.schoolteam" placeholder="请选择学期">
-                <el-option label="第一学期" value="first"></el-option>
-                <el-option label="第二学期" value="second"></el-option>
-              </el-select>
+            <el-form-item label="教师名:">
+              <el-input v-model="createclass.tecName" size="middle" placeholder="请输入姓名" />
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -70,6 +67,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -80,7 +78,7 @@ export default {
       createclass: {
         course: "",
         schoolyear: "",
-        schoolteam: ""
+        tecName: ""
       },
       releasenotice: {
         notice: "",
@@ -110,12 +108,33 @@ export default {
       else{
         console.log(this.classlist);
         if(this.classlist.indexOf(this.createclass.course)==-1){
-          console.log(this.createclass.course)
-      this.$notify({
+          let data = {
+            "id":'',
+            "name":this.createclass.course,
+            "studentNum":2,
+            "teacher":this.createclass.tecName
+          }
+          axios
+            .post(
+              'http://2z431s2133.wicp.vip:20570/work/Course/addCourse',
+              data,
+              {
+                headers: { "Content-Type":"application/json" }
+              }
+            )
+            .then(res => {
+              this.$notify({
         title: "成功",
         message: "创建成功",
         type: "success"
-      });
+      })
+            })
+            .catch(error => {
+              this.$message({
+                type: "info",
+                message: "网络错误"
+              });
+            })
       console.log(this.createclass.course)
       this.$emit('add',this.createclass.course);
       // if(this.createclass.course == 1){
