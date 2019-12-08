@@ -22,8 +22,16 @@ export default new Router({
       component: Index
     },
     {
+      path:'/login',
+      name:'Login',
+      component:Login
+    },
+    {
       path:'/home',
-      component:Home
+      component:Home,
+      meta:{
+        roles:'teacher'
+      }
     },
     {
       path:'/login',
@@ -35,24 +43,38 @@ export default new Router({
     },
     {
       path:'/setting-me',
-      component:SettingMe
+      component:SettingMe,
+      meta:{
+        roles:['teacher','stu']
+      }
     },
     {
       path:'/tec-class-detail/:class',
-      component:TecClassDetail
+      component:TecClassDetail,
+      meta:{
+        roles:'teacher'
+      }
     },
     {
       path:'/stu-class-detail',
-      component:StuClass
-
+      component:StuClass,
+      meta:{
+        roles:'teacher'
+      }
     },
     {
       path:'/stu-homework/:workid',
-      component:Stuworklist
+      component:Stuworklist,
+      meta:{
+        roles:'teacher'
+      }
     },
     {
       path:'/fix-homework/:id',
-      component:Fixwork
+      component:Fixwork,
+      meta:{
+        roles:'teacher'
+      }
     },
     {
       path:'*',
