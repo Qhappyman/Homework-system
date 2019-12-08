@@ -55,7 +55,7 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogForVisible = false">取 消</el-button>
+              <el-button @click="dialogForVisible = false">取 消</el-button>
             <span @click="releaseNotice">
               <el-button type="primary" @click="dialogForVisible = false">发布</el-button>
             </span>
@@ -92,7 +92,7 @@ export default {
     cancle: function() {},
     createClass() {
       if((this.createclass.course=="")||(this.createclass.schoolyear=="")||(this.createclass.schoolteam=="")){
-        
+
         this.$notify.error({
           title: '未完善',
           message: '请完善你的内容'
@@ -104,7 +104,7 @@ export default {
       //     console.log('error');
       //     console.log(this.createclass.course)
       //   }
-      
+
       else{
         console.log(this.classlist);
         if(this.classlist.indexOf(this.createclass.course)==-1){
@@ -158,7 +158,7 @@ export default {
         });
         }
       }
-      
+
     },
     releaseNotice() {
       if((this.releasenotice.notice=="")||(this.releasenotice.noticecourse=="")){
@@ -181,8 +181,8 @@ export default {
     classlist(){
       return this.$store.state.checkList;
     }
-      
-    
+
+
   },
   watch:{
   }

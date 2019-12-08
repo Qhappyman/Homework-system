@@ -33,6 +33,7 @@
       <el-table-column label="分数" prop="score"></el-table-column>
       <el-table-column align="right">
         <template slot="header">
+        <template slot="header" slot-scoped>
           <el-input v-model="search" size="middle" placeholder="输入关键字搜索" />
         </template>
         <template slot-scope="scope">
@@ -82,6 +83,11 @@ export default {
     })
     this.$store.commit('updateStuworklist');
   }
+  // mounted(){
+  //   axios.get('https://www.easy-mock.com/mock/5c35a447a7a7577b357b4596/example/name').then(res=>{console.log(res.data.data.class);
+
+  //   })
+  // }
 };
 </script>
 

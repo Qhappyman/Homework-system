@@ -2,7 +2,7 @@
 <div>
 
     <HomeNav></HomeNav>
-    
+
     <CreateClass @add="addCourse"></CreateClass>
     <ClassList :courseList="courseList"></ClassList>
 </div>
@@ -37,6 +37,8 @@ mounted(){
                 console.log(res.data.data);
             })
 }
+    }
+  }
 }
 </script>
 <style scoped>

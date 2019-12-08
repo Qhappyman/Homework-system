@@ -1,40 +1,43 @@
 <template>
   <div>
-    <el-header>作业提交
-      <el-button type="primary" round @click="goLogin">登录</el-button>
-      <el-button type="primary" round @click="goRegister">注册</el-button>
-    </el-header>
+    <el-menu
+      class="el-menu-demo"
+      mode="horizontal"
+      background-color="#545c64"
+      text-color="#fff"
+      router=true
+      active-text-color="#ffd04b">作业提交
+      <el-menu-item
+        index="/home"
+        :default-active="navindex1"
+      >进入课堂
+      </el-menu-item>
+    </el-menu>
   </div>
 </template>
 
 <script>
 export default {
   name:'IndexNav',
-  methods: {
-    goLogin: function() {
-      this.$router.push({path: '/login'});
-    },
-    goRegister: function() {
-      this.$router.push({path: '/register'});
+  data() {
+    return {
+      navindex1: '1'
     }
   }
 }
 </script>
 
 <style scoped>
-header {
-  padding-left: 3%;
-  background-color: #272E38;
-  color: white;
-  font-size: 2vw;
-  font-weight: 800;
-  font-family: "PingFang SC";
-  line-height: 58px;
-}
+  .el-menu {
+    padding-left: 20px;
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 60px;
+    color: white;
+  }
 
-.el-button {
-  position: relative;
-  left: 78%;
-  bottom: 10%;
-}
+  .el-menu-item {
+    float: right;
+    font-weight: 400;
+  }
 </style>

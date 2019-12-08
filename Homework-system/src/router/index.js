@@ -3,11 +3,13 @@ import Router from 'vue-router'
 import Vuex from 'vuex'
 import Index from '../pages/index/index'
 import Home from '../pages/home/home'
+import StuHome from '../pages/home/stu-home'
 import Login from '../pages/login/login'
 import Register from '../pages/register/register'
 import SettingMe from '../pages/setting-me/setting-me'
 import ClassDetail from '../pages/class-detail/class-detail'
-import StuClass from '../pages/stu-class-detail/stu-class.vue'
+import StuClassDetail from '../pages/stu-class-detail/stu-class'
+import SubmitWork from '../pages/stu-class-detail/stu-homework/submit-work'
 import TecClassDetail from '../pages/tec-class-detail/tec-class-detail'
 import Error from '../pages/error'
 import Stuworklist from '../pages/tec-class-detail/tec-homework/stu-homework'
@@ -32,6 +34,10 @@ export default new Router({
       meta:{
         roles:'teacher'
       }
+    },
+    {
+      path:'/stu-home',
+      component:StuHome
     },
     {
       path:'/login',
@@ -61,6 +67,14 @@ export default new Router({
       meta:{
         roles:'teacher'
       }
+      path:'/stu-class-detail/:stuclass',
+      component:StuClassDetail
+      path:'/class-detail',
+      component:ClassDetail
+    },
+    {
+      path: '/stu-submit-work/:homework',
+      component:SubmitWork
     },
     {
       path:'/stu-homework/:workid',

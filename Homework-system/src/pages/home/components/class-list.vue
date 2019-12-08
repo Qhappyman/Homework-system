@@ -1,8 +1,8 @@
 <template>
   <div class="class-list">
       <Class v-for="item in checklist" :key="item.index" style="display:inline-block; margin-right:15px;"><template v-slot:classname>{{item}}</template></Class>   <!--通过插槽动态加入数据-->
-      
-
+      <Class v-for="item in checklist" :key="item.index" @delete="handleDelete"   style="display:inline-block; margin-right:15px;">
+      <template v-slot:classname>{{item}}</template></Class>   <!--通过插槽动态加入数据-->
   </div>
 </template>
 
@@ -15,7 +15,7 @@ components:{
 },
 data(){
     return{
-      
+
     }
 },
 methods:{
@@ -28,7 +28,7 @@ methods:{
         return this.$store.state.checkList;
     }
   }
-  
+
 
 }
 
