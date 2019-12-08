@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <el-menu
       class="el-menu-demo"
       mode="horizontal"
@@ -27,9 +28,11 @@
       :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
     >
-      <el-table-column label="Date" prop="date"></el-table-column>
-      <el-table-column label="Name" prop="name"></el-table-column>
+      <el-table-column label="学号" prop="userId"></el-table-column>
+      <el-table-column label="姓名" prop="id"></el-table-column>
+      <el-table-column label="分数" prop="score"></el-table-column>
       <el-table-column align="right">
+        <template slot="header">
         <template slot="header" slot-scoped>
           <el-input v-model="search" size="middle" placeholder="输入关键字搜索" />
         </template>
@@ -53,18 +56,11 @@ export default {
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎"
-        },
-        {
-          date: "2016-05-01",
-          name: "郭俊清"
-        }
+        // {
+        //   userId: '',
+        //   id: '', //要改成userName
+        //   score:''
+        // }
       ],
       search: ""
     };
@@ -79,6 +75,13 @@ export default {
       console.log(index, row.name, row.date);
       this.$router.push({ path: `/fix-homework/${row.name}` });
     }
+  },
+  mounted(){
+    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=${this.$route.params.workid}`).then((res)=>{
+      // console.log(res.data.data[0].id);
+      this.tableData = res.data.data;
+    })
+    this.$store.commit('updateStuworklist');
   }
   // mounted(){
   //   axios.get('https://www.easy-mock.com/mock/5c35a447a7a7577b357b4596/example/name').then(res=>{console.log(res.data.data.class);

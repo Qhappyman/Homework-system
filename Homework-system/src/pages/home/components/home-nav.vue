@@ -6,6 +6,7 @@
   mode="horizontal"
   background-color="#545c64"
   text-color="#fff"
+  :router= true
   router=true
   :router= "true"
   active-text-color="#ffd04b">

@@ -1,5 +1,11 @@
 <template>
   <div id="continer">
+      <!-- {{checklist}} -->
+      <header ref="class"> <slot name="classname"></slot><p class="header-p">课程号:20720</p></header>
+     
+      <main>学生数 :<br>教师 :</main>
+      
+      <footer><el-button type="primary" size="big" @click="toteclass" style="float:left">进入课程</el-button><el-button type="primary" size="big" @click="deleteCourse" style="float:right">删除课程   <i class="el-icon-delete"></i></el-button></footer>
     <!-- {{checklist}} -->
     <header ref="class">
       <slot name="classname"></slot>
