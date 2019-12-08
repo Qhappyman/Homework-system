@@ -6,7 +6,7 @@ Vue.use(axios)
 export default()=>{
 return new Vuex.Store({
     state:{
-        role:"2",
+        role:"1",
         teach:{
             name:"郭俊清",
             profession:"信管",

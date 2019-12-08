@@ -71,9 +71,9 @@ export default {
   },
   methods: {
     goBack() {
-       axios.get('https://www.easy-mock.com/mock/5c35a447a7a7577b357b4596/example/name').then(res=>{console.log(res.data.data.class);
-      this.$router.push({ path: `/tec-class-detail/${res.data.data.class}` });
-       })
+       
+      this.$router.push({ path: "/tec-class-detail/前端"});
+       
     },
     handleEdit(index, row) {
       console.log(index, row.name, row.date);

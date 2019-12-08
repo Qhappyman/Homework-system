@@ -44,20 +44,18 @@ export default new Router({
       component:SettingMe
     },
     {
-      path:'/class-detail',
-      component:ClassDetail
+      path:'/tec-class-detail/:class',
+      component:TecClassDetail
     },
     {
       path:'/stu-class-detail/:stuclass',
       component:StuClassDetail
+      path:'/class-detail',
+      component:ClassDetail
     },
     {
       path: '/stu-submit-work/:homework',
       component:SubmitWork
-    },
-    {
-      path:'/tec-class-detail/:class',
-      component:TecClassDetail
     },
     {
       path:'/stu-homework/:workid',

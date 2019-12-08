@@ -3,10 +3,10 @@
     <div class="part" id="part1"></div>
     <div class="part" id="part2">
       <div class="show">
-        <div class="list"><img src=""></div>
-        <div class="list"><img src=""></div>
-        <div class="list"><img src=""></div>
-        <div class="list"><img src=""></div>
+        <div class="list"><img src="./../../assets/image1.jpg"></div>
+        <div class="list"><img src="./../../assets/images2.png"></div>
+        <div class="list"><img src="./../../assets/images3.png"></div>
+        <div class="list"><img src="./../../assets/images43.jpg"></div>
       </div>
     </div>
   </el-main>
