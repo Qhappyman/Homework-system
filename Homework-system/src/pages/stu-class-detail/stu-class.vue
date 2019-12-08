@@ -1,96 +1,175 @@
 <template>
   <div>
-    <el-header>
-      <router-link to="/class-detail"><i class="el-icon-back"></i></router-link>
-      <div class="submit" @click="change1">提交作业</div>
-      <div class="has-submit" @click="change2">已交作业</div>
-      <router-link to="/setting-me"><div class="icon"><el-avatar :size="40" :src="circleUrl"></el-avatar></div></router-link>
-    </el-header>
-    <SubmitWork v-show="appear1"></SubmitWork>
-    <HasSubmit v-show="appear2"></HasSubmit>
+    <router-view/>
+    <div>
+      <el-menu
+        class="el-menu-demo"
+        mode="horizontal"
+        background-color="#545c64"
+        text-color="#fff"
+        :router="true"
+        active-text-color="#ffd04b"
+      >
+        <el-menu-item>
+          <el-breadcrumb separator-class="el-icon-arrow-right" class="newstyle">
+            <el-breadcrumb-item :to="{ path: '/home' }">
+              <span style="color: white; line-height: 60px;">我的课堂</span>
+            </el-breadcrumb-item>
+            <el-breadcrumb-item>
+              <span style="color:#ffe; line-height: 60px;">{{this.$route.params.stuclass}}</span>
+            </el-breadcrumb-item>
+          </el-breadcrumb>
+        </el-menu-item>
+        <el-menu-item index="/setting-me">
+          <div class="demo-basic--circle">
+            <el-avatar :size="30" :src="circleUrl"></el-avatar>
+          </div>
+        </el-menu-item>
+        <el-menu-item class="studio" index="/">
+          系统主页
+          <i class="el-icon-s-home"></i>
+        </el-menu-item>
+      </el-menu>
+    </div>
+    <main>
+      <div class="base-class">
+        <div class="class-name">{{this.$route.params.stuclass}}</div>
+        <div class="class-code"><p>加课码</p><p>学生数</p></div>
+      </div>
+      <div class="class-nav">
+        <el-tabs v-model="activeName"  @tab-click="handleClick" :stretch = true class="nav-tap">
+          <el-tab-pane label="作业" name="first">
+            <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
+              <StuHomeworkList :stu="stuwork" v-for="(item,index) in stuHomeworkList" :key="index" ref="stuHomeworkList">
+                <template slot="title">{{stuHomeworkList[index].title}}:</template>
+                <template slot="content">{{stuHomeworkList[index].content}}</template>
+                <template slot="deadline">截止日期：{{stuHomeworkList[index].deadline}}</template>
+              </StuHomeworkList>
+            </el-collapse>
+          </el-tab-pane>
+          <el-tab-pane label="公告" name="second">
+            <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
+              <StuNotice :stu="stunotice" v-for="(item,index) in stuNoticeList" :key="index" ref="stuNoticeList">
+                <template slot="title">{{stuNoticeList[index].title}}:</template>
+                <template slot="content">{{stuNoticeList[index].content}}</template>
+                <template slot="time">发布日期：{{stuNoticeList[index].time}}</template>
+              </StuNotice>
+            </el-collapse>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
-import SubmitWork from './stu-homework/submit-work'
-import HasSubmit from './stu-homework/hassubmit'
+import StuHomeworkList from './stu-homework/stu-homework-list'
+import StuNotice from './stu-notice.vue/stu-notice'
 export default {
   name: 'StuClass',
   components: {
-    SubmitWork,
-    HasSubmit
+    StuHomeworkList,
+    StuNotice
   },
   data () {
     return {
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      appear1: true,
-      appear2: false
+      activeName: 'first',
+      workName: '',
+      stuwork: '',
+      stunotice: ''
     }
   },
   methods: {
-    change1: function() {
-      this.appear1 = true
-      this.appear2 = false
+    handleClick(tab, event) {
+        console.log(tab, event);
     },
-    change2: function() {
-      this.appear2 = true
-      this.appear1 = false
+    handleChange(val) {
+      console.log(val);
     }
+  },
+  computed: {
+    stuHomeworkList() {
+      return this.$store.state.stuHomeworkList;
+    },
+    stuNoticeList() {
+      return this.$store.state.stuNoticeList;
+    }
+  },
+  created(){
+    this.$store.dispatch('stuHomeworkList')
+  },
+  mounted(){
+    this.stuwork = this.$route.params.stuclass
+    this.stunotice = this.$route.params.stuclass
   }
-
 }
 </script>
 
 <style scoped>
-  .el-header {
-    height: 60px;
-    background-color: #F1F3F4;
-    font-size: 20px;
-    font-weight: 400;
-    color: black;
-    text-align: center;
-    line-height: 60px;
-  }
+.studio {
+  float: right;
+}
 
-  .el-icon-back {
-    position: relative;
-    right: 49%;
-    cursor: pointer;
-  }
+.newstyle {
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  line-height: 50px;
+}
 
-  .submit {
-    position: relative;
-    left: 42%;
-    bottom: 60px;
-    width: 8%;
-    height: 100%;
-    background-color: #F1F3F4;
-    cursor: pointer;
-  }
+main {
+  border-radius: 15px;
+  margin: 2% auto;
+  display: flex;
+  height: 235px;
+  width: 80%;
+  flex-direction: column;
+}
 
-  .has-submit {
-    position: relative;
-    left: 50%;
-    bottom: 120px;
-    width: 8%;
-    height: 100%;
-    background-color: #F1F3F4;
-    cursor: pointer;
-  }
+.base-class {
+  border-radius: 15px 15px 0 0;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  /* background-color: bisque; */
+  background-image: url(../../../src/assets/class.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 
-  .submit:hover {
-    background-color: #5F6368;
-  }
+.class-name {
+  border-radius: 15px 15px 0 0;
+  flex-grow: 2;
+  /* background-color: blueviolet; */
+  text-align: center;
+  font-size: 40px;
+  padding-top: 20px;
+}
 
-  .has-submit:hover {
-    background-color: #5F6368;
-  }
+.class-code {
+  flex-grow: 1;
+  /* line-height: 20px; */
+  text-align: center
+}
 
-  .icon {
-    width: 30px;
-    position: relative;
-    left: 96%;
-    bottom: 170px;
-    cursor: pointer;
-  }
+.class-nav {
+  flex-grow: 1;
+  height: 8%;
+  background-color:#F1F3F4;
+  border-radius: 0 0 15px 15px;
+}
+
+p {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.work-list {
+  margin: 10px auto;
+  border: 1px solid #e2e6ed;
+  border-radius: 8px;
+  padding: 10px 10px 0 20px; /*此处css样式可复用与notice,可添加在全局样式里面*/
+}
+
 </style>

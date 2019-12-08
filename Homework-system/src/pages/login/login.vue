@@ -1,9 +1,17 @@
 <template>
   <div class="background">
     <div class="login">账号登录
-      <el-input v-model="username" placeholder="请输入学号" id="username"></el-input>
-      <el-input placeholder="请输入密码" v-model="password" show-password id="password"></el-input>
-      <el-button type="primary" @click="login">登录</el-button>
+      <el-form ref="form">
+        <el-form-item>
+          <el-input v-model="username" placeholder="请输入学号" id="username"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input placeholder="请输入密码" v-model="password" type="password"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="login">登录</el-button>
+        </el-form-item>
+      </el-form>
       <div class="to-register" @click="goRegister">注册账号</div>
     </div>
   </div>
@@ -48,14 +56,7 @@ export default {
 }
 </script>
 
-<style>
-  body {
-    width: 100%;
-    height: 100%;
-    margin: 0%;
-    position: absolute;
-  }
-
+<style scoped>
   .background {
     width: 100%;
     height: 100%;
@@ -77,32 +78,24 @@ export default {
     border-radius: 8px;
   }
 
-  #username {
-    margin-top: 60px;
-    width: 380px;
-    height: 60px;
+  .el-form {
+    margin-top: 50px;
   }
 
-  #password {
-    margin-top: 30px;
+  .el-input {
     width: 380px;
-    height: 60px;
-  }
-
-  span {
-    position: relative;
-    right: 30px;
-    top: 15px;
+    height: 80px;
   }
 
   .el-button {
-    margin-top: 80px;
+    margin-top: 10px;
     width: 380px;
     height: 60px;
     font-size: 20px;
     text-align: center;
     line-height: 1px;
   }
+
   .el-button span {
     position: relative;
     left:1px;
@@ -112,7 +105,7 @@ export default {
   .to-register {
     position: relative;
     left: 320px;
-    top: 30px;
+    top: 20px;
     width: 60px;
     height: 20px;
     font-size: 15px;

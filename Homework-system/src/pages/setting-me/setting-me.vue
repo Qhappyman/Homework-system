@@ -21,7 +21,7 @@
             <el-form-item label="学号" prop="ID">
               <el-input v-model="user.ID"></el-input>
               <!-- <el-alert title="学号格式错误" type="error" class="alert" v-if="true"> -->
-              </el-alert>
+              <!-- </el-alert> -->
             </el-form-item>
             <el-form-item label="专业" prop="profession">
               <el-input v-model="user.profession"></el-input>
@@ -35,7 +35,7 @@
                 <el-checkbox label="Python" value="Python"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
-         
+
             <el-form-item label="角色">
               <el-radio-group v-model="role">
               <el-radio v-model="role" label="1">讲师</el-radio>
@@ -43,7 +43,7 @@
               </el-radio-group>
               <!-- <el-alert title="请选择身份" type="error" class="alert" v-if="true"></el-alert> -->
             </el-form-item>
-    
+
             <el-form-item size="small">
               <el-button type="primary" @click="savebaseInf('user')">保存</el-button>
             </el-form-item>
@@ -105,7 +105,7 @@ export default {
             let reg = /^[\w]{6,12}$/;
             if(!value.match(reg)){
               callback(new Error('密码6-12位，只能包括字母、数字和下划线'));
-            } 
+            }
           }
           callback();
         }
@@ -132,7 +132,7 @@ export default {
         checkPass:""
       },
       checkList: [ ], //选中的科目,保存着"前端","后台"
-      
+
       userrules:{
         name:[
           {required:true,message:'请填写姓名',tigger:'blur'}
@@ -152,12 +152,12 @@ export default {
             { validator: validatePass2, trigger: 'blur' }
           ]
       },
-     
-      
-    
+
+
+
     };
   },
-  
+
   methods: {
     savebaseInf() {
       let result = Object.keys(this.user);
@@ -170,12 +170,12 @@ export default {
         });
     }
     else{
-      let newarr = new Array();     
+      let newarr = new Array();
       for(let i in this.checkList){
         newarr[i] = this.checkList[i];
       };
        let courselist= newarr.filter((item)=>{
-      return !(item>=1&&item<=127)  
+      return !(item>=1&&item<=127)
     })                        //因为最开始的checkList列表包括了observe的属性值，为了创建一个
       //纯粹的数组，定义一个新的数组来存放数据，去除了多余不需要的数据
       let _this = this;
@@ -194,7 +194,7 @@ export default {
         });
     }
     },
-   
+
     savePassword(password) {
       this.$refs[password].validate((valid) => {
           if (valid) {
@@ -212,7 +212,7 @@ export default {
             return false;
           }
         });
-      
+
     }
   },
   // watch: {
@@ -236,7 +236,7 @@ export default {
    })
    },
    watch:{
-     
+
    },
   components: {
     HomeNav

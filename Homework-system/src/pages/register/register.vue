@@ -115,7 +115,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .background {
     width: 100%;
     height: 100%;
