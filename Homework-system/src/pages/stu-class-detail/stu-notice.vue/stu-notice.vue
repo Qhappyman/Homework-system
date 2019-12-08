@@ -1,32 +1,32 @@
 <template>
   <div>
-    <div class="container" v-for="(item,index) in items" :key="index">
-      <div class="title">{{item.title}}</div>
-      <div class="publish-time">发布时间 {{item.time}}</div>
-      <div class="content">{{item.content}}</div>
-    </div>
+    <el-collapse-item :title="this.title">
+      <slot name="content"></slot>
+      <br>
+      <slot name="time"></slot>
+    </el-collapse-item>
   </div>
 </template>
 
 <script>
+import Vuex from 'vuex'
 export default {
   name: 'StuNotice',
   data() {
     return {
-      items: [
-        {
-          title: '公告题目1',
-          time: '发布时间1',
-          content: '公告内容1'
-        },
-        {
-          title: '公告题目1',
-          time: '发布时间1',
-          content: '公告内容1'
-        },
-      ]
+
     }
-  }
+  },
+  methods: {},
+  computed: {
+    stuNoticekList(){
+      return this.$store.state.stuNoticeList;
+    },
+    title(){
+      return this.$slots.title[0].text;
+    }
+  },
+  props: ['stu']
 }
 </script>
 

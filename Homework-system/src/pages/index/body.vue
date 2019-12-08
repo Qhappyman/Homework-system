@@ -1,6 +1,7 @@
 <template>
   <el-main>
-    <div class="part" id="part1">
+    <div class="part" id="part1"></div>
+    <div class="part" id="part2">
       <div class="show">
         <div class="list"><img src="./../../assets/image1.jpg"></div>
         <div class="list"><img src="./../../assets/images2.png"></div>
@@ -8,7 +9,6 @@
         <div class="list"><img src="./../../assets/images43.jpg"></div>
       </div>
     </div>
-    <div class="part"></div>
   </el-main>
 </template>
 
@@ -20,13 +20,18 @@ export default {
 
 <style scoped>
    .el-main {
-    height: 800px;
+    height: 1000px;
     background-color: #E9EEF3;
   }
 
-  .part {
+  #part1 {
     width: 100%;
-    height: 50%;
+    height: 400px;
+  }
+
+  #part2 {
+    width: 100%;
+    height: 500px;
   }
 
   #part1 {
@@ -36,17 +41,20 @@ export default {
 
   .show {
     position: relative;
-    top: 80%;
+    bottom: 20%;
     left: 10%;
     width: 80%;
-    height: 60%;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-content: space-between;
   }
 
   .list {
-    width: 20%;
-    height: 100%;
+    width: 230px;
+    height: 230px;
+    margin-top: 50px;
     box-shadow: 5px 5px 3px 0 grey;
   }
 

@@ -2,7 +2,7 @@
 <div>
 
     <HomeNav></HomeNav>
-    
+
     <CreateClass @add="addCourse"></CreateClass>
     <ClassList :courseList="courseList"></ClassList>
 </div>
@@ -27,7 +27,7 @@ methods:{
     addCourse(course){
         this.courseList.unshift(course);
     }
-}
+  }
 }
 </script>
 <style scoped>

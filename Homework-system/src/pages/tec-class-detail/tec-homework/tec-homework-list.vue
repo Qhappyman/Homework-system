@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <el-collapse-item :title= this.title>
+      <slot name="title"></slot><slot name="content"></slot>
+      <el-link type="primary" @click="workDetail" class="icon" :underline="false">查看详情<i class="el-icon-view el-icon--right"></i> </el-link>
+    </el-collapse-item>
+  </div>
 <div>
       <el-collapse-item :title= this.title>
         <slot name="title"></slot><slot name="content"></slot>
@@ -22,10 +28,10 @@ data(){
 },
 computed:{
     worklist(){
-        return this.$store.state.workList;
+      return this.$store.state.workList;
     },
-    title(){   
-       return  this.$slots.title[0].text;
+    title(){
+      return  this.$slots.title[0].text;
     }
 },
 methods:{
