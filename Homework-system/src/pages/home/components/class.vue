@@ -1,20 +1,12 @@
 <template>
   <div id="continer">
-      <!-- {{checklist}} -->
-      <header ref="class"> <slot name="classname"></slot><p class="header-p">课程号:20720</p></header>
-     
-      <main>学生数 :<br>教师 :</main>
-      
-      <footer><el-button type="primary" size="big" @click="toteclass" style="float:left">进入课程</el-button><el-button type="primary" size="big" @click="deleteCourse" style="float:right">删除课程   <i class="el-icon-delete"></i></el-button></footer>
-    <!-- {{checklist}} -->
-    <header ref="class">
+    <header ref="class" id="classname">
       <slot name="classname"></slot>
-      <p class="header-p">课程号:20720</p>
     </header>
 
     <main>
-      学生数:23
-      <br />学年:2019
+      <p class="header-p">课程码:</p>
+      <p class="main-p">学生数:</p>
     </main>
 
     <footer>
@@ -84,13 +76,12 @@ export default {
 }
 .header-p {
   font-size: 20px;
-  line-height: 4px;
+  margin-top: 15px;
 }
-
 header {
   text-align: center;
   height: 40%;
-  line-height: 50px;
+  line-height: 70px;
   font-size: 40px;
   color: cornflowerblue;
   background-image: url(../../../assets/course.jpg);

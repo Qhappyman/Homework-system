@@ -127,7 +127,10 @@ export default {
         title: "成功",
         message: "创建成功",
         type: "success"
-      })
+      });
+       console.log(this.createclass.course)
+      this.$emit('add',this.createclass.course);
+       this.$store.commit('updateChecklist',this.createclass.course);
             })
             .catch(error => {
               this.$message({
@@ -135,8 +138,6 @@ export default {
                 message: "网络错误"
               });
             })
-      console.log(this.createclass.course)
-      this.$emit('add',this.createclass.course);
       // if(this.createclass.course == 1){
       //   this.createclass.course = "前端";
       // }
@@ -148,7 +149,7 @@ export default {
       // }
       // else
       //   this.createclass.course = "Python"; //根据选择的课程进行更新state,代码需要简化
-      this.$store.commit('updateChecklist',this.createclass.course);
+  
         }
         else{
           console.log('error');

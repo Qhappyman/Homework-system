@@ -8,9 +8,8 @@
       router=true
       active-text-color="#ffd04b">作业提交
       <el-menu-item
-        index="/home"
         :default-active="navindex1"
-      >进入课堂
+      ><span @click="goClass">进入课堂</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -22,6 +21,24 @@ export default {
   data() {
     return {
       navindex1: '1'
+    }
+  },
+  methods:{
+    goClass(){
+      if(this.role==''){
+        this.$router.push({path:'/login'});
+      }
+      else if(this.role=='讲师'){
+        this.$router.push({path:'/home'})
+      }
+      else if(this.role == '学生'){
+        this.$router.push({path:'/stu-home'})
+      }
+    }
+  },
+  computed:{
+    role(){
+      return this.$store.state.role;
     }
   }
 }

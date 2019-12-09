@@ -61,15 +61,15 @@ export default new Router({
         roles:'teacher'
       }
     },
-    {
-      path:'/stu-class-detail',
-      component:StuClass,
-      meta:{
-        roles:'teacher'
-      }
+    // {
+    //   path:'/stu-class-detail',
+    //   component:StuClass,
+    // },
+      {
       path:'/stu-class-detail/:stuclass',
       component:StuClassDetail
-      path:'/class-detail',
+      },
+      {path:'/class-detail',
       component:ClassDetail
     },
     {

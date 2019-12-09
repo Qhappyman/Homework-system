@@ -32,7 +32,7 @@
       <el-table-column label="姓名" prop="id"></el-table-column>
       <el-table-column label="分数" prop="score"></el-table-column>
       <el-table-column align="right">
-        <template slot="header">
+        <template slot="header"></template>
         <template slot="header" slot-scoped>
           <el-input v-model="search" size="middle" placeholder="输入关键字搜索" />
         </template>
@@ -47,9 +47,8 @@
     </el-table>
   </div>
 </template>
-
-<script>
 import axios from "axios";
+<script>
 export default {
   data() {
     return {
@@ -83,11 +82,6 @@ export default {
     })
     this.$store.commit('updateStuworklist');
   }
-  // mounted(){
-  //   axios.get('https://www.easy-mock.com/mock/5c35a447a7a7577b357b4596/example/name').then(res=>{console.log(res.data.data.class);
-
-  //   })
-  // }
 };
 </script>
 

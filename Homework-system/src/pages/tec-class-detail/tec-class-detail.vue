@@ -13,7 +13,7 @@
         <el-menu-item>
           <el-breadcrumb separator-class="el-icon-arrow-right" class="newstyle">
             <el-breadcrumb-item :to="{ path: '/home' }">
-              <span>我的课堂</span>
+              <span>我的课堂</span>{{role}}
             </el-breadcrumb-item>
             <el-breadcrumb-item>
               <span style="color:#ffe">{{this.$route.params.class}}</span>  <!--根据params参数传递过来的的路由值进行更改-->
@@ -36,7 +36,7 @@
     <main>
       <div class="base-class">
         <div class="class-name">{{this.$route.params.class}}</div>
-        <div class="class-code"><p>加课码 : 123456</p><p>学生数 : 50</p></div>
+        <div class="class-code"><p>加课码 : 123456</p>{{role}}<p>学生数 : 50</p></div>
       </div>
       <div class="class-nav">
         <el-tabs v-model="activeName"  @tab-click="handleClick" :stretch = true class="nav-tap">
@@ -67,6 +67,18 @@ export default {
   methods:{
     handleClick(tab, event) {
         console.log(tab, event);
+      },
+      jumpHome(){
+        if(this.role == '讲师'){
+          this.$router.push({path:'/home'})
+          console.log(132)
+        }
+        else if(this.role == '学生'){
+          this.$router.push({path:'/stu-home'})
+        }
+        else{
+          this.$router.push({path:'/*'})
+        }
       }
   },
   components: {
@@ -74,6 +86,11 @@ export default {
     TecHomework,
     ReleaseWork,
     ReleaseNotice
+  },
+  computed:{
+    role:function(){
+        return this.$store.state.role;
+      }
   }
 };
 </script>

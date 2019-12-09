@@ -7,20 +7,18 @@
   background-color="#545c64"
   text-color="#fff"
   :router= true
-  router=true
-  :router= "true"
   active-text-color="#ffd04b">
   <el-menu-item
-    index="/home"
+  index="/home"
     :default-active="navindex1"
-    >我的课堂
+    ><span>我的课堂</span>
   </el-menu-item>
 
   <el-submenu>
     <template slot="title">个人中心</template>
 
     <el-menu-item index="/setting-me">个人设置</el-menu-item>
-    <el-menu-item @click="exitCount" index="2">退出账户</el-menu-item>
+    <el-menu-item index="2">退出账户</el-menu-item>
 
   </el-submenu>
   <el-menu-item
@@ -35,7 +33,7 @@
   <el-menu-item
     class="studio"
     index="/"
-    >系统主页
+    >系统主页{{role}}
     <i class="el-icon-s-home"></i>
   </el-menu-item>
 </el-menu>
@@ -52,9 +50,22 @@ export default {
       };
     },
     methods: {
-
-      exitCount(){
-
+      // jumpHome(){
+      //   if(this.role == '讲师'){
+      //     this.$router.push({path:'/home'})
+      //     console.log(132)
+      //   }
+      //   else if(this.role == '学生'){
+      //     this.$router.push({path:'/stu-home'})
+      //   }
+      //   else{
+      //     this.$router.push({path:'/*'})
+      //   }
+      // }
+    },
+    computed:{
+      role:function(){
+        return this.$store.state.role;
       }
     }
 }

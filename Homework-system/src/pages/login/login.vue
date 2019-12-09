@@ -1,16 +1,4 @@
 <template>
-  <div id="login">
-      <el-form ref="form" :model="form" label-width="80px">
-  <el-form-item label="身份">
-    <el-radio-group v-model="form.role">
-      <el-radio label="讲师"></el-radio>
-      <el-radio label="学生"></el-radio>
-    </el-radio-group>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="onSubmit" size="small">登录</el-button>
-  </el-form-item>
-</el-form>
   <div class="background">
     <div class="login">账号登录
       <el-form ref="form">
@@ -20,6 +8,12 @@
         <el-form-item>
           <el-input placeholder="请输入密码" v-model="password" type="password"></el-input>
         </el-form-item>
+         <el-form-item label="身份" style="margin:0 70px">
+    <el-radio-group v-model="role">
+      <el-radio label="讲师"></el-radio>
+      <el-radio label="学生"></el-radio>
+    </el-radio-group>
+  </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login">登录</el-button>
         </el-form-item>
@@ -28,57 +22,45 @@
     </div>
   </div>
 </template>
-
+import Vuex from "vuex";
 <script>
-export default {
-name:'Login',
-data(){
-  return{
-    form:{
-      role:''
-    }
-}
-}
-}
-</script>
-<style scoped>
-#login{
-margin: auto;
-width: 500px;
-height: 500px;
-background-color: azure;
-margin: 20px 15px;
-}
+export default{
   name:'Login',
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      role:''
     }
   },
   methods: {
     login: function() {
-      axios.post('', {
-        uesrName: username,
-        password: password
-      })
-      .then(function (response) {
-        console.log(response);
-        const h = this.$createElement;
-        this.$notify({
-          title: '提示',
-          message: h('i','登录成功')
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-        const h = this.$createElement;
-        this.$notify({
-          title: '提示',
-          message: h('i','登录失败')
-        });
-      });
+    //   axios.post('', {
+    //     uesrName: username,
+    //     password: password
+    //   })
+    //   .then(function (response) {
+    //     console.log(response);
+    //     const h = this.$createElement;
+    //     this.$notify({
+    //       title: '提示',
+    //       message: h('i','登录成功')
+    //     });
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //     const h = this.$createElement;
+    //     this.$notify({
+    //       title: '提示',
+    //       message: h('i','登录失败')
+    //     });
+    //   });
+    // },
+    this.role == '学生'?this.$router.push({path:'/stu-home'}):(this.role == '讲师'?this.$router.push({path:'/home'}):this.$router.push({path:'/*'}))
+    this.$store.commit('addRole',role);
+    localStorage.setItem('role',this.role);
     },
+
     goRegister: function() {
       this.$router.push({path: '/register'})
     }

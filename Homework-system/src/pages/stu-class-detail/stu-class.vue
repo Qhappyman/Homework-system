@@ -87,6 +87,18 @@ export default {
     handleChange(val) {
       console.log(val);
     }
+    // jumpHome(){
+    //     if(this.role == '讲师'){
+    //       this.$router.push({path:'/home'})
+    //       console.log(132)
+    //     }
+    //     else if(this.role == '学生'){
+    //       this.$router.push({path:'/stu-home'})
+    //     }
+    //     else{
+    //       this.$router.push({path:'/*'})
+    //     }
+    //   }
   },
   computed: {
     stuHomeworkList() {
@@ -94,7 +106,10 @@ export default {
     },
     stuNoticeList() {
       return this.$store.state.stuNoticeList;
-    }
+    },
+    role:function(){
+        return this.$store.state.role;
+      }
   },
   created(){
     this.$store.dispatch('stuHomeworkList')

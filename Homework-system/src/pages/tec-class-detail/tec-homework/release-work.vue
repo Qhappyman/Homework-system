@@ -96,15 +96,15 @@
       </el-form-item>
       <!-- <input type="file" id="filea"><input type="submit" @click="addfile"> -->
     </el-form>
-    <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="false">
-      <Worklist
+    <!-- <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="false"> -->
+      <!-- <Worklist
         v-for="(item,index) in worklist"
         :key="index"
         ref="worklist"
         @updateWork="handleUpdate"
-      >
+      > -->
         <!-- <template slot="title">{{worklist[index].context.split('and')[0]}}:</template> -->
-        <template slot="content">{{worklist[index].context.split('and')[1]}}</template>
+        <!-- <template slot="content">{{worklist[index].context.split('and')[1]}}</template> -->
     <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
       <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist" >
         <template slot="title">{{worklist[index].title}}:</template>
@@ -145,7 +145,7 @@ export default {
         type: [],
         delivery: false
       },
-      ifupdate: false
+      ifupdate: false,
       // direction:this.direction
       fileList: [  
       ],
@@ -327,33 +327,23 @@ export default {
         }
         course(this.my);
 console.log(classtype);
-axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=${classtype}&time=3&context=${this.homework.name+this.homework.content}`)
+axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${classtype}&time=3&context=${this.homework.name+this.homework.content}`)
 .then(function (response) {
     console.log(response);
   })
   .catch(function (error) {
     console.log(error);
   });
-  // let a = document.getElementById('files');
-  // console.log(a.files[0]);
-  // let file = this.fileList[0];
-  // console.log(this.fileList[0]);
-  // let param = new FormData();
-  // param.append('file',file);
-  // console.log(param.get('file'));
-  // axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=1`,param,{ headers: {'Content-Type': 'multipart/form-data'}});
-  // axios.get(`http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=1`).then(res=>console.log(res))
-        // axios.post('http://2z431s2133.wicp.vip:20570/Mission/addMission',data).then(res=>console.log(res));
-          // axios.get('http://2z431s2133.wicp.vip:20570/Mission/searchMission',{direction:1}).then((res)=>console.log(res));
           this.handelRelease();
-      } else 
-      {
-        this.$message.error({
-          message: "作业名称或内容不可为空",
-          type: "warning"
-        });
-      }
-    }
+       } 
+    //    else 
+    //   {
+    //     this.$message.error({
+    //       message: "作业名称或内容不可为空",
+    //       type: "warning"
+    //     })
+    //   }
+    // }
     
     },
     // addfile(){
@@ -404,7 +394,7 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?direction=$
       });
   },
   updated() {}
-};
+}
 </script>
 
 <style scoped>
