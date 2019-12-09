@@ -32,7 +32,7 @@ export default{
     return {
       name: '',
       password: '',
-      role:''
+      role:'学生'
     }
   },
   methods: {

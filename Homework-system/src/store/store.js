@@ -14,8 +14,8 @@ return new Vuex.Store({
         },
         userInfo:'',
         stuworkList:[],
-        checkList:["前端"],
-        // workList:[{title:'作业一',content:'做一个登录网站'},{title:'作业二',content:'做一个注册网站不是noise2号212拨不2比比不择手段交付给基本基本环节拨不就吧就会被就拨不基本基本基本基本就weg'}],
+        checkList:["前端"],  //教师所教课程
+        stuWorklist:'',   //missionId下面已交的学生作业
         workList:[{context:"作业一and写一个网站",id:1},{context:"作业二and写一个网站",id:2}],
         noticeList:[{title:'公告一',content:'做一个公鸡网站'}],
         courseList:[{name:'前端',code:'123'},{name:'后端',code:'456'},{name:'安卓',code:'789'}],
@@ -61,7 +61,7 @@ return new Vuex.Store({
             state.checkList.push(course);
         },
         updateStuworklist(state,payload){
-            
+            state.stuWorklist = payload;  //教师获取missionId下面的学生作业
         },
         deleteClass(state,name){
             let index;

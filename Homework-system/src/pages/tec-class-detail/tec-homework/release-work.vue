@@ -117,6 +117,7 @@
 
 <script>
 import axios from "axios";
+import Vuex from "vuex";
 import Worklist from "./tec-homework-list";
 export default {
   props:["clas"],

@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import Vuex from "vuex";
 export default {
 name:'Noticelist',
 data(){
@@ -24,13 +26,7 @@ methods:{
     
 },
 mounted(){
-    // let a =worklist.forEach((item,index)=>{
-    //         if(worklist[index][content] == this.$slots.title[0].text ){
-    //             return worklist[index].title;
-    //         }
-    //     })
-    // Object.defineProperty(worklist,)
-    // this.$set(this,"titl", a);
+    
 }
 }
 </script>

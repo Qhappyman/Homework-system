@@ -9,16 +9,16 @@
   :router= true
   active-text-color="#ffd04b">
   <el-menu-item
-  index="/home"
+  index="1"
     :default-active="navindex1"
-    ><span>我的课堂</span>
+    ><span @click="jumpHome">我的课堂</span>
   </el-menu-item>
 
   <el-submenu>
     <template slot="title">个人中心</template>
 
     <el-menu-item index="/setting-me">个人设置</el-menu-item>
-    <el-menu-item index="2">退出账户</el-menu-item>
+    <el-menu-item index="2" @click="exit">退出账户</el-menu-item>
 
   </el-submenu>
   <el-menu-item
@@ -33,7 +33,7 @@
   <el-menu-item
     class="studio"
     index="/"
-    >系统主页{{role}}
+    >系统主页
     <i class="el-icon-s-home"></i>
   </el-menu-item>
 </el-menu>
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import vuex from 'vuex'
 export default {
     data() {
       return {
@@ -50,22 +52,25 @@ export default {
       };
     },
     methods: {
-      // jumpHome(){
-      //   if(this.role == '讲师'){
-      //     this.$router.push({path:'/home'})
-      //     console.log(132)
-      //   }
-      //   else if(this.role == '学生'){
-      //     this.$router.push({path:'/stu-home'})
-      //   }
-      //   else{
-      //     this.$router.push({path:'/*'})
-      //   }
-      // }
+      jumpHome(){
+        if(this.userInfo.role == '讲师'){
+          this.$router.push({path:'/home'})
+        }
+        else if(this.userInfo.role == '学生'){
+          this.$router.push({path:'/stu-home'})
+        }
+        else{
+          this.$router.push({path:'/*'})
+        }
+      },
+      exit(){
+        localStorage.clear();
+        this.$router.push({path:'/'})
+      }
     },
     computed:{
-      role:function(){
-        return this.$store.state.role;
+      userInfo:function(){
+        return this.$store.state.userInfo;
       }
     }
 }

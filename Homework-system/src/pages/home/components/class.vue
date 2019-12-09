@@ -20,7 +20,8 @@
 </template>
 
 <script>
-import Vuex from "vuex";
+import Vuex from "vuex"
+import axios from 'axios'
 export default {
   props: ["classtype", "item"],
   data() {
@@ -34,11 +35,15 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.$message({
+          //删除教师课程
+          axios.post('http://2z431s2133.wicp.vip:20570/work/')
+          .then((res)=>{
+            this.$message({
             type: "success",
             message: "删除成功!"
-          });
+          })
           this.$store.commit("deleteClass", this.$slots.classname[0].text); //获取到对应课程的名字，通过插槽属性获取
+          })            
         })
         .catch(() => {
           this.$message({

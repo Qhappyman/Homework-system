@@ -12,8 +12,8 @@
       >
         <el-menu-item>
           <el-breadcrumb separator-class="el-icon-arrow-right" class="newstyle">
-            <el-breadcrumb-item :to="{ path: '/home' }">
-              <span style="color: white; line-height: 60px;">我的课堂</span>
+            <el-breadcrumb-item>
+              <span style="color: white; line-height: 60px;" @click="jumpHome">我的课堂</span>
             </el-breadcrumb-item>
             <el-breadcrumb-item>
               <span style="color:#ffe; line-height: 60px;">{{this.$route.params.stuclass}}</span>
@@ -86,19 +86,19 @@ export default {
     },
     handleChange(val) {
       console.log(val);
-    }
-    // jumpHome(){
-    //     if(this.role == '讲师'){
-    //       this.$router.push({path:'/home'})
-    //       console.log(132)
-    //     }
-    //     else if(this.role == '学生'){
-    //       this.$router.push({path:'/stu-home'})
-    //     }
-    //     else{
-    //       this.$router.push({path:'/*'})
-    //     }
-    //   }
+    },
+    jumpHome(){
+        if(this.userInfo.role == '讲师'){
+          this.$router.push({path:'/home'})
+          console.log(132)
+        }
+        else if(this.userInfo.role == '学生'){
+          this.$router.push({path:'/stu-home'})
+        }
+        else{
+          this.$router.push({path:'/*'})
+        }
+      }
   },
   computed: {
     stuHomeworkList() {
@@ -107,8 +107,8 @@ export default {
     stuNoticeList() {
       return this.$store.state.stuNoticeList;
     },
-    role:function(){
-        return this.$store.state.role;
+    userInfo:function(){
+        return this.$store.state.userInfo;
       }
   },
   created(){

@@ -16,7 +16,7 @@
     </el-menu>
     <div class="homework">
       <div class="work-score">
-        <el-input placeholder="分数(100)" v-model="input" maxlength="3" clearable></el-input>
+        <el-input placeholder="分数(100)" v-model="score" maxlength="3" clearable></el-input>
         <el-button type="primary" class="submit" size="medium" @click="submitScore">提交分数</el-button>
       </div>
       <div class="work-content">
@@ -30,11 +30,13 @@
 </template>
 
 <script>
+import axios from 'axios'
+import Vuex from 'vuex'
 export default {
   name: "FixHomework",
   data() {
     return {
-      input: "",
+      score: "",
       textarea: ""
     };
   },
@@ -55,6 +57,16 @@ export default {
         type: "warning"
       })
         .then(() => {
+          axios.post('http://2z431s2133.wicp.vip:20570/work/')
+          .then((res)=>{
+            console.log(res);  //提交分数
+          })
+          .catch(()=>{
+            this.$message({
+              type:"info",
+              message:"网络错误"
+            })
+          })
           this.$message({
             type: "success",
             message: "提交成功!"
@@ -83,6 +95,10 @@ export default {
         })}
 
     }
+  },
+  mounted(){
+    //根据params传过来的id找到学生作业具体数据
+    this.textarea = '';
   }
 };
 </script>

@@ -31,7 +31,7 @@ new Vue({
   template: '<App/>',
   mounted(){
       if(localStorage.name!=undefined&&localStorage.role!=undefined){
-          this.$store.commit('saveInfo',{username:localStorage.name,role:ocalStorage.role})
+          this.$store.commit('saveInfo',{username:localStorage.name,role:localStorage.role})
       }
       else{
           this.$router.push('/login');

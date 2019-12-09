@@ -12,9 +12,10 @@
     </el-collapse-item>
   </div>
 </template>
+
+<script>
 import axios from "axios";
 import Vuex from "vuex";
-<script>
 export default {
  props:['clas','workname'],
   name: "Worklist",
@@ -94,7 +95,12 @@ export default {
     }
   },
   mounted() {
-    // worklist();
+    //通过courseId获取作业列表
+     axios.post('http://2z431s2133.wicp.vip:20570/work')
+     .then((res)=>{
+       console.log(res);
+       this.$store.commit('getCourse',res)
+     })
   }
 }
   </script>

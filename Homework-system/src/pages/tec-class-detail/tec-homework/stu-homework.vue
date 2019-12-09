@@ -47,8 +47,9 @@
     </el-table>
   </div>
 </template>
-import axios from "axios";
 <script>
+import axios from "axios";
+import Vuex from "vuex";
 export default {
   data() {
     return {
@@ -70,17 +71,20 @@ export default {
       this.$router.push({ path: "/tec-class-detail/前端"});
        
     },
+    //跳转到学生作业打分页面
+    //可以直接把那位学生对应的id发过去，然后遍历vuex找到具体内容
     handleEdit(index, row) {
       console.log(index, row.name, row.date);
       this.$router.push({ path: `/fix-homework/${row.name}` });
     }
   },
   mounted(){
+    //通过missionId获取学生作业
     axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=${this.$route.params.workid}`).then((res)=>{
       // console.log(res.data.data[0].id);
       this.tableData = res.data.data;
     })
-    this.$store.commit('updateStuworklist');
+    this.$store.commit('updateStuworklist',res);
   }
 };
 </script>

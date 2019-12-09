@@ -68,6 +68,7 @@
 
 <script>
 import axios from "axios";
+import Vuex from "vuex";
 export default {
   data() {
     return {
@@ -116,8 +117,7 @@ export default {
           }
           axios
             .post(
-              'http://2z431s2133.wicp.vip:20570/work/Course/addCourse',
-              data,
+              'http://2z431s2133.wicp.vip:20570/work/Course/addCourse?',
               {
                 headers: { "Content-Type":"application/json" }
               }
@@ -170,11 +170,16 @@ export default {
         this.dialogForVisible = true;
       }
       else{
-      this.$notify({
+        axios.post('http://2z431s2133.wicp.vip:20570/work/')
+        .then((res)=>{
+        this.$notify({
         title: "成功",
         message: "发布成功",
         type: "success"
-      });
+      })
+        }).catch(()=>{
+          alert('网络错误')
+        })
     }
   }
   },

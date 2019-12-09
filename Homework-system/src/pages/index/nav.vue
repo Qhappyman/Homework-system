@@ -5,7 +5,7 @@
       mode="horizontal"
       background-color="#545c64"
       text-color="#fff"
-      router=true
+      :router=true
       active-text-color="#ffd04b">作业提交
       <el-menu-item
         :default-active="navindex1"
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import Vuex from "vuex";
 export default {
   name:'IndexNav',
   data() {

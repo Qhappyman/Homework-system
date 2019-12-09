@@ -12,8 +12,8 @@
       >
         <el-menu-item>
           <el-breadcrumb separator-class="el-icon-arrow-right" class="newstyle">
-            <el-breadcrumb-item :to="{ path: '/home' }">
-              <span>我的课堂</span>{{role}}
+            <el-breadcrumb-item>
+              <span @click="jumpHome">我的课堂</span>
             </el-breadcrumb-item>
             <el-breadcrumb-item>
               <span style="color:#ffe">{{this.$route.params.class}}</span>  <!--根据params参数传递过来的的路由值进行更改-->
@@ -43,7 +43,6 @@
     <el-tab-pane label="作业" name="first"><ReleaseWork :direction="this.$route.params.class"></ReleaseWork></el-tab-pane>
     <el-tab-pane label="公告" name="second"><ReleaseNotice></ReleaseNotice></el-tab-pane>
     <el-tab-pane label="已发布" name="third"></el-tab-pane>
-    
   </el-tabs>
       </div>
     </main>
@@ -55,6 +54,8 @@ import ReleaseWork from './tec-homework/release-work'
 import TecNotice from "./tec-notice/tec-notice";
 import TecHomework from "./tec-homework/tec-homework.vue";
 import ReleaseNotice from './tec-notice/release-notice'
+import axios from "axios";
+import Vuex from "vuex";
 export default {
   name: "TecClass",
   data() {
@@ -69,11 +70,11 @@ export default {
         console.log(tab, event);
       },
       jumpHome(){
-        if(this.role == '讲师'){
+        if(this.userInfo.role == '讲师'){
           this.$router.push({path:'/home'})
           console.log(132)
         }
-        else if(this.role == '学生'){
+        else if(this.userInfo.role == '学生'){
           this.$router.push({path:'/stu-home'})
         }
         else{
@@ -88,8 +89,8 @@ export default {
     ReleaseNotice
   },
   computed:{
-    role:function(){
-        return this.$store.state.role;
+    userInfo:function(){
+        return this.$store.state.userInfo;
       }
   }
 };
