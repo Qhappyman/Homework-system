@@ -30,10 +30,10 @@ export default {
       if(localStorage.role==undefined){
         this.$router.push({path:'/login'});
       }
-      else if(localStorage.role=='讲师'){
+      else if(localStorage.role==0){
         this.$router.push({path:'/home'})
       }
-      else if(localStorage.role == '学生'){
+      else if(localStorage.role == 1){
         this.$router.push({path:'/stu-home'})
       }
     }

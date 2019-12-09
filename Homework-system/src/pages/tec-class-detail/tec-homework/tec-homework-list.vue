@@ -25,28 +25,15 @@ export default {
     };
   },
   computed: {
-    worklist() {
-      return this.$store.state.workList;
-    },
+    
     title() {
-      //this.$slots.title[0].text;
-      return this.worklist
-        .filter((item, index) => {
-          return item.context
-            .split("and")
-            .includes(this.$slots.content[0].text);
-        })[0]
-        .context.split("and")[0];
+    return this.$slots.title[0].text;
     }
   },
   methods: {
     workDetail() {
       this.$router.push({
-        path: `/stu-homework/${this.worklist.filter((item, index) => {
-          return item.context
-            .split("and")
-            .includes(this.$slots.content[0].text);
-        })[0].id}`
+        path: `/stu-homework/${missionId}` //主要还是missionId
       });
     },
     updateWork(){
@@ -62,15 +49,10 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        let deleteId = this.worklist.filter((item, index) => {
-          return item.context
-            .split("and")
-            .includes(this.$slots.content[0].text);
-        })[0].id;
         axios
           .delete(
             `http://2z431s2133.wicp.vip:20570/work/Mission/deleteMission?missionId=${deleteId}`
-          )
+          )   //获取到missionId
           .then(res => {
             this.$message({
               type: "success",

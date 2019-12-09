@@ -107,8 +107,8 @@
         <!-- <template slot="content">{{worklist[index].context.split('and')[1]}}</template> -->
     <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
       <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist" >
-        <template slot="title">{{worklist[index].title}}:</template>
-        <template slot="content">{{worklist[index].content}}</template>
+        <template slot="title">{{worklist[index].title}}</template>
+        <template slot="content">{{worklist[index].context}}</template>
         <!--千万不要修改插槽，不然会有很多问题-->
       </Worklist>
     </el-collapse>
@@ -122,12 +122,13 @@ import Worklist from "./tec-homework-list";
 export default {
   props:["clas"],
   name: "ReleaseWork",
-  props: ["direction"],
+  props: ["courseInfo"],
   components: {
     Worklist
   },
   data() {
     return {
+      courseinfo:this.courseInfo,
       homework: {
         name: "",
         date: "",
@@ -186,9 +187,8 @@ export default {
         axios
           .post(
             `http://2z431s2133.wicp.vip:20570/work/Mission/updateMission?missionId=${
-              this.updateId
-            }&content=${this.updateWork.name +
-              "and" +
+              this.updateId   //获取到修改的任务missionId来传参
+            }&content=${
               this.updateWork.content}`,
             formdata,
             { headers: { "Content-Type": "multipart/form-data;charset=UTF-8" } }
@@ -201,7 +201,7 @@ export default {
             });
             this.ifupdate = false;
             this.$store.commit("updateWork", {
-              context: this.updateWork.name + "and" + this.updateWork.content,id:this.updateId
+              context: this.updateWork.name  //需要完善，主要是title问题
             });   //先使视图更新，然后在跳出页面时使数据更新
           })
           .catch(error => {
@@ -252,18 +252,16 @@ export default {
     },
     releaseWork() {
       if (!(this.homework.name == "" || this.homework.content == "")) {
-        axios
+       let newthis = this;
+       axios
           .post(
             `http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${
-              this.directnumber
-            }&time=3&context=${this.homework.name +
-              "and" +
-              this.homework.content}`
+              newthis.entercourse.courseId}&time=1&context=${this.homework.content}&title=${this.homework.name}`
           )
           .then(function(response) {
             console.log(response);
             this.$store.commit("addWorklist", {
-              context: this.homework.name + "and" + this.homework.content
+              context: this.homework.content,title: this.homework.name
             });
             this.$message({
               // title: "成功",
@@ -337,50 +335,25 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${
   });
           this.handelRelease();
        } 
-    //    else 
-    //   {
-    //     this.$message.error({
-    //       message: "作业名称或内容不可为空",
-    //       type: "warning"
-    //     })
-    //   }
-    // }
-    
-    },
-    // addfile(){
-    //   let file= document.getElementById('filea').files[0];
-    //   let box = new FormData();
-    //   box.append("file",file);
-    //   // console.log(box);
-    //   // console.log(box.get('file'));
-    //   axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=2`,box,{ headers: {'Content-Type': 'multipart/form-data'}});
-    //   axios.get('http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=2').then((res)=>console.log(res))
-    // }
+    }
   },
-  // created(){
-  //   axios.get("http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?direction=1").then((res)=>console.log(res));
-  // },
   computed: {
     worklist() {
       return this.$store.state.workList;
+    },
+    entercourse(){
+      return this.$store.state.entercourse;
     }
   },
   watch: {},
   created() {
-    if (this.direction == "前端") {
-      this.directnumber = 1;
-    } else if (this.direction == "后台") {
-      this.directnumber = 2;
-    } else if (this.direction == "Python") {
-      this.directnumber = 3;
-    } else {
-      this.directnumber = 4;
-    }
+    
   },
   mounted() {
+    let newthis=this;
     axios
       .get(
-        `http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?courseId=${this.directnumber}`
+        `http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?courseId=${newthis.entercourse.courseId}`
       )
       .then(res => {
         let workArray = res.data.data;
@@ -391,7 +364,7 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${
         this.$store.commit("updateWorklist", workArray); //分析返回数据传给store
       })
       .catch(res => {
-        alert(res);
+        alert('网络错误');
       });
   },
   updated() {}

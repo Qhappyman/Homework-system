@@ -8,17 +8,11 @@
         <el-form-item>
           <el-input placeholder="请输入密码" v-model="password" type="password"></el-input>
         </el-form-item>
-         <el-form-item label="身份" style="margin:0 70px">
-    <el-radio-group v-model="role">
-      <el-radio label="讲师"></el-radio>
-      <el-radio label="学生"></el-radio>
-    </el-radio-group>
-  </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
-      <div class="to-register">注册账号</div>
+      <div class="to-register" @click="goRegister">注册账号</div>
     </div>
   </div>
 </template>
@@ -32,40 +26,57 @@ export default{
     return {
       name: '',
       password: '',
-      role:'学生'
     }
   },
   methods: {
-    login: function() {
-      this.role == '学生'?this.$router.push({path:'/stu-home'}):(this.role == '讲师'?this.$router.push({path:'/home'}):this.$router.push({path:'/*'}))
-      this.$store.commit('saveInfo',{username:this.name,role:this.role})
-      localStorage.name = this.name;
-      localStorage.role = this.role;
-      // axios.post('http://2z431s2133.wicp.vip:20570/work')
-      // .then(function (response) {
-      //   console.log(response);
-      //   const h = this.$createElement;
-      //   this.$notify({
-      //     title: '提示',
-      //     message: h('i','登录成功')
-      //   });
-        
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      //   const h = this.$createElement;
-      //   this.$notify({
-      //     title: '提示',
-      //     message: h('i','登录失败')
-      //   });
-      // });
+    jump(role){
+      if(role==1){
+        this.$router.push({path:'/home'})
+      }
+      else if(role==0){
+        this.$router.push({path:'/stu-home'})
+      }
+      else{
+        this.$router.push({path:'/*'})
+      }
     },
+    login: function() { 
+       
+      //加入axios后删上面四句
+      let newthis = this;
+      let jump;
+      let data = {
+        id:this.name,
+        password:this.password
+      }
+      axios.post('http://2z431s2133.wicp.vip:20570/work//User/login',data)
+      .then(function (response) {
+        console.log(response.data.data.role==1);
+        newthis.jump(response.data.data.role)
+           newthis.$store.commit('saveInfo',{userid:response.data.data.id,role:response.data.data.role})
+          window.localStorage.id = response.data.data.id;
+      window.localStorage.role = response.data.data.role;
+        // const h = this.$createElement;
+        // this.$notify({
+        //   title: '提示',
+        //   message: h('i','登录成功')
+        // });    
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+        // const h = this.$createElement;
+        // this.$notify({
+        //   title: '提示',
+        //   message: h('i','登录失败')
+        // });
+      })
+    },
+    goRegister: function() {
+      this.$router.push({path: '/register'})
     }
-
-    // goRegister: function() {
-    //   this.$router.push({path: '/register'})
-    // }
   }
+}
 
 </script>
 

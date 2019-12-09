@@ -12,11 +12,12 @@ return new Vuex.Store({
             ID:"2018210842",            
             ID:"2018210842",
         },
-        userInfo:'',
+        entercourse:'',
+        userInfo:'123',  //{userid:  ,role:}
         stuworkList:[],
-        checkList:["前端"],  //教师所教课程
+        checkList:'',  //教师所教课程
         stuWorklist:'',   //missionId下面已交的学生作业
-        workList:[{context:"作业一and写一个网站",id:1},{context:"作业二and写一个网站",id:2}],
+        workList:'',   //老师布置的作业列表
         noticeList:[{title:'公告一',content:'做一个公鸡网站'}],
         courseList:[{name:'前端',code:'123'},{name:'后端',code:'456'},{name:'安卓',code:'789'}],
         stuHomeworkList: [{title:'作业一', content:'做一个登录网站', deadline:'10月1日'}, {title:'作业二',content:'做一个注册网站', deadline:'10月1日'}],
@@ -62,6 +63,9 @@ return new Vuex.Store({
         },
         updateStuworklist(state,payload){
             state.stuWorklist = payload;  //教师获取missionId下面的学生作业
+        },
+        enterCourse(state,mes){
+          state.entercourse=mes;
         },
         deleteClass(state,name){
             let index;

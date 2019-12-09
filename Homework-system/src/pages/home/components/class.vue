@@ -2,11 +2,12 @@
   <div id="continer">
     <header ref="class" id="classname">
       <slot name="classname"></slot>
+      <p class="header-p">课程码:<slot name="courseId"></slot></p>
     </header>
 
     <main>
-      <p class="header-p">课程码:</p>
-      <p class="main-p">学生数:</p>
+      <p class="head-p">教师:<slot name="courseTea"></slot></p>
+      <p class="main-p">学生数:<slot name="stunum"></slot></p>
     </main>
 
     <footer>
@@ -58,6 +59,7 @@ export default {
       this.$router.push({
         path: `/tec-class-detail/${this.$slots.classname[0].text}`
       });
+      this.$store.commit('enterCourse',{courseName:this.$slots.classname[0].text,courseId:this.$slots.courseId[0].text})
     }
   },
   computed: {
@@ -81,7 +83,7 @@ export default {
 }
 .header-p {
   font-size: 20px;
-  margin-top: 15px;
+  margin-top: -25px;
 }
 header {
   text-align: center;

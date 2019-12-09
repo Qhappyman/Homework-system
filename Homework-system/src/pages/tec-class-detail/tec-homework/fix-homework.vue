@@ -57,8 +57,9 @@ export default {
         type: "warning"
       })
         .then(() => {
-          axios.post('http://2z431s2133.wicp.vip:20570/work/')
-          .then((res)=>{
+          let newthis = this;
+          axios.post(`http://2z431s2133.wicp.vip:20570/work/Work/scoreWork?score=${newthis.score}&workId=${newthis.$route.params.workid}`)
+          .then((res)=>{  //还是workId
             console.log(res);  //提交分数
           })
           .catch(()=>{

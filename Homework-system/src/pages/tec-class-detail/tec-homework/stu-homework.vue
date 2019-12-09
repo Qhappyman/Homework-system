@@ -75,14 +75,15 @@ export default {
     //可以直接把那位学生对应的id发过去，然后遍历vuex找到具体内容
     handleEdit(index, row) {
       console.log(index, row.name, row.date);
-      this.$router.push({ path: `/fix-homework/${row.name}` });
+      this.$router.push({ path: `/fix-homework/${row.name}` }); //应该把workId传过去
     }
   },
   mounted(){
     //通过missionId获取学生作业
-    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=${this.$route.params.workid}`).then((res)=>{
+    let newthis = this;
+    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=${newthis.$route.params.workid}`).then((res)=>{
       // console.log(res.data.data[0].id);
-      this.tableData = res.data.data;
+      this.tableData = res.data.data;   //获取到作业列表，但此组件只显示id，score，name
     })
     this.$store.commit('updateStuworklist',res);
   }

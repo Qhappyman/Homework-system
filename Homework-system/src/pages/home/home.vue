@@ -2,7 +2,7 @@
 <div>
 
     <HomeNav></HomeNav>
-
+    
     <CreateClass @add="addCourse"></CreateClass>
     <ClassList :courseList="courseList"></ClassList>
 </div>
@@ -28,18 +28,24 @@ data(){
 methods:{
     addCourse(course){
         this.courseList.unshift(course);
+        
+},
+computed:{
+    studentId(){
+        
+    }
 }
 },
 mounted(){
+    let newthis = this;
     axios.post(
-              'http://2z431s2133.wicp.vip:20570/work/Course/allCourse'             
+              `http://2z431s2133.wicp.vip:20570/work/Course/selectCourseByTeacerId=${localStorage.id}`         
             ).then(res=>{
                 // this.$store.commit('getCourse',res.data.data);
                 console.log(res.data.data);
+                this.$store.commit('getCourse',res.data.data)
             })
 }
-    
-  
 }
 </script>
 <style scoped>

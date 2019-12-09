@@ -30,8 +30,8 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted(){
-      if(localStorage.name!=undefined&&localStorage.role!=undefined){
-          this.$store.commit('saveInfo',{username:localStorage.name,role:localStorage.role})
+      if(localStorage.id!=undefined&&localStorage.role!=undefined){
+          this.$store.commit('saveInfo',{userid:localStorage.id,role:localStorage.role})
       }
       else{
           this.$router.push('/login');

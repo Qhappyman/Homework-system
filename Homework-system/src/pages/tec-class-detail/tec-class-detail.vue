@@ -16,7 +16,7 @@
               <span @click="jumpHome">我的课堂</span>
             </el-breadcrumb-item>
             <el-breadcrumb-item>
-              <span style="color:#ffe">{{this.$route.params.class}}</span>  <!--根据params参数传递过来的的路由值进行更改-->
+              <span style="color:#ffe">{{this.$route.params.class.split('and')[0]}}</span>  <!--根据params参数传递过来的的路由值进行更改-->
             </el-breadcrumb-item>
           </el-breadcrumb>
         </el-menu-item>
@@ -35,13 +35,13 @@
     </div>
     <main>
       <div class="base-class">
-        <div class="class-name">{{this.$route.params.class}}</div>
-        <div class="class-code"><p>加课码 : 123456</p>{{role}}<p>学生数 : 50</p></div>
+        <div class="class-name">{{this.entercourse.courseName}}</div>
+        <div class="class-code"><p>加课码 : {{this.entercourse.courseId}}</p></div>
       </div>
       <div class="class-nav">
         <el-tabs v-model="activeName"  @tab-click="handleClick" :stretch = true class="nav-tap">
-    <el-tab-pane label="作业" name="first"><ReleaseWork :direction="this.$route.params.class"></ReleaseWork></el-tab-pane>
-    <el-tab-pane label="公告" name="second"><ReleaseNotice></ReleaseNotice></el-tab-pane>
+    <el-tab-pane label="作业" name="first"><ReleaseWork></ReleaseWork></el-tab-pane>
+    <el-tab-pane label="公告" name="second"><ReleaseNotice ></ReleaseNotice></el-tab-pane>
     <el-tab-pane label="已发布" name="third"></el-tab-pane>
   </el-tabs>
       </div>
@@ -91,6 +91,9 @@ export default {
   computed:{
     userInfo:function(){
         return this.$store.state.userInfo;
+      },
+      entercourse:function(){
+        return this.$store.state.entercourse;
       }
   }
 };
@@ -138,7 +141,8 @@ main{
 .class-code{
   flex-grow: 1;
   /* line-height: 20px; */
-  text-align: center
+  text-align: center;
+  font-size: 25px;
 }
 .class-nav{
   flex-grow: 1;

@@ -110,17 +110,17 @@ export default {
         console.log(this.classlist);
         if(this.classlist.indexOf(this.createclass.course)==-1){
           let data = {
-            "id":'',
+            "board":"gjq",
+            "boardTitle":"createit",
+            "id":0,  //这个id是创建课程时后台自动生成的courseId
             "name":this.createclass.course,
-            "studentNum":2,
-            "teacher":this.createclass.tecName
+            "studentNum":0,
+            "teacher":this.createclass.tecName,
           }
           axios
             .post(
-              'http://2z431s2133.wicp.vip:20570/work/Course/addCourse?',
-              {
-                headers: { "Content-Type":"application/json" }
-              }
+              'http://2z431s2133.wicp.vip:20570/work/Course/addCourse',data,
+              
             )
             .then(res => {
               this.$notify({
@@ -130,7 +130,7 @@ export default {
       });
        console.log(this.createclass.course)
       this.$emit('add',this.createclass.course);
-       this.$store.commit('updateChecklist',this.createclass.course);
+       this.$store.commit('updateChecklist',res.data.data);
             })
             .catch(error => {
               this.$message({

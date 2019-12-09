@@ -1,6 +1,10 @@
 <template>
   <div class="class-list">
-      <Class v-for="item in checklist" :key="item.index" style="display:inline-block; margin-right:15px;"><template v-slot:classname>{{item}}</template></Class>   <!--通过插槽动态加入数据-->
+      <Class v-for="item in checklist" :key="item.index" style="display:inline-block; margin-right:15px;"><template v-slot:classname>{{item.name}}</template>
+      <template v-slot:courseId>{{item.id}}</template>
+      <template v-slot:courseTea>{{item.teacher}}</template>
+      <template v-slot:stunum>{{item.studentNum}}</template>
+      </Class>   <!--通过插槽动态加入数据-->
       <!-- <Class v-for="item in checklist" :key="item.index" @delete="handleDelete"   style="display:inline-block; margin-right:15px;">
       <template v-slot:classname>{{item}}</template></Class>   通过插槽动态加入数据 -->
   </div>

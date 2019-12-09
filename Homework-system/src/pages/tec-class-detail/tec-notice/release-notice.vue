@@ -53,7 +53,8 @@ export default {
     },
     addNotice() {
       if (!(this.notice.name == "" || this.notice.content == "")) {
-        axios.post('http://2z431s2133.wicp.vip:20570/work/')
+        let newthis = this;
+        axios.post(`http://2z431s2133.wicp.vip:20570/work/Course/updateBoard&contentTitle=${newthis.notice.name}&scousrId=${newthis.entercourse.courseId}&content=${newthis.notice.content}`)
         .then((res)=>{
           this.$message({   //及时刷新页面:1. 再次请求axios 2.更新vuex
           message: "发布成功",
@@ -78,6 +79,9 @@ export default {
   computed: {
     noticelist() {
       return this.$store.state.noticeList;  //是否有必要上传到vuex
+    },
+    entercourse(){
+      return this.$router.state.entercourse;
     }
   },
   mounted(){
