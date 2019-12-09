@@ -12,7 +12,7 @@ return new Vuex.Store({
             ID:"2018210842",            
             ID:"2018210842",
         },
-        role:'',
+        userInfo:'',
         stuworkList:[],
         checkList:["前端"],
         // workList:[{title:'作业一',content:'做一个登录网站'},{title:'作业二',content:'做一个注册网站不是noise2号212拨不2比比不择手段交付给基本基本环节拨不就吧就会被就拨不基本基本基本基本就weg'}],
@@ -23,9 +23,9 @@ return new Vuex.Store({
         stuNoticeList:[{title:'公告一',content:'做一个登录网站',time:'10月2日'},{title:'公告二',content:'做一个注册网站',time:'10月2日'}]
     },
     mutations:{
-      addRole(state,role){
-        state.role = role;
-      },
+        saveInfo(state,mes){
+          state.userInfo = mes;
+        },
         update(state,paload){
             state[paload.name] = paload.data; //更新teach
             // state[paload.list] = paload.listdata //更新checklist

@@ -24,14 +24,15 @@ export default {
     }
   },
   methods:{
+    //根据本地存储身份来判断跳转
     goClass(){
-      if(this.role==''){
+      if(localStorage.role==undefined){
         this.$router.push({path:'/login'});
       }
-      else if(this.role=='讲师'){
+      else if(localStorage.role=='讲师'){
         this.$router.push({path:'/home'})
       }
-      else if(this.role == '学生'){
+      else if(localStorage.role == '学生'){
         this.$router.push({path:'/stu-home'})
       }
     }
