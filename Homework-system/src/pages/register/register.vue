@@ -1,7 +1,6 @@
 <template>
   <div class="background">
     <div class="container">
-      注册账号
       <el-form :ref="form" :model="form" status-icon :rules="rules" label-width="80px">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name"></el-input>
@@ -27,6 +26,9 @@
         <el-form-item>
           <el-button type="primary" @click="submitForm(form)">立即注册</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click='goLogin'>登录</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -34,6 +36,7 @@
 
 <script>
 import axios from "axios";
+import Login from '../login/login'
 export default {
   name: "Register",
   data() {
@@ -90,7 +93,13 @@ export default {
       }
     };
   },
+  components:{
+    Login
+  },
   methods: {
+    goLogin(){
+      this.$router.push({path:'/login'})
+    },
     submitForm(form) {
       this.$refs[form].validate(valid => {
         let data = {
@@ -138,11 +147,11 @@ export default {
 .container {
   position: relative;
   left: 35%;
-  top: 15%;
-  padding-top: 30px;
+  top: 13%;
+  padding-top: 10px;
   padding-left: 25px;
   width: 405px;
-  height: 470px;
+  height: 530px;
   font-size: 25px;
   font-weight: 400;
   background-color: white;
@@ -161,7 +170,7 @@ export default {
 .el-button {
   position: relative;
   right: 25px;
-  top: 10px;
+  top: 3px;
   width: 280px;
 }
 </style>

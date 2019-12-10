@@ -56,20 +56,20 @@ export default{
            newthis.$store.commit('saveInfo',{userid:response.data.data.id,role:response.data.data.role})
           window.localStorage.id = response.data.data.id;
       window.localStorage.role = response.data.data.role;
-        // const h = this.$createElement;
-        // this.$notify({
-        //   title: '提示',
-        //   message: h('i','登录成功')
-        // });    
+        const h = newthis.$createElement;
+        newthis.$notify({
+          title: '提示',
+          message: h('i','登录成功')
+        });    
         
       })
       .catch(function (error) {
         console.log(error);
-        // const h = this.$createElement;
-        // this.$notify({
-        //   title: '提示',
-        //   message: h('i','登录失败')
-        // });
+        const h = newthis.$createElement;
+        newthis.$notify({
+          title: '提示',
+          message: h('i','登录失败')
+        });
       })
     },
     goRegister: function() {

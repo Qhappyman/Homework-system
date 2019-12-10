@@ -23,6 +23,14 @@ Vue.use(ElementUI);
 // Vue.use(VueAxios,axios);
 
 //使用钩子函数进行权限跳转
+// router.beforeEach((to,from,next)=>{
+//     if(localStorage.id!=undefined&&localStorage.role!=undefined){
+//         next()
+//     }
+//     else{
+//         next('/login')
+//     }
+// })       //Maximum call stack size exceeded
 new Vue({
   el: '#app',
   router,

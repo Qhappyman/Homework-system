@@ -13,7 +13,7 @@ return new Vuex.Store({
             ID:"2018210842",
         },
         entercourse:'',
-        userInfo:'123',  //{userid:  ,role:}
+        userInfo:'',  //{userid:  ,role:}
         stuworkList:[],
         checkList:'',  //教师所教课程
         stuWorklist:'',   //missionId下面已交的学生作业
