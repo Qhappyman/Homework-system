@@ -49,7 +49,7 @@ export default{
         id:this.name,
         password:this.password
       }
-      axios.post('http://2z431s2133.wicp.vip:20570/work//User/login',data)
+      axios.post('/User/login',data)
       .then(function (response) {
         console.log(response.data.data.role==1);
         newthis.jump(response.data.data.role)

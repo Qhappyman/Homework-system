@@ -20,17 +20,16 @@ Vue.config.productionTip = false
 Vue.use(router)
 Vue.use(Vuex)
 Vue.use(ElementUI);
+
+axios.defaults.baseURL='http://2z431s2133.wicp.vip:20570/work'
+Vue.prototype.axios=axios 
 // Vue.use(VueAxios,axios);
 
 //使用钩子函数进行权限跳转
-// router.beforeEach((to,from,next)=>{
-//     if(localStorage.id!=undefined&&localStorage.role!=undefined){
-//         next()
-//     }
-//     else{
-//         next('/login')
-//     }
-// })       //Maximum call stack size exceeded
+router.beforeEach((to,from,next)=>{
+    next();
+    to.mounted();
+})       //Maximum call stack size exceeded
 new Vue({
   el: '#app',
   router,
@@ -44,5 +43,5 @@ new Vue({
       else{
           this.$router.push('/login');
       }
-  }
+    }
 })

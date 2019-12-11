@@ -77,14 +77,14 @@ export default new Router({
       component:SubmitWork
     },
     {
-      path:'/stu-homework/:workid',
+      path:'/stu-homework/:missionId',
       component:Stuworklist,
       meta:{
         roles:'teacher'
       }
     },
     {
-      path:'/fix-homework/:id',
+      path:'/fix-homework/:workid',
       component:Fixwork,
       meta:{
         roles:'teacher'

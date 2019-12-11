@@ -68,7 +68,7 @@ export default {
   methods: {
     goBack() {
        
-      this.$router.push({ path: "/tec-class-detail/前端"});
+      this.$router.push({ path: `/tec-class-detail/${JSON.parse(localStorage.entercourse).courseName}`});
        
     },
     //跳转到学生作业打分页面
@@ -76,12 +76,13 @@ export default {
     handleEdit(index, row) {
       console.log(index, row.name, row.date);
       this.$router.push({ path: `/fix-homework/${row.name}` }); //应该把workId传过去
+      localStorage.workid = workid;
     }
   },
   mounted(){
     //通过missionId获取学生作业
     let newthis = this;
-    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=${newthis.$route.params.workid}`).then((res)=>{
+    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=${newthis.$route.params.workid||localStorage.missionId}`).then((res)=>{
       // console.log(res.data.data[0].id);
       this.tableData = res.data.data;   //获取到作业列表，但此组件只显示id，score，name
     })

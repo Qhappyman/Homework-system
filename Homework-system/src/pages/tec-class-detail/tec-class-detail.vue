@@ -16,7 +16,7 @@
               <span @click="jumpHome">我的课堂</span>
             </el-breadcrumb-item>
             <el-breadcrumb-item>
-              <span style="color:#ffe">{{this.$route.params.class.split('and')[0]}}</span>  <!--根据params参数传递过来的的路由值进行更改-->
+              <span style="color:#ffe">{{this.className}}</span>  <!--根据params参数传递过来的的路由值进行更改-->
             </el-breadcrumb-item>
           </el-breadcrumb>
         </el-menu-item>
@@ -62,7 +62,8 @@ export default {
     return {
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-        activeName: 'first'
+        activeName: 'first',
+        className:JSON.parse(localStorage.entercourse).courseName
     };
   },
   methods:{

@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       '/api':
       {
-        target :'http://2z431s2133.wicp.vip:20570/work/Mission',
+        target :'http://2z431s2133.wicp.vip:20570/work',
         changeOrigin:true,
         pathRewriteL:{
           '^api':''

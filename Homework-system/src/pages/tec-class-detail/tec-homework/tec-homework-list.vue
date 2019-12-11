@@ -35,13 +35,10 @@ export default {
       this.$router.push({
         path: `/stu-homework/${missionId}` //主要还是missionId
       });
+      localStorage.missionId = missionId;
     },
     updateWork(){
-      this.$emit('updateWork',this.worklist.filter((item, index) => {
-          return item.context
-            .split("and")
-            .includes(this.$slots.content[0].text);
-        })[0].id)
+      this.$emit('updateWork',this.$slots.title[0].text)
     },
     deleteWork() {
       this.$confirm("确认删除?", "提示", {
@@ -49,6 +46,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
+        //通过this.$slots.title[0].text遍历任务获取到missionId
         axios
           .delete(
             `http://2z431s2133.wicp.vip:20570/work/Mission/deleteMission?missionId=${deleteId}`
@@ -60,12 +58,12 @@ export default {
             });
             this.$store.commit(
               "deleteWorklist",
-              this.worklist.filter((item, index) => {
-                return item.context
-                  .split("and")
-                  .includes(this.$slots.content[0].text);
-              })[0].id
-            );
+              //删除的任务
+            )
+            axios
+          .delete(
+            `http://2z431s2133.wicp.vip:20570/work/Mission/deleteMissionFile?missionId=${deleteId}`
+          )
           })
           .catch(err => {
             this.$message({

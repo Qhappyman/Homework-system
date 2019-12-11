@@ -3,7 +3,7 @@
     <el-menu background-color="#545c64" text-color="#fff" class="el-menu-demo" mode="horizontal" :router="true">
       <el-menu-item>
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/stu-homework/1' }" class="back">返回</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: `/stu-homework/${this.missionId}` }" class="back">返回</el-breadcrumb-item>
           <el-breadcrumb-item class="back">
             <span style="color:white">{{this.$route.params.id}}</span>
           </el-breadcrumb-item>
@@ -37,12 +37,13 @@ export default {
   data() {
     return {
       score: "",
-      textarea: ""
+      textarea: "",
+      missionId:localStorage.missionId
     };
   },
   methods: {
     goBack() {
-      this.$router.go(-1);
+      this.$router.push({path:`stu-homework/${localStorage.missionId}`})  //返回上一级
     },
     submitScore(){
         if(this.input!=''){
@@ -58,7 +59,7 @@ export default {
       })
         .then(() => {
           let newthis = this;
-          axios.post(`http://2z431s2133.wicp.vip:20570/work/Work/scoreWork?score=${newthis.score}&workId=${newthis.$route.params.workid}`)
+          axios.post(`http://2z431s2133.wicp.vip:20570/work/Work/scoreWork?score=${newthis.score}&workId=${newthis.$route.params.workid||localStorage.workid}`)
           .then((res)=>{  //还是workId
             console.log(res);  //提交分数
           })
@@ -100,6 +101,7 @@ export default {
   mounted(){
     //根据params传过来的id找到学生作业具体数据
     this.textarea = '';
+    //localStorage.workid
   }
 };
 </script>

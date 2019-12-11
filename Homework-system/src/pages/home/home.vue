@@ -41,7 +41,6 @@ mounted(){
     axios.post(
               `http://2z431s2133.wicp.vip:20570/work/Course/selectCourseByTeacerId=${localStorage.id}`         
             ).then(res=>{
-                // this.$store.commit('getCourse',res.data.data);
                 console.log(res.data.data);
                 this.$store.commit('getCourse',res.data.data)
             })

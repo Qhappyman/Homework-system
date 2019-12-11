@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div  @updateWork="handleUpdate">
     <el-button type="primary" plain @click="handelRelease">
       发布作业
       <i class="el-icon-edit-outline"></i>
@@ -139,6 +139,7 @@ export default {
       release: false,
       fileList: [],
       directnumber: "",
+      updatetitle:'',
       workName: "",
       updateWork: {
         name: "",
@@ -184,12 +185,14 @@ export default {
           var formdata = new FormData();
           formdata.append("file", file2.files[0]);
         }
+        let newthis = this;
+        //this.updatetitle获取missionId
+        //应该获取到选择的mission的id
         axios
           .post(
             `http://2z431s2133.wicp.vip:20570/work/Mission/updateMission?missionId=${
-              this.updateId   //获取到修改的任务missionId来传参
-            }&content=${
-              this.updateWork.content}`,
+              newthis.updateId   //获取到修改的任务missionId来传参
+            }&content=${newthis.updateWork.content}&title=${newthis.updateWork.name}`,
             formdata,
             { headers: { "Content-Type": "multipart/form-data;charset=UTF-8" } }
           )
@@ -218,7 +221,7 @@ export default {
       }
     },
     handleUpdate(param) {
-      this.updateId = param;
+      this.updatetitle = param;
       this.ifupdate = true;
       this.release = false;
     },
@@ -253,12 +256,14 @@ export default {
     releaseWork() {
       if (!(this.homework.name == "" || this.homework.content == "")) {
        let newthis = this;
+       let missionid;
        axios
           .post(
             `http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${
               newthis.entercourse.courseId}&time=1&context=${this.homework.content}&title=${this.homework.name}`
           )
           .then(function(response) {
+            missionid = response.missionid;  //获取到返回来的missionId
             console.log(response);
             this.$store.commit("addWorklist", {
               context: this.homework.content,title: this.homework.name
@@ -286,7 +291,7 @@ export default {
           formdata.append("file", file.files[0]);
           axios
             .post(
-              `http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=2`,
+              `http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=${missionid}`,  //获取第一步发布作业返回来的missionId
               formdata,
               {
                 headers: { "Content-Type": "multipart/form-data;charset=UTF-8" }
@@ -304,38 +309,13 @@ export default {
         }
       } else {
         this.$message({
-          // title: "成功",
           message: "发布成功",
           type: "success"
         }),
-        this.$store.commit('updateWorklist',{name:{title:this.homework.name,content:this.homework.content}});
-        let classtype;
-        function course(clas){
-          if(clas='前端'){
-            classtype = 1;
-          }
-          else if(clas='后台'){
-            classtype=2;
-          }
-          else if(clas='安卓'){
-            classtype=4;
-          }
-          else{
-            classtype=3;
-          }
-        }
-        course(this.my);
-console.log(classtype);
-axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${classtype}&time=3&context=${this.homework.name+this.homework.content}`)
-.then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+        this.$store.commit('updateWorklist',{title:this.homework.name,content:this.homework.content});
           this.handelRelease();
        } 
-    }
+  
   },
   computed: {
     worklist() {
@@ -353,7 +333,7 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${
     let newthis=this;
     axios
       .get(
-        `http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?courseId=${newthis.entercourse.courseId}`
+        `http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?courseId=${newthis.entercourse.courseId||JSON.parse(localStorage.entercourse).courseId}`
       )
       .then(res => {
         let workArray = res.data.data;
@@ -366,8 +346,8 @@ axios.post(`http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${
       .catch(res => {
         alert('网络错误');
       });
-  },
-  updated() {}
+  }
+}
 }
 </script>
 

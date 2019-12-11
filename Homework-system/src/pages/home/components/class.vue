@@ -37,7 +37,8 @@ export default {
       })
         .then(() => {
           //删除教师课程
-          axios.post('http://2z431s2133.wicp.vip:20570/work/')
+          let newthis = this;
+          axios.delete(`http://2z431s2133.wicp.vip:20570/work/Course/deleteCourse?id=${newthis.$slots.courseId[0].text}`)
           .then((res)=>{
             this.$message({
             type: "success",
@@ -60,6 +61,8 @@ export default {
         path: `/tec-class-detail/${this.$slots.classname[0].text}`
       });
       this.$store.commit('enterCourse',{courseName:this.$slots.classname[0].text,courseId:this.$slots.courseId[0].text})
+      localStorage.entercourse = JSON.stringify({courseName:this.$slots.classname[0].text,courseId:this.$slots.courseId[0].text});
+      //实现vuex与localStorage的同步
     }
   },
   computed: {
