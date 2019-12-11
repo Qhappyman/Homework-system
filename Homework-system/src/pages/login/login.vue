@@ -49,7 +49,7 @@ export default{
         id:this.name,
         password:this.password
       }
-      axios.post('/User/login',data)
+      this.axios.post('/User/login',data)
       .then(function (response) {
         console.log(response.data.data.role==1);
         newthis.jump(response.data.data.role)

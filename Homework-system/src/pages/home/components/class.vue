@@ -38,7 +38,7 @@ export default {
         .then(() => {
           //删除教师课程
           let newthis = this;
-          axios.delete(`http://2z431s2133.wicp.vip:20570/work/Course/deleteCourse?id=${newthis.$slots.courseId[0].text}`)
+          axios.delete(`/Course/deleteCourse?id=${newthis.$slots.courseId[0].text}`)
           .then((res)=>{
             this.$message({
             type: "success",

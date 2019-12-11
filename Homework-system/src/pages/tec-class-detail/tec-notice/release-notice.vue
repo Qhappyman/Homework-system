@@ -54,7 +54,7 @@ export default {
     addNotice() {
       if (!(this.notice.name == "" || this.notice.content == "")) {
         let newthis = this;
-        axios.post(`http://2z431s2133.wicp.vip:20570/work/Course/updateBoard&contentTitle=${newthis.notice.name}&scousrId=${newthis.entercourse.courseId}&content=${newthis.notice.content}`)
+        axios.post(`/Course/updateBoard&contentTitle=${newthis.notice.name}&scousrId=${newthis.entercourse.courseId}&content=${newthis.notice.content}`)
         .then((res)=>{
           this.$message({   //及时刷新页面:1. 再次请求axios 2.更新vuex
           message: "发布成功",
@@ -86,10 +86,10 @@ export default {
   },
   mounted(){
     //获取到教师端公告
-    axios.post('http://2z431s2133.wicp.vip:20570/work/')
-    .then((res)=>{
-        this.noticelist = res;  //会报错，已经声明了noticelist,如果每次都会有mounted执行，可以删除vuex中的数据
-    })
+    // axios.post('')
+    // .then((res)=>{
+    //     this.noticelist = res;  //会报错，已经声明了noticelist,如果每次都会有mounted执行，可以删除vuex中的数据
+    // })
   }
 };
 </script>

@@ -38,8 +38,8 @@ computed:{
 },
 mounted(){
     let newthis = this;
-    axios.post(
-              `http://2z431s2133.wicp.vip:20570/work/Course/selectCourseByTeacerId=${localStorage.id}`         
+    axios.get(
+              `/Course/selectCourseByTeacherId?id=${localStorage.id}`         
             ).then(res=>{
                 console.log(res.data.data);
                 this.$store.commit('getCourse',res.data.data)

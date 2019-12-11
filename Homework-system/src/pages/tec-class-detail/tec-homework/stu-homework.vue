@@ -28,8 +28,8 @@
       :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
     >
-      <el-table-column label="学号" prop="userId"></el-table-column>
-      <el-table-column label="姓名" prop="id"></el-table-column>
+      <el-table-column label="作业编号(可以改为学号)" prop="id"></el-table-column>
+      <el-table-column label="姓名" prop="userName"></el-table-column>
       <el-table-column label="分数" prop="score"></el-table-column>
       <el-table-column align="right">
         <template slot="header"></template>
@@ -56,12 +56,13 @@ export default {
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       tableData: [
-        // {
-        //   userId: '',
-        //   id: '', //要改成userName
-        //   score:''
-        // }
+      //   "id": 7,
+      // "userId": 1,
+      // "missionId": 3,
+      // "score": 0,
+      // "fileId": 15
       ],
+      workid:'',
       search: ""
     };
   },
@@ -74,17 +75,24 @@ export default {
     //跳转到学生作业打分页面
     //可以直接把那位学生对应的id发过去，然后遍历vuex找到具体内容
     handleEdit(index, row) {
-      console.log(index, row.name, row.date);
-      this.$router.push({ path: `/fix-homework/${row.name}` }); //应该把workId传过去
-      localStorage.workid = workid;
+      console.log(index, row.userName);
+      this.tableData.filter((item,index)=>{
+        if(item.userName==row.userName){
+          this.workid = item.id;
+        }
+      });
+      this.$router.push({ path: `/fix-homework/${this.workid}`}); //应该把workId传过去
+      localStorage.workid = this.workid;
     }
   },
   mounted(){
     //通过missionId获取学生作业
     let newthis = this;
-    axios.get(`http://2z431s2133.wicp.vip:20570/work/Work/searchWork?missionId=${newthis.$route.params.workid||localStorage.missionId}`).then((res)=>{
+    // axios.get(`/Work/searchWork?missionId=${newthis.$route.params.missionid||localStorage.missionId}`).then((res)=>{
+      axios.get(`/Work/searchWork?missionId=3`).then((res)=>{
       // console.log(res.data.data[0].id);
       this.tableData = res.data.data;   //获取到作业列表，但此组件只显示id，score，name
+      this.workid = res.data.data.id;
     })
     this.$store.commit('updateStuworklist',res);
   }

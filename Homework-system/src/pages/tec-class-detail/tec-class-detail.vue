@@ -71,11 +71,11 @@ export default {
         console.log(tab, event);
       },
       jumpHome(){
-        if(this.userInfo.role == '讲师'){
+        if(localStorage.role == 1){
           this.$router.push({path:'/home'})
           console.log(132)
         }
-        else if(this.userInfo.role == '学生'){
+        else if(localStorage.role == 0){
           this.$router.push({path:'/stu-home'})
         }
         else{

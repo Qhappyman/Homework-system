@@ -19,8 +19,8 @@
         </el-form-item>
         <el-form-item label="身份" prop="status">
           <el-radio-group v-model="form.role">
-            <el-radio label="0">讲师</el-radio>
-            <el-radio label="1">学生</el-radio>
+            <el-radio label="1">讲师</el-radio>
+            <el-radio label="0">学生</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item>
@@ -106,12 +106,12 @@ export default {
           email: this.form.email,
           id: this.form.id,
           password: this.form.password,
-          role: this.role=='讲师'?0:1,   //无效,后续判断
+          role: this.form.role,   
           userName: this.form.name
         };
         if (valid) {
           axios.post(
-            "http://2z431s2133.wicp.vip:20570/work//User/register",
+            "/User/register",
             data
           ).then((res)=>{
             console.log(res);

@@ -119,8 +119,7 @@ export default {
           }
           axios
             .post(
-              'http://2z431s2133.wicp.vip:20570/work/Course/addCourse',data,
-              
+              '/Course/addCourse',data,            
             )
             .then(res => {
               this.$notify({

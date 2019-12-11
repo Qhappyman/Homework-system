@@ -1,5 +1,5 @@
 <template>
-  <div  @updateWork="handleUpdate">
+  <div>
     <el-button type="primary" plain @click="handelRelease">
       发布作业
       <i class="el-icon-edit-outline"></i>
@@ -106,9 +106,9 @@
         <!-- <template slot="title">{{worklist[index].context.split('and')[0]}}:</template> -->
         <!-- <template slot="content">{{worklist[index].context.split('and')[1]}}</template> -->
     <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
-      <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist" >
+      <Worklist v-for="(item,index) in worklist" :key="index" ref="worklist" @updateWork="handleUpdate">
         <template slot="title">{{worklist[index].title}}</template>
-        <template slot="content">{{worklist[index].context}}</template>
+        <template slot="content">{{worklist[index].content}}</template>
         <!--千万不要修改插槽，不然会有很多问题-->
       </Worklist>
     </el-collapse>
@@ -139,7 +139,7 @@ export default {
       release: false,
       fileList: [],
       directnumber: "",
-      updatetitle:'',
+      updateId:'',
       workName: "",
       updateWork: {
         name: "",
@@ -190,9 +190,7 @@ export default {
         //应该获取到选择的mission的id
         axios
           .post(
-            `http://2z431s2133.wicp.vip:20570/work/Mission/updateMission?missionId=${
-              newthis.updateId   //获取到修改的任务missionId来传参
-            }&content=${newthis.updateWork.content}&title=${newthis.updateWork.name}`,
+            `/Mission/updateMission?missionId=${this.updateId}&title=${newthis.updateWork.name}&content=${newthis.updateWork.content}`,
             formdata,
             { headers: { "Content-Type": "multipart/form-data;charset=UTF-8" } }
           )
@@ -221,7 +219,7 @@ export default {
       }
     },
     handleUpdate(param) {
-      this.updatetitle = param;
+      this.updateId = param;
       this.ifupdate = true;
       this.release = false;
     },
@@ -257,16 +255,20 @@ export default {
       if (!(this.homework.name == "" || this.homework.content == "")) {
        let newthis = this;
        let missionid;
+       let data = {
+         content:this.homework.content,
+         title:this.homework.name,
+         courseId:newthis.entercourse.courseId||localStorage.courseId
+       }
        axios
           .post(
-            `http://2z431s2133.wicp.vip:20570/work/Mission/addMission?courseId=${
-              newthis.entercourse.courseId}&time=1&context=${this.homework.content}&title=${this.homework.name}`
+            `/Mission/addMission`,data
           )
           .then(function(response) {
             missionid = response.missionid;  //获取到返回来的missionId
             console.log(response);
             this.$store.commit("addWorklist", {
-              context: this.homework.content,title: this.homework.name
+              content: this.homework.content,title: this.homework.name
             });
             this.$message({
               // title: "成功",
@@ -291,7 +293,7 @@ export default {
           formdata.append("file", file.files[0]);
           axios
             .post(
-              `http://2z431s2133.wicp.vip:20570/work/Mission/addMissionFile?missionId=${missionid}`,  //获取第一步发布作业返回来的missionId
+              `/Mission/addMissionFile?missionId=${missionid}`,  //获取第一步发布作业返回来的missionId
               formdata,
               {
                 headers: { "Content-Type": "multipart/form-data;charset=UTF-8" }
@@ -316,6 +318,7 @@ export default {
           this.handelRelease();
        } 
   
+  }
   },
   computed: {
     worklist() {
@@ -325,15 +328,11 @@ export default {
       return this.$store.state.entercourse;
     }
   },
-  watch: {},
-  created() {
-    
-  },
   mounted() {
     let newthis=this;
     axios
       .get(
-        `http://2z431s2133.wicp.vip:20570/work/Mission/searchMission?courseId=${newthis.entercourse.courseId||JSON.parse(localStorage.entercourse).courseId}`
+        `/Mission/searchMission?courseId=${newthis.entercourse.courseId||JSON.parse(localStorage.entercourse).courseId}`
       )
       .then(res => {
         let workArray = res.data.data;
@@ -347,7 +346,7 @@ export default {
         alert('网络错误');
       });
   }
-}
+
 }
 </script>
 

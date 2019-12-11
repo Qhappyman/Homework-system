@@ -21,24 +21,39 @@ export default {
   name: "Worklist",
   data() {
     return {
-    deletename:this.workname
+    deletename:this.workname,
+    missionId:'',
+    deleteid:'',
+    updateId:''
     };
   },
   computed: {
-    
+    worklist(){
+      return this.$store.state.workList;
+    },
     title() {
     return this.$slots.title[0].text;
     }
   },
   methods: {
     workDetail() {
+      this.$store.state.workList.forEach((item,index)=>{
+      if(this.$store.state.workList[index].title == this.$slots.title[0].text){
+        this.missionId =  this.$store.state.workList[index].id;
+      }
+    })  //获取到missionId
+    localStorage.missionId = this.missionId;
       this.$router.push({
-        path: `/stu-homework/${missionId}` //主要还是missionId
+        path: `/stu-homework/${this.missionId||localStorage.missionId}` //主要还是missionId
       });
-      localStorage.missionId = missionId;
+      
     },
     updateWork(){
-      this.$emit('updateWork',this.$slots.title[0].text)
+      this.$store.state.workList.forEach((item,index)=>{
+      if(this.$store.state.workList[index].title == this.$slots.title[0].text){
+        this.updateId =  this.$store.state.workList[index].id;
+      }})
+      this.$emit('updateWork',this.updateId)
     },
     deleteWork() {
       this.$confirm("确认删除?", "提示", {
@@ -47,9 +62,14 @@ export default {
         type: "warning"
       }).then(() => {
         //通过this.$slots.title[0].text遍历任务获取到missionId
+        this.$store.state.workList.forEach((item,index)=>{
+      if(this.$store.state.workList[index].title == this.$slots.title[0].text){
+        this.deleteid =  this.$store.state.workList[index].id;
+      }
+    })
         axios
           .delete(
-            `http://2z431s2133.wicp.vip:20570/work/Mission/deleteMission?missionId=${deleteId}`
+            `/Mission/deleteMission?missionId=${this.deleteid}`
           )   //获取到missionId
           .then(res => {
             this.$message({
@@ -62,7 +82,7 @@ export default {
             )
             axios
           .delete(
-            `http://2z431s2133.wicp.vip:20570/work/Mission/deleteMissionFile?missionId=${deleteId}`
+            `/Mission/deleteMissionFile?missionId=${deleteId}`
           )
           })
           .catch(err => {
@@ -76,11 +96,11 @@ export default {
   },
   mounted() {
     //通过courseId获取作业列表
-     axios.post('http://2z431s2133.wicp.vip:20570/work')
-     .then((res)=>{
-       console.log(res);
-       this.$store.commit('getCourse',res)
-     })
+    //  axios.get('')
+    //  .then((res)=>{
+    //    console.log(res);
+    //    this.$store.commit('getCourse',res)
+    //  })
   }
 }
   </script>

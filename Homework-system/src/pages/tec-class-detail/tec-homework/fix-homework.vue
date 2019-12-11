@@ -59,7 +59,7 @@ export default {
       })
         .then(() => {
           let newthis = this;
-          axios.post(`http://2z431s2133.wicp.vip:20570/work/Work/scoreWork?score=${newthis.score}&workId=${newthis.$route.params.workid||localStorage.workid}`)
+          axios.post(`/Work/scoreWork?score=${newthis.score}&workId=${localStorage.workid}`)
           .then((res)=>{  //还是workId
             console.log(res);  //提交分数
           })
