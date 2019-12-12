@@ -18,7 +18,7 @@ return new Vuex.Store({
         checkList:'',  //教师所教课程
         stuWorklist:'',   //missionId下面已交的学生作业
         workList:'',   //老师布置的作业列表
-        noticeList:[{title:'公告一',content:'做一个公鸡网站'}],
+        noticeList:'',
         courseList:[{name:'前端',code:'123'},{name:'后端',code:'456'},{name:'安卓',code:'789'}],
         stuHomeworkList: [{title:'作业一', content:'做一个登录网站', deadline:'10月1日'}, {title:'作业二',content:'做一个注册网站', deadline:'10月1日'}],
         stuNoticeList:[{title:'公告一',content:'做一个登录网站',time:'10月2日'},{title:'公告二',content:'做一个注册网站',time:'10月2日'}]
@@ -56,7 +56,7 @@ return new Vuex.Store({
             state.workList.splice(deleteIndex,1);
         },
         updateNoticelist(state,message){
-            state.noticeList.push(message.name);
+            state.noticeList = message;
         },
         updateChecklist(state,course){
             state.checkList.push(course);

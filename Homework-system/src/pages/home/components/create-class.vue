@@ -42,7 +42,7 @@
         </el-button>
         <el-dialog title="编辑公告" :visible.sync="dialogForVisible" class="dialog-title">
           <el-form ref="form" :model="releasenotice" label-width="80px">
-            <el-form-item label="课程">
+            <el-form-item label="课程(正式)">
               <el-select v-model="releasenotice.noticecourse" placeholder="请选择课程">
                 <el-option label="前端" value="前端"></el-option>
                 <el-option label="后台" value="后台"></el-option>
@@ -50,8 +50,14 @@
                 <el-option label="Python" value="Python"></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label="课程id(测试)">
+        <el-input v-model="releasenotice.id"></el-input>
+      </el-form-item>
+            <el-form-item label="公告名称">
+        <el-input v-model="releasenotice.name"></el-input>
+      </el-form-item>
             <el-form-item label="公告内容">
-              <el-input type="textarea" v-model="releasenotice.notice"></el-input>
+              <el-input type="textarea" v-model="releasenotice.content"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -83,7 +89,10 @@ export default {
       },
       releasenotice: {
         notice: "",
-        noticecourse: ""
+        noticecourse: "",
+        id:'',
+        name:'',
+        content:''
       },
       formLabelWidth: "120px"
     };
@@ -100,12 +109,6 @@ export default {
         });
         this.dialogFormVisible = true;
       }
-      // else{
-      //   if(this.classlist.indexOf(this.createclass.course)!=-1){
-      //     console.log('error');
-      //     console.log(this.createclass.course)
-      //   }
-
       else{
         console.log(this.classlist);
         if(this.classlist.indexOf(this.createclass.course)==-1){
@@ -137,18 +140,6 @@ export default {
                 message: "网络错误"
               });
             })
-      // if(this.createclass.course == 1){
-      //   this.createclass.course = "前端";
-      // }
-      // else if(this.createclass.course == 2){
-      //   this.createclass.course = "后台";
-      // }
-      // else if(this.createclass.course == 3){
-      //   this.createclass.course = "安卓";
-      // }
-      // else
-      //   this.createclass.course = "Python"; //根据选择的课程进行更新state,代码需要简化
-  
         }
         else{
           console.log('error');
@@ -161,7 +152,7 @@ export default {
 
     },
     releaseNotice() {
-      if((this.releasenotice.notice=="")||(this.releasenotice.noticecourse=="")){
+      if((this.releasenotice.name=="")||(this.releasenotice.content=="")||(this.releasenotice.id=="")){
         this.$notify.error({
           title: '未完善',
           message: '请完善你的内容'
@@ -169,13 +160,14 @@ export default {
         this.dialogForVisible = true;
       }
       else{
-        axios.post('http://2z431s2133.wicp.vip:20570/work/')
+        axios.post(`/Course/updateBoard?board=${this.releasenotice.content}&cousreId=${this.releasenotice.id}&boardTitle=${this.releasenotice.name}`)
         .then((res)=>{
         this.$notify({
         title: "成功",
         message: "发布成功",
         type: "success"
       })
+      this.$store.commit("updateNoticelist",res.data.data);
         }).catch(()=>{
           alert('网络错误')
         })

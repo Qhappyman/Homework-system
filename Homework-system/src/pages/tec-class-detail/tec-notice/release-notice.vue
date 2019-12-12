@@ -18,8 +18,8 @@
     </el-form>
     <el-collapse v-model="noticeName" @change="handleChange" class="notice-list" :accordion="true">
       <Noticelist v-for="(item,index) in noticelist" :key="index" ref="noticelist">
-        <template slot="title">{{noticelist[index].title}}:</template>
-        <template slot="content">{{noticelist[index].content}}</template>
+        <template slot="title">{{noticelist[index].boardTitle}}:</template>
+        <template slot="content">{{noticelist[index].board}}</template>
       </Noticelist>
       <!--千万不要修改插槽，不然会有很多问题-->
     </el-collapse>
@@ -54,15 +54,13 @@ export default {
     addNotice() {
       if (!(this.notice.name == "" || this.notice.content == "")) {
         let newthis = this;
-        axios.post(`/Course/updateBoard&contentTitle=${newthis.notice.name}&scousrId=${newthis.entercourse.courseId}&content=${newthis.notice.content}`)
+        axios.post(`/Course/updateBoard?board=${newthis.notice.name}&scousrId=${newthis.entercourse.courseId}&boardTitle=${newthis.notice.content}`)
         .then((res)=>{
           this.$message({   //及时刷新页面:1. 再次请求axios 2.更新vuex
           message: "发布成功",
           type: "success"
         })
-        this.$store.commit("updateNoticelist", {
-            name: { title: this.notice.name, content: this.notice.content }
-          });
+        this.$store.commit("updateNoticelist",res.data.data);
         this.handleRelease();
         })
         .catch(()=>{
@@ -85,11 +83,11 @@ export default {
     }
   },
   mounted(){
-    //获取到教师端公告
-    // axios.post('')
-    // .then((res)=>{
-    //     this.noticelist = res;  //会报错，已经声明了noticelist,如果每次都会有mounted执行，可以删除vuex中的数据
-    // })
+    axios.get(`/Course/selectBoardByCourseId?courseId=${JSON.parse(localStorage.entercourse).courseId||this.entercourse.courseId}`)
+    .then((res)=>{
+      this.$store.commit("updateNoticelist",res.data.data);
+    })
+  
   }
 };
 </script>
