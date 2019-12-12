@@ -83,12 +83,12 @@
         >
           <!-- <el-button slot="trigger" size="small" type="primary" id="files">选取文件</el-button> -->
           <div @click.stop>
-            <input type="file" value="上传文件" style="display:none" ref="fileSubmit" id="file" />
+            <input type="file" value="上传文件"  ref="fileSubmit" id="file" />
             <label for="file" class="fileSubmit">选择文件</label>
           </div>
-          <div slot="tip" class="el-upload__tip">文件大小不超过5M</div>
+          <div slot="tip" class="el-upload__tip">文件大小不超过5M{{releasemissionId}}</div>
         </el-upload>
-        <el-button style="margin-left: 10px;" size="small" type="danger" @click="deleteFile">删除附件</el-button>
+        <!-- <el-button style="margin-left: 10px;" size="small" type="danger" @click="deleteFile">删除附件</el-button> -->
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="releaseWork">立即发布</el-button>
@@ -138,9 +138,9 @@ export default {
       },
       release: false,
       fileList: [],
-      directnumber: "",
       updateId:'',
       workName: "",
+      releasemissionId:'',
       updateWork: {
         name: "",
         content: "",
@@ -252,7 +252,7 @@ export default {
       this.$store.commit("deleteWorklist");
     },
     releaseWork() {
-      if (!(this.homework.name == "" || this.homework.content == "")) {
+      if (!(this.homework.name == ""||this.homework.content == "")) {
        let newthis = this;
        let missionid;
        let data = {
@@ -264,36 +264,43 @@ export default {
           .post(
             `/Mission/addMission`,data
           )
-          .then(function(response) {
-            missionid = response.missionid;  //获取到返回来的missionId
-            console.log(response);
-            this.$store.commit("addWorklist", {
-              content: this.homework.content,title: this.homework.name
-            });
+          .then((response)=>{
+            newthis.releasemissionId = response.data.data.id;  //获取到返回来的missionId
+            this.$store.commit("addWorklist", {content: this.homework.content,title: this.homework.name})
             this.$message({
-              // title: "成功",
               message: "发布成功",
               type: "success"
-            });
+            })
             this.handelRelease();
           })
-          .catch(err => {
+          .catch(() => {
             this.$message({
               type: "info",
               message: "网络错误"
-            });
+            })
           });
         // let file = this.$refs.fileSubmit;
 
-        let file = document.getElementById("file");
-
+        
+      } else {
+       this.$message({
+              type: "info",
+              message: "作业不可为空"
+            });
+       } 
+  
+  }
+  },
+  watch:{
+    releasemissionId(){
+      let file = document.getElementById("file");
         if (file.files[0] != undefined) {
           console.log(file.files[0]);
           let formdata = new FormData();
           formdata.append("file", file.files[0]);
           axios
             .post(
-              `/Mission/addMissionFile?missionId=${missionid}`,  //获取第一步发布作业返回来的missionId
+              `/Mission/addMissionFile?missionId=${this.releasemissionId}`,  //获取第一步发布作业返回来的missionId
               formdata,
               {
                 headers: { "Content-Type": "multipart/form-data;charset=UTF-8" }
@@ -305,20 +312,11 @@ export default {
             .catch(error => {
               this.$message({
                 type: "info",
-                message: "网络错误"
+                message: "发布失败"
               });
             });
         }
-      } else {
-        this.$message({
-          message: "发布成功",
-          type: "success"
-        }),
-        this.$store.commit('updateWorklist',{title:this.homework.name,content:this.homework.content});
-          this.handelRelease();
-       } 
-  
-  }
+    }
   },
   computed: {
     worklist() {
@@ -363,7 +361,7 @@ export default {
   border-radius: 8px;
   padding: 10px 10px 0 20px; /*此处css样式可复用与notice,可添加在全局样式里面*/
 }
-.fileSubmit {
+/* .fileSubmit {
   color: aliceblue;
   margin-top: 5px;
   display: inline-block;
@@ -371,5 +369,5 @@ export default {
   border-radius: 4px;
   width: 70px;
   height: 35px;
-}
+} */
 </style>

@@ -4,7 +4,7 @@
       <slot name="title"></slot>
       <slot name="content"></slot>
       <el-link type="primary" @click="workDetail" class="icon" :underline="false">
-        查看学生作业
+        查看学生作业<a href="" download>下载</a>
         <i class="el-icon-view el-icon--right"></i>
       </el-link>
       <el-button type="danger" size="mini" class="delete" @click="deleteWork">删除任务</el-button>
@@ -77,13 +77,13 @@ export default {
               message: "删除成功!"
             });
             this.$store.commit(
-              "deleteWorklist",
+              "deleteWorklist"
               //删除的任务
             )
-            axios
-          .delete(
-            `/Mission/deleteMissionFile?missionId=${deleteId}`
-          )
+          //   axios
+          // .delete(
+          //   `/Mission/deleteMissionFile?missionId=${this.deleteid}`
+          // )       //删除任务附件不如直接更新任务
           })
           .catch(err => {
             this.$message({

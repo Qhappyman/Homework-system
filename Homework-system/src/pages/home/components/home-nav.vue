@@ -66,6 +66,11 @@ export default {
       exit(){
         localStorage.clear();
         this.$router.push({path:'/'})
+        // axios.get('/User/logout').then(()=>{
+        //   alert('已退出')
+        // }).catch(()=>{
+        //   alert('网络错误')
+        // })
       }
     },
     computed:{
