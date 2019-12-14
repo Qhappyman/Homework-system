@@ -18,7 +18,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="学年:">
-              <el-select v-model="createclass.schoolyear" placeholder="请选择学年" >
+              <el-select v-model="createclass.schoolyear" placeholder="请选择学年">
                 <el-option label="2017-2018" value="2017"></el-option>
                 <el-option label="2018-2019" value="2018"></el-option>
                 <el-option label="2019-2020" value="2019"></el-option>
@@ -51,17 +51,17 @@
               </el-select>
             </el-form-item>
             <el-form-item label="课程id(测试)">
-        <el-input v-model="releasenotice.id"></el-input>
-      </el-form-item>
+              <el-input v-model="releasenotice.id"></el-input>
+            </el-form-item>
             <el-form-item label="公告名称">
-        <el-input v-model="releasenotice.name"></el-input>
-      </el-form-item>
+              <el-input v-model="releasenotice.name"></el-input>
+            </el-form-item>
             <el-form-item label="公告内容">
               <el-input type="textarea" v-model="releasenotice.content"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-              <el-button @click="dialogForVisible = false">取 消</el-button>
+            <el-button @click="dialogForVisible = false">取 消</el-button>
             <span @click="releaseNotice">
               <el-button type="primary" @click="dialogForVisible = false">发布</el-button>
             </span>
@@ -90,9 +90,9 @@ export default {
       releasenotice: {
         notice: "",
         noticecourse: "",
-        id:'',
-        name:'',
-        content:''
+        id: "",
+        name: "",
+        content: ""
       },
       formLabelWidth: "120px"
     };
@@ -101,88 +101,90 @@ export default {
     onSubmit: function() {},
     cancle: function() {},
     createClass() {
-      if((this.createclass.course=="")||(this.createclass.schoolyear=="")||(this.createclass.schoolteam=="")){
-
+      if (
+        this.createclass.course == "" ||
+        this.createclass.schoolyear == "" ||
+        this.createclass.schoolteam == ""
+      ) {
         this.$notify.error({
-          title: '未完善',
-          message: '请完善你的内容'
+          title: "未完善",
+          message: "请完善你的内容"
         });
         this.dialogFormVisible = true;
-      }
-      else{
+      } else {
         console.log(this.classlist);
-        if(this.classlist.indexOf(this.createclass.course)==-1){
+        if (this.classlist.indexOf(this.createclass.course) == -1) {
           let data = {
-            "board":"gjq",
-            "boardTitle":"createit",
-            "id":0,  //这个id是创建课程时后台自动生成的courseId
-            "name":this.createclass.course,
-            "studentNum":0,
-            "teacher":this.createclass.tecName,
-          }
+            board: "gjq",
+            boardTitle: "createit",
+            id: 0, //这个id是创建课程时后台自动生成的courseId
+            name: this.createclass.course,
+            studentNum: 0,
+            teacher: this.createclass.tecName
+          };
           axios
-            .post(
-              '/Course/addCourse',data,            
-            )
+            .post("/Course/addCourse", data)
             .then(res => {
               this.$notify({
-        title: "成功",
-        message: "创建成功",
-        type: "success"
-      });
-       console.log(this.createclass.course)
-      this.$emit('add',this.createclass.course);
-       this.$store.commit('updateChecklist',res.data.data);
+                title: "成功",
+                message: "创建成功",
+                type: "success"
+              });
+              console.log(this.createclass.course);
+              this.$emit("add", this.createclass.course);
+              this.$store.commit("updateChecklist", res.data.data);
             })
             .catch(error => {
               this.$message({
                 type: "info",
                 message: "网络错误"
               });
-            })
-        }
-        else{
-          console.log('error');
+            });
+        } else {
+          console.log("error");
           this.$notify.error({
-          title: '不可添加',
-          message: '一学期你只能创建一个此类课程'
-        });
+            title: "不可添加",
+            message: "一学期你只能创建一个此类课程"
+          });
         }
       }
-
     },
     releaseNotice() {
-      if((this.releasenotice.name=="")||(this.releasenotice.content=="")||(this.releasenotice.id=="")){
+      if (
+        this.releasenotice.name == "" ||
+        this.releasenotice.content == "" ||
+        this.releasenotice.id == ""
+      ) {
         this.$notify.error({
-          title: '未完善',
-          message: '请完善你的内容'
+          title: "未完善",
+          message: "请完善你的内容"
         });
         this.dialogForVisible = true;
+      } else {
+        axios
+          .post(
+            `/Course/updateBoard?board=${this.releasenotice.content}&cousreId=${this.releasenotice.id}&boardTitle=${this.releasenotice.name}`
+          )
+          .then(res => {
+            this.$notify({
+              title: "成功",
+              message: "发布成功",
+              type: "success"
+            });
+            this.$store.commit("updateNoticelist", res.data.data);
+          })
+          .catch(() => {
+            alert("网络错误");
+          });
       }
-      else{
-        axios.post(`/Course/updateBoard?board=${this.releasenotice.content}&cousreId=${this.releasenotice.id}&boardTitle=${this.releasenotice.name}`)
-        .then((res)=>{
-        this.$notify({
-        title: "成功",
-        message: "发布成功",
-        type: "success"
-      })
-      this.$store.commit("updateNoticelist",res.data.data);
-        }).catch(()=>{
-          alert('网络错误')
-        })
     }
-  }
   },
-  computed:{
-    classlist(){
+  computed: {
+    classlist() {
       return this.$store.state.checkList;
     }
-
-
   },
-  watch:{
-  }
+  watch: {}
 };
 </script>
 

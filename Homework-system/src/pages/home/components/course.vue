@@ -28,12 +28,6 @@ export default {
     margin: 10px 10px 10px  30px;
     align-items: stretch;
   }
-
-  /* .header-p{
-    font-size: 20px;
-    line-height: 4px;
-  } */
-
   header{
     margin-top: 10%;
     text-align: center;
@@ -62,8 +56,4 @@ export default {
     background-color: #409EFF;
     border-radius: 0 0 5px 5px;
   }
-
-  /* .header-p{
-    color: black;
-  } */
 </style>
