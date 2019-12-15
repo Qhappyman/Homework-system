@@ -12,7 +12,7 @@ export default {
   name:'Index',
   components:{
     IndexNav,
-    IndexBody
+    IndexBody,
   }
 }
 </script>

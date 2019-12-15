@@ -1,14 +1,15 @@
 <template>
   <div>
-    <Course v-for="(item,index) in courseList" :key="index" @delete="handleDelete" style="display:inline-block; margin-right:15px;">
-      <template v-slot:name>{{courseList[index].name}}</template>
-      <template v-slot:code>课程码：{{courseList[index].code}}</template>
+    <Course v-for="(item,index) in courseList" :key="index" style="display:inline-block; margin-right:15px;">
+      <template v-slot:name>{{item.name}}</template>
+      <template v-slot:code>{{item.id}}</template>
       <template v-slot:button></template>
     </Course>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import Bus from '../../../bus'
 import Vuex from 'vuex'
 import Course from './course'
@@ -19,38 +20,21 @@ export default {
   },
   data() {
     return {
-      show: []
-    }
-  },
-  computed: {
-    courseList() {
-      return this.$store.state.courseList
-      // let studentId = 1
-      // this.$axios.post('http://2z431s2133.wicp.vip:20570/work/swagger-ui.html#/student-course-controller/studentAllCourseUsingPOST_1',{
-      //   studentId: studentId
-      //   })
-      //   .then(function (response) {
-      //   console.log(response)
-      //   })
-      //   .catch(function (error) {
-      //   console.log(error)
-      //   })
+      courseList: null
     }
   },
   mounted() {
-    Bus.$on('val', (data) => {
-      this.show = data
-      console.log(this.show)
-    })
-    let studentId = 1
-    this.$axios.post('http://2z431s2133.wicp.vip:20570/work/swagger-ui.html#/student-course-controller/studentAllCourseUsingPOST_1',{
-      studentId: studentId
+    // Bus.$on('val', (data) => {
+    //   this.show = data
+    //   console.log(this.show)
+    // })
+    // alert(this.GLOBAL.userId)
+    this.$axios.post(`http://2z431s2133.wicp.vip:31188/work/StudentCourse/studentAllCourse?studentId=${this.GLOBAL.userId}`)
+      .then(response => {
+        this.courseList = response.data.data
       })
-      .then(function (response) {
-      console.log(response)
-      })
-      .catch(function (error) {
-      console.log(error)
+      .catch(error => {
+        console.log(error)
       })
   }
 }

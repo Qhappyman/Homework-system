@@ -11,8 +11,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import qs from 'qs'
 import '@/assets/reset.css'
+import globalVariable from './globalVariable'
 Vue.prototype.$axios = axios
 Vue.prototype.qs =qs
+Vue.prototype.GLOBAL = globalVariable
 Vue.config.productionTip = false
 Vue.use(router)
 Vue.use(Vuex)

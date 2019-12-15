@@ -3,55 +3,66 @@
     <div class="login">账号登录
       <el-form ref="form">
         <el-form-item>
-          <el-input v-model="username" placeholder="请输入学号" id="username"></el-input>
+          <el-input v-model="name" placeholder="请输入学号" id="username"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input placeholder="请输入密码" v-model="password" type="password"></el-input>
         </el-form-item>
+         <el-form-item label="身份" style="margin:0 70px">
+    <el-radio-group v-model="role">
+      <el-radio label="讲师"></el-radio>
+      <el-radio label="学生"></el-radio>
+    </el-radio-group>
+  </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
-      <div class="to-register" @click="goRegister">注册账号</div>
+      <div class="to-register">注册账号</div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import Vuex from "vuex"
+import axios from 'axios'
+export default{
   name:'Login',
   data () {
     return {
-      username: '',
-      password: ''
+      name: '',
+      password: '',
+      role:'学生'
     }
   },
   methods: {
     login: function() {
-      axios.post('', {
-        uesrName: username,
-        password: password
-      })
-      .then(function (response) {
-        console.log(response);
-        const h = this.$createElement;
-        this.$notify({
-          title: '提示',
-          message: h('i','登录成功')
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-        const h = this.$createElement;
-        this.$notify({
-          title: '提示',
-          message: h('i','登录失败')
-        });
-      });
-    },
-    goRegister: function() {
-      this.$router.push({path: '/register'})
+      this.role == '学生'?this.$router.push({path:'/stu-home'}):(this.role == '讲师'?this.$router.push({path:'/home'}):this.$router.push({path:'/*'}))
+      this.$store.commit('saveInfo',{username:this.name,role:this.role})
+      localStorage.name = this.name;
+      localStorage.role = this.role;
     }
+      // axios.post('http://2z431s2133.wicp.vip:20570/work')
+      // .then(function (response) {
+      //   console.log(response);
+      //   const h = this.$createElement;
+      //   this.$notify({
+      //     title: '提示',
+      //     message: h('i','登录成功')
+      //   });
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      //   const h = this.$createElement;
+      //   this.$notify({
+      //     title: '提示',
+      //     message: h('i','登录失败')
+      //   });
+      // });
+    // goRegister: function() {
+    //   this.$router.push({path: '/register'})
+    // }
   }
 }
 </script>
@@ -59,7 +70,8 @@ export default {
 <style scoped>
   .background {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    height: 800px;
     background-image: url('../../images/img1.jpg');
   }
 

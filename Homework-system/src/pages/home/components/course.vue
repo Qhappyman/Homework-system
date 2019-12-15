@@ -1,17 +1,34 @@
 <template>
   <div class="container" style="border: 1px solid #F1F3F4; border-radius: 4px;">
     <header ref="class"><slot name="name"></slot></header>
-    <main><slot name="code"></slot></main>
+    <main>课程码：<slot name="code"></slot></main>
     <footer><slot name="button"><el-button type="primary" size="big" @click="goCourse" style="float:left">进入课程</el-button><el-button type="primary" size="big" @click="deleteCourse" style="float:right">删除课程<i class="el-icon-delete"></i></el-button></slot></footer>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import Vuex from 'vuex'
 export default {
   name: 'Course',
   methods: {
     goCourse() {
       this.$router.push({ path: `/stu-class-detail/${this.$slots.name[0].text}` })
+      this.$store.commit('enterStuCourse',{name: this.$slots.name[0].text, code: this.$slots.code[0].text})
+    },
+    deleteCourse() {
+      let studentCoursePo = {
+        courseId: this.$slots.code[0].text,
+        studentId: this.GLOBAL.userId
+      }
+      this.$axios.delete('http://2z431s2133.wicp.vip:31188/work/StudentCourse/studentDeleteCourse',{data:studentCoursePo})
+      .then((response)=>{
+        console.log(response)
+        this.$router.go(0)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
     }
   }
 }

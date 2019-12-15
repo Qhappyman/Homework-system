@@ -16,8 +16,11 @@ return new Vuex.Store({
         courseList:[{name:'前端',code:'123'},{name:'后端',code:'456'},{name:'安卓',code:'789'}],
         workList:[{title:'作业一',content:'做一个登录网站'},{title:'作业二',content:'做一个注册网站'}],
         noticeList:[{title:'公告一',content:'做一个公鸡网站'},{title:'公告二',content:'做一个公告网站'}],
-        stuHomeworkList: [{title:'作业一', content:'做一个登录网站', deadline:'10月1日'}, {title:'作业二',content:'做一个注册网站', deadline:'10月1日'}],
-        stuNoticeList:[{title:'公告一',content:'做一个登录网站',time:'10月2日'},{title:'公告二',content:'做一个注册网站',time:'10月2日'}]
+        // stuHomeworkList: [{title:'作业一', content:'做一个登录网站', deadline:'10月1日'}, {title:'作业二',content:'做一个注册网站', deadline:'10月1日'}],
+        // stuNoticeList:[{title:'公告一',content:'做一个登录网站',time:'10月2日'},{title:'公告二',content:'做一个注册网站',time:'10月2日'}],
+        enterStuCourse:'',
+        stuHomeworkList:'',
+        stuNoticeList: ''
     },
     mutations:{
         update(state,paload){
@@ -43,7 +46,7 @@ return new Vuex.Store({
                 }
             });
             state.checkList.splice(index,1);
-        }
+        },
         // updateName(state,namw){
         //     state.teach.name=name;
         // },
@@ -52,7 +55,16 @@ return new Vuex.Store({
         // },
         // updateProfession(state,profession){
         //     state.teach.profession=profession;
-        // }
+        // },
+        enterStuCourse(state,data) {
+          state.enterStuCourse = data
+        },
+        stuHomeworkList(state,data) {
+          state.stuHomeworkList = data
+        },
+        stuNoticeList(state,data) {
+          state.stuNoticeList = data
+        }
     },
     getters:{
         getUserDetails: state => {
@@ -73,24 +85,15 @@ return new Vuex.Store({
         getNoticelist: state => {
           return state.noticeList;
         },
-        getStuHomeworkList(state,response){
-          state.stuHomeworkList = reponse
+        getStuHomeworkList: state=>{
           return state.stuHomeworkList;
         },
         getStuNoticeList: state => {
           return state.stuNoticeList;
+        },
+        getEnterStuCourse: state => {
+          return state.enterStuCourse;
         }
-    },
-    actions: {
-      stuHomeworkList(context) {
-        axios.post()
-          .then((response)=>{
-            context.commit('getStuHomeworkList',response)
-          })
-          .catch((error)=>{
-            console.log(error)
-          })
-      }
     }
 })
 }

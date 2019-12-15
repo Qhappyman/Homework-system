@@ -10,6 +10,7 @@ import SettingMe from '../pages/setting-me/setting-me'
 import ClassDetail from '../pages/class-detail/class-detail'
 import StuClassDetail from '../pages/stu-class-detail/stu-class'
 import SubmitWork from '../pages/stu-class-detail/stu-homework/submit-work'
+import Hassubmit from '../pages/stu-class-detail/stu-homework/hassubmit'
 import TecClassDetail from '../pages/tec-class-detail/tec-class-detail'
 import Error from '../pages/error'
 import Stuworklist from '../pages/tec-class-detail/tec-homework/stu-homework'
@@ -54,6 +55,10 @@ export default new Router({
     {
       path: '/stu-submit-work/:homework',
       component:SubmitWork
+    },
+    {
+      path: '/check-homework',
+      component:Hassubmit
     },
     {
       path:'/tec-class-detail/:class',

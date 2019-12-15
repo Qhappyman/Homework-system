@@ -31,12 +31,15 @@
         class="upload-demo"
         action=""
         multiple
-        :file-list="file"
+        :file-list="fileList"
         :auto-upload="false"
-        :before-upload="beforeUpload">
+        :before-upload="beforeUpload"
+        :on-remove="handleRemove"
+        :before-remove="beforeRemove">
         <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传作业</el-button>
       </el-upload>
+      <el-button style="margin-left: 10px;" size="small" type="primary" @click="checkWork">查看作业</el-button>
     </el-card>
     <div class="loading" v-if="loading">
       <h4 class="tips">{{tips}}</h4>
@@ -66,6 +69,7 @@
 </template>
 
 <script>
+import Bus from '../../../bus'
 import axios from 'axios'
 export default {
   name: 'SubmitWork',
@@ -74,16 +78,18 @@ export default {
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       title: '',
       content: '',
-      file: [],
+      fileList: [],
       loading: false,
       percentage: 0,
       tips: '',
       dialogVisible: false,
-      dialogVisibleFail: false
+      dialogVisibleFail: false,
+      stuHomeworkList: '',
+      missionId: ''
     }
   },
   methods: {
-    beforeUpload(file) {
+    beforeUpload(file,fileList) {
       let formdata = new FormData();
       formdata.append('file',file);
       console.log(formdata.get('file'));
@@ -108,17 +114,19 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       };
-      this.$axios.post('http://2z431s2133.wicp.vip:20570/work/swagger-ui.html#/work-controller/addWorkUsingPOST?missionId=1&userId=1',formdata,config)
+      this.$axios.post(`http://2z431s2133.wicp.vip:31188/work/Work/addWork?missionId=${this.missionId}&userId=${this.GLOBAL.userId}`,formdata,config)
         .then((response)=>{
           console.log(response)
-          this.dialogVisible = true
+          // this.dialogVisible = true
+          alert(`${file.name}上传成功`)
         })
         .catch((error)=>{
           console.log(error)
-          this.dialogVisibleFail = true
+          // this.dialogVisibleFail = true
+          alert(`${file.name}上传失败`)
         })
     },
-    submitUpload() {
+    submitUpload(file,fileList) {
       // this.loading = true;
       // this.tips = '正在上传...'
       this.$refs.upload.submit();
@@ -128,25 +136,49 @@ export default {
       this.loading = false;
       this.dialogVisibleFail = false;
     },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
+    },
+    checkWork() {
+      this.$router.push({path: '/check-homework'})
+      Bus.$emit('val',this.missionId)
+    },
     goBack() {
       this.$router.go(-1)
     }
   },
-   mounted() {
+  mounted(){
+    this.$axios.get(`http://2z431s2133.wicp.vip:31188/work/Mission/searchMission?courseId=${this.enterStuCourse.code}`)
+      .then((response) => {
+        console.log(response)
+        this.stuHomeworkList = response.data.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+  },
+  watch:{
+    stuHomeworkList:function(){
       for(let i = 0; i < this.stuHomeworkList.length; i++) {
         if(this.stuHomeworkList[i].title+':' == this.$route.params.homework) {
           this.title = this.stuHomeworkList[i].title
           this.content = this.stuHomeworkList[i].content
+          this.missionId = this.stuHomeworkList[i].id
           break
         } else {
           this.title = ''
           this.content = ''
         }
       }
-   },
+    }
+  },
+
   computed: {
-    stuHomeworkList() {
-      return this.$store.state.stuHomeworkList;
+    // stuHomeworkList() {
+    //   return this.$store.state.stuHomeworkList;
+    // },
+    enterStuCourse() {
+      return this.$store.state.enterStuCourse;
     }
   }
 }

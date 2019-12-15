@@ -7,7 +7,7 @@
           加入课程
         </el-button>
         <el-dialog title="选择信息" :visible.sync="dialogFormVisible" class="dialog-title">
-          <el-form ref="form" :model="createclass" label-width="80px">
+          <el-form ref="form" label-width="80px">
             <el-form-item label="课程码">
               <el-input style="width:90%;" v-model="classCode"></el-input>
             </el-form-item>
@@ -28,6 +28,7 @@
 
 <script>
 import Bus from '../../../bus'
+import axios from 'axios'
 export default {
   name: 'JoinClass',
   data() {
@@ -50,23 +51,20 @@ export default {
       //   }
       // }
       // console.log(appears)
-      // Bus.$emit('val', appears)
-      let ClassCode = this.classCode
-      // let studentCoursePo = {
-      //   studentCoursePo: ClassCode
-      // }
-      this.$axios.post('http://2z431s2133.wicp.vip:20570/work/StudentCourse/studentAddCourse?studentCoursePo=1')
-        .then((response)=>{
-          console.log(response)
-        })
-        .catch((error)=>{
-          console.log(error)
-        })
-    }
-  },
-  computed: {
-    courseList() {
-      return this.$store.state.courseList
+      // Bus.$emit('val', this.classCode)
+      //let newthis = this;   //axios里面的this作用域变化了，所以需要一个临时的newthis来代替this
+      this.$axios.post('http://2z431s2133.wicp.vip:31188/work/StudentCourse/studentAddCourse',{
+        courseId: this.classCode,
+        studentId: this.GLOBAL.userId
+      })
+      .then((response)=>{
+        console.log(response)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+      this.classCode = ''
+      this.$router.go(0)
     }
   }
 }
