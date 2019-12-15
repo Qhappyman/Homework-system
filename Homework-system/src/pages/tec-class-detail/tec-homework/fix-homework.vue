@@ -20,10 +20,10 @@
         <el-button type="primary" class="submit" size="medium" @click="submitScore">提交分数</el-button>
       </div>
       <div class="work-content">
-        <el-input type="textarea" :rows="10" placeholder="作业内容" v-model="textarea"></el-input>
+        <el-input type="textarea" :rows="10" placeholder="作业内容(没有此功能)" v-model="textarea"></el-input>
       </div>
       <div class="work-file">
-<el-button plain size="small">        <el-button type="info" icon="el-icon-download" circle size="small"></el-button><span class="download">文件下载</span></el-button>
+<el-button plain size="small">        <el-button type="info" icon="el-icon-download" circle size="small"></el-button><span class="download" @click="download">{{fileName}}</span></el-button>
       </div>
     </div>
   </div>
@@ -38,7 +38,8 @@ export default {
     return {
       score: "",
       textarea: "",
-      missionId:localStorage.missionId
+      missionId:localStorage.missionId,
+      fileName:localStorage.fileName
     };
   },
   methods: {
@@ -59,15 +60,9 @@ export default {
       })
         .then(() => {
           let newthis = this;
-          axios.post(`/Work/scoreWork?score=${newthis.score}&workId=${localStorage.workid}`)
+          axios.get(`/Work/scoreWork?score=${newthis.score}&workId=${localStorage.workid}`)
           .then((res)=>{  //还是workId
             console.log(res);  //提交分数
-          })
-          .catch(()=>{
-            this.$message({
-              type:"info",
-              message:"网络错误"
-            })
           })
           this.$message({
             type: "success",
@@ -96,12 +91,18 @@ export default {
           type: 'warning'
         })}
 
+    },
+    download(){
+      window.open(`http://2z431s2133.wicp.vip:31188/work/File/downloadByName?fileName=${this.fileName}`);
+      // axios.get(`/File/downloadByName?fileName=${this.fileName}`).then((res)=>{
+      //   console.log(res)
+      // })
     }
   },
   mounted(){
     //根据params传过来的id找到学生作业具体数据
-    this.textarea = '';
     //localStorage.workid
+    console.log(this.fileName)
   }
 };
 </script>

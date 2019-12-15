@@ -27,21 +27,15 @@ data(){
 },
 methods:{
     addCourse(course){
-        this.courseList.unshift(course);
-        
+        this.courseList.unshift(course);       
 },
-computed:{
-    studentId(){
-        
-    }
-}
+
 },
 mounted(){
     let newthis = this;
     axios.get(
               `/Course/selectCourseByTeacherId?id=${localStorage.id}`         
             ).then(res=>{
-                console.log(res.data.data);
                 this.$store.commit('getCourse',res.data.data)
             })
 }

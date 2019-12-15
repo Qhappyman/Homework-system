@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-collapse-item :title="title">
-      <slot name="title"></slot>
+      <span style="display:none"><slot name="title"></slot></span>
       <slot name="content"></slot>
       <el-link type="primary" @click="workDetail" class="icon" :underline="false">
-        查看学生作业<a href="" download>下载</a>
+        查看学生作业
         <i class="el-icon-view el-icon--right"></i>
       </el-link>
       <el-button type="danger" size="mini" class="delete" @click="deleteWork">删除任务</el-button>

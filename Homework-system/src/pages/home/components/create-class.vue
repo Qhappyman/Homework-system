@@ -115,8 +115,8 @@ export default {
         console.log(this.classlist);
         if (this.classlist.indexOf(this.createclass.course) == -1) {
           let data = {
-            board: "gjq",
-            boardTitle: "createit",
+            board: "",
+            boardTitle: "未发布公告",
             id: 0, //这个id是创建课程时后台自动生成的courseId
             name: this.createclass.course,
             studentNum: 0,
@@ -163,7 +163,7 @@ export default {
       } else {
         axios
           .post(
-            `/Course/updateBoard?board=${this.releasenotice.content}&cousreId=${this.releasenotice.id}&boardTitle=${this.releasenotice.name}`
+            `/Course/updateBoard?board=${this.releasenotice.content}&courseId=${this.releasenotice.id}&boardTitle=${this.releasenotice.name}`
           )
           .then(res => {
             this.$notify({

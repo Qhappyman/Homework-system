@@ -1,6 +1,8 @@
 <template>
-      <el-collapse-item :title= this.title>
-        <slot name="title"></slot><slot name="content"></slot>
+      <el-collapse-item :title="title">
+         
+        <span style="display:none"><slot name="title"></slot></span>
+        <slot name="content"></slot>
       </el-collapse-item>
 </template>
 

@@ -11,9 +11,9 @@ import axios from 'axios'
 // import VueAxios from 'vue-axios'
 import qs from 'qs'
 // import './assets/reset.css'   //引入reset.css和一像素边框
-import './assets/border.css'
+// import './assets/border.css'
 Vue.prototype.axios = axios
-import '@/assets/reset.css'
+// import '@/assets/reset.css'
 Vue.prototype.$axios = axios
 Vue.prototype.qs =qs
 Vue.config.productionTip = false

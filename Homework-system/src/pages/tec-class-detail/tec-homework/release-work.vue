@@ -334,7 +334,6 @@ export default {
       )
       .then(res => {
         let workArray = res.data.data;
-        console.log(workArray);
         if (workArray == "") {
           this.release = true;
         }

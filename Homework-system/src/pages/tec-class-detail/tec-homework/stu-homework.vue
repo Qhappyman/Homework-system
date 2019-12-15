@@ -34,7 +34,7 @@
       <el-table-column align="right">
         <template slot="header"></template>
         <template slot="header" slot-scoped>
-          <el-input v-model="search" size="middle" placeholder="输入关键字搜索" />
+          <el-input v-model="search" size="middle" placeholder="输入关键字搜索(不要点这个)" />
         </template>
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">进入批改</el-button>
@@ -63,7 +63,8 @@ export default {
       // "fileId": 15
       ],
       workid:'',
-      search: ""
+      search: "",
+      fileName:''
     };
   },
   methods: {
@@ -79,22 +80,24 @@ export default {
       this.tableData.filter((item,index)=>{
         if(item.userName==row.userName){
           this.workid = item.id;
+          this.fileName = item.fileName;
         }
       });
       this.$router.push({ path: `/fix-homework/${this.workid}`}); //应该把workId传过去
       localStorage.workid = this.workid;
+      localStorage.fileName = this.fileName;
     }
   },
   mounted(){
     //通过missionId获取学生作业
     let newthis = this;
     // axios.get(`/Work/searchWork?missionId=${newthis.$route.params.missionid||localStorage.missionId}`).then((res)=>{
-      axios.get(`/Work/searchWork?missionId=3`).then((res)=>{
+      axios.get(`/Work/searchWork?missionId=${localStorage.missionId}`).then((res)=>{
       // console.log(res.data.data[0].id);
       this.tableData = res.data.data;   //获取到作业列表，但此组件只显示id，score，name
       this.workid = res.data.data.id;
+      this.$store.commit('updateStuworklist',res);
     })
-    this.$store.commit('updateStuworklist',res);
   }
 };
 </script>

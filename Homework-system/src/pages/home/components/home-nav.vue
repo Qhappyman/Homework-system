@@ -9,7 +9,6 @@
   :router= true
   active-text-color="#ffd04b">
   <el-menu-item
-  index="1"
     :default-active="navindex1"
     ><span @click="jumpHome">我的课堂</span>
   </el-menu-item>
@@ -18,12 +17,11 @@
     <template slot="title">个人中心</template>
 
     <el-menu-item index="/setting-me">个人设置</el-menu-item>
-    <el-menu-item index="2" @click="exit">退出账户</el-menu-item>
+    <el-menu-item @click="exit">退出账户</el-menu-item>
 
   </el-submenu>
   <el-menu-item
     index="/setting-me"
-
   >
     <div class="demo-basic--circle">
           <el-avatar :size="30" :src="circleUrl"></el-avatar>
