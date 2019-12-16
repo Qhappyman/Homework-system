@@ -31,7 +31,7 @@
           width="580">
           <template slot-scope="scope">
             <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.name }}</el-tag>
+              <el-tag size="medium">{{ scope.row.fileName }}</el-tag>
             </div>
           </template>
         </el-table-column>
@@ -56,42 +56,30 @@ export default {
     return {
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       missionId: '',
-       tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
+      tableData: ''
     }
   },
   methods: {
     handleDelete(index, row) {
-      console.log(index,row.name)
-      let workId = ''
+      console.log(index,row.fileName)
       for(let i = 0; i < this.tableData.length; i++) {
-        if(this.tableData.name == row.name) {
-          workId = this.tableData.id
+        if(this.tableData[i].fileName == row.fileName) {
+          let workId = this.tableData[i].id
+          localStorage.setItem("workId", workId)
         }
       }
-      this.$axios.delete('')
+      let work = localStorage.getItem("workId")
+      this.$axios.delete(`http://2z431s2133.wicp.vip:31188/work/Work/deleteWork?workId=${work}`)
         .then((response) => {
           console.log(response)
+          alert('删除成功！')
+          this.$router.go(0)
         })
         .catch((error) => {
           console.log(error)
+          alert('删除失败！')
+          this.$router.go(0)
         })
-      this.$router.go(0)
     },
     goBack() {
       this.$router.go(-1)
@@ -99,9 +87,10 @@ export default {
   },
   mounted() {
     Bus.$on('val',(data) => {
-      this.missionId = data
+      localStorage.setItem("mission", data)
     })
-    this.$axios.get(`http://2z431s2133.wicp.vip:31188/work/Work/searchWork?missionId=${this.missionId}`)
+    let mission = localStorage.getItem("mission")
+    this.$axios.get(`http://2z431s2133.wicp.vip:31188/work/Work/searchWork?missionId=${mission}`)
       .then((response) => {
         console.log(response)
         this.tableData = response.data.data

@@ -38,8 +38,8 @@
         :before-remove="beforeRemove">
         <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传作业</el-button>
+        <el-button style="margin-left: 10px;" size="small" type="primary" @click="checkWork">查看作业</el-button>
       </el-upload>
-      <el-button style="margin-left: 10px;" size="small" type="primary" @click="checkWork">查看作业</el-button>
     </el-card>
     <div class="loading" v-if="loading">
       <h4 class="tips">{{tips}}</h4>
@@ -85,7 +85,8 @@ export default {
       dialogVisible: false,
       dialogVisibleFail: false,
       stuHomeworkList: '',
-      missionId: ''
+      code: '',
+      missionId: 0
     }
   },
   methods: {
@@ -148,7 +149,9 @@ export default {
     }
   },
   mounted(){
-    this.$axios.get(`http://2z431s2133.wicp.vip:31188/work/Mission/searchMission?courseId=${this.enterStuCourse.code}`)
+    this.code = localStorage.getItem("courseCode")
+    this.name = localStorage.getItem("courseName")
+    this.$axios.get(`http://2z431s2133.wicp.vip:31188/work/Mission/searchMission?courseId=${this.code}`)
       .then((response) => {
         console.log(response)
         this.stuHomeworkList = response.data.data

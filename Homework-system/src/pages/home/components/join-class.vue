@@ -59,12 +59,15 @@ export default {
       })
       .then((response)=>{
         console.log(response)
+        alert('加入课程成功！')
+        this.$router.go(0)
       })
       .catch((error)=>{
         console.log(error)
+        alert('加入课程失败！')
+        this.$router.go(0)
       })
       this.classCode = ''
-      this.$router.go(0)
     }
   }
 }

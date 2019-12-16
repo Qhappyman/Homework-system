@@ -1,19 +1,19 @@
 <template>
   <div>
-    <HomeNav></HomeNav>
+    <StuHomeNav></StuHomeNav>
     <JoinClass></JoinClass>
     <CourseList></CourseList>
   </div>
 </template>
 
 <script>
-import HomeNav from './components/home-nav'
+import StuHomeNav from './components/stu-home-nav'
 import JoinClass from './components/join-class'
 import CourseList from './components/course-list'
 export default {
   name: 'StuHome',
   components: {
-    HomeNav,
+    StuHomeNav,
     JoinClass,
     CourseList
   }

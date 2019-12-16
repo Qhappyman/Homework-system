@@ -12,7 +12,7 @@
       >
         <el-menu-item>
           <el-breadcrumb separator-class="el-icon-arrow-right" class="newstyle">
-            <el-breadcrumb-item :to="{ path: '/home' }">
+            <el-breadcrumb-item :to="{ path: '/stu-home' }">
               <span style="color: white; line-height: 60px;">我的课堂</span>
             </el-breadcrumb-item>
             <el-breadcrumb-item>
@@ -33,13 +33,13 @@
     </div>
     <main>
       <div class="base-class">
-        <div class="class-name">{{enterStuCourse.name}}</div>
-        <div class="class-code"><p>课程码:{{enterStuCourse.code}}</p></div>
+        <div class="class-name">{{name}}</div>
+        <div class="class-code"><p>课程码:{{code}}</p></div>
       </div>
       <div class="class-nav">
         <el-tabs v-model="activeName"  @tab-click="handleClick" :stretch = true class="nav-tap">
           <el-tab-pane label="作业" name="first">
-            <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
+            <el-collapse v-model="workName" class="work-list" :accordion="true">
               <StuHomeworkList :stu="stuwork" v-for="(item,index) in stuHomeworkList" :key="index" ref="stuHomeworkList">
                 <template slot="title">{{stuHomeworkList[index].title}}:</template>
                 <template slot="content">{{stuHomeworkList[index].content}}</template>
@@ -47,10 +47,10 @@
             </el-collapse>
           </el-tab-pane>
           <el-tab-pane label="公告" name="second">
-            <el-collapse v-model="workName" @change="handleChange" class="work-list" :accordion="true">
+            <el-collapse v-model="workName" class="work-list" :accordion="true">
               <StuNotice :stu="stunotice" v-for="(item,index) in stuNoticeList" :key="index" ref="stuNoticeList">
                 <template slot="title">{{stuNoticeList[index].boardTitle}}:</template>
-                <template slot="content">{{stuNoticeList[index].boardContent}}</template>
+                <template slot="content">{{stuNoticeList[index].board}}</template>
               </StuNotice>
             </el-collapse>
           </el-tab-pane>
@@ -77,49 +77,28 @@ export default {
       stuwork: '',
       stunotice: '',
       stuHomeworkList: '',
-      stuNoticeList: ''
-    }
-  },
-  methods: {
-    handleClick(tab, event) {
-        console.log(tab, event);
-    },
-    handleChange(val) {
-      console.log(val);
-    }
-  },
-  computed: {
-    // stuHomeworkList() {
-    //   return this.$store.state.stuHomeworkList;
-    // },
-    // stuNoticeList() {
-    //   return this.$store.state.stuNoticeList;
-    // },
-    enterStuCourse() {
-      return this.$store.state.enterStuCourse;
+      stuNoticeList: '',
+      name: '',
+      code: ''
     }
   },
   mounted(){
     this.stuwork = this.$route.params.stuclass
     this.stunotice = this.$route.params.stuclass
-    this.$axios.get(`http://2z431s2133.wicp.vip:31188/work/Mission/searchMission?courseId=${this.enterStuCourse.code}`)
+    this.code = localStorage.getItem("courseCode")
+    this.name = localStorage.getItem("courseName")
+    this.$axios.get(`http://2z431s2133.wicp.vip:31188/work/Mission/searchMission?courseId=${this.code}`)
       .then((response) => {
         console.log(response)
         this.stuHomeworkList = response.data.data
-        // for(let i = 0; i < response.data.data.length; i++){
-        //   this.$store.commit('stuHomeworkList', {title: response.data.data[i].title, content: response.data.data[i].content})
-        // }
       })
       .catch((error) => {
         console.log(error)
       })
-    this.$axios.post('http://2z431s2133.wicp.vip:31188/work/Course/allCourse')
+    this.$axios.post(`http://2z431s2133.wicp.vip:31188/work/Course/selectBoardByCourseId?id=${this.code}`)
       .then((response) => {
         console.log(response)
         this.stuNoticeList = response.data.data
-        // for(let i = 0; i < response.data.data.length; i++){
-        //   this.$store.commit('stuNoticeList', {boardTitle: response.data.data[i].boardTitle, boardContent: response.data.data[i].board})
-        // }
       })
       .catch((error) => {
         console.log(error)

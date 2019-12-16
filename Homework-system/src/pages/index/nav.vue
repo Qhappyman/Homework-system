@@ -8,7 +8,7 @@
       router=true
       active-text-color="#ffd04b">作业提交
       <el-menu-item
-        index="/home"
+        index="/login"
         :default-active="navindex1"
       >进入课堂
       </el-menu-item>

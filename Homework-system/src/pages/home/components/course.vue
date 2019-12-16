@@ -15,6 +15,8 @@ export default {
     goCourse() {
       this.$router.push({ path: `/stu-class-detail/${this.$slots.name[0].text}` })
       this.$store.commit('enterStuCourse',{name: this.$slots.name[0].text, code: this.$slots.code[0].text})
+      localStorage.setItem("courseCode",this.$slots.code[0].text)
+      localStorage.setItem("courseName",this.$slots.name[0].text)
     },
     deleteCourse() {
       let studentCoursePo = {
@@ -24,10 +26,12 @@ export default {
       this.$axios.delete('http://2z431s2133.wicp.vip:31188/work/StudentCourse/studentDeleteCourse',{data:studentCoursePo})
       .then((response)=>{
         console.log(response)
+        alert('删除成功！')
         this.$router.go(0)
       })
       .catch((error)=>{
         console.log(error)
+        alert('删除失败！')
       })
     }
   }
